@@ -1,27 +1,12 @@
-<div class="flex justify-between w-full items-center px-4 ">
-    <div class="">
-        <button class="rounded-full hover:bg-sky-100 transition-colors p-2 group">
-            <svg class="stroke-gray-500 fill-gray-500 group-hover:stroke-sky-500 group-hover:fill-sky-500" width="24" height="24" stroke-width="0.5" viewBox="0 0 24 24" fill="" xmlns="http://www.w3.org/2000/svg">
-                <path stroke=""
-                    stroke-width="0.5"
-                    stroke-linecap="round"
-                    stroke-linejoin="round" d="M2.25 6A.75.75 0 0 1 3 5.25h18a.75.75 0 0 1 0 1.5H3A.75.75 0 0 1 2.25 6ZM21 11.25H3a.75.75 0 0 0 0 1.5h18a.75.75 0 0 0 0-1.5Zm0 6H3a.75.75 0 0 0 0 1.5h18a.75.75 0 0 0 0-1.5Z"></path>
-            </svg>
-        </button>
-    </div>
-    <div class="flex flex-row-reverse gap-4 relative items-center ">
+<div class="flex justify-end w-full items-center px-4 ">
+    <div class="flex flex-row-reverse gap-4 relative items-center">
         <div class="relative">
             <button id="profileButton" class="flex items-center gap-3 justify-center focus:outline-none">
                 <div class="text-right">
                     <h1 class="text-black text-sm font-medium">Thomas Wilson</h1>
                     <p class="text-gray-500 text-sm">Designer</p>
                 </div>
-                <!-- <div class="flex items-center"> -->
                     <img src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/jese-leos.png" alt="" class="w-12 h-12 rounded-full object-cover object-center">
-                    <!-- <svg id="dropdownIcon" class="rotate-90 stroke-gray-500 fill-gray-500 transition-transform duration-200" width="18" height="18" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path d="m16.354 12.354-7 7a.5.5 0 0 1-.708-.708L15.293 12 8.646 5.354a.5.5 0 0 1 .708-.708l7 7a.5.5 0 0 1 0 .708Z" />
-                    </svg> -->
-                <!-- </div> -->
             </button>
 
             <!-- Dropdown Menu -->
@@ -75,22 +60,16 @@
 <script>
     const profileButton = document.getElementById('profileButton');
     const dropdownMenu = document.getElementById('dropdownMenu');
-    const dropdownIcon = document.getElementById('dropdownIcon');
 
     profileButton.addEventListener('click', () => {
         dropdownMenu.classList.toggle('opacity-0');
         dropdownMenu.classList.toggle('invisible');
         dropdownMenu.classList.toggle('scale-95');
-
-        dropdownIcon.classList.toggle('-rotate-90');
-        dropdownIcon.classList.toggle('rotate-0');
     });
 
     document.addEventListener('click', (e) => {
         if (!profileButton.contains(e.target) && !dropdownMenu.contains(e.target)) {
             dropdownMenu.classList.add('opacity-0', 'invisible', 'scale-95');
-            dropdownIcon.classList.add('-rotate-90');
-            dropdownIcon.classList.remove('rotate-0');  
         }
     });
 </script>

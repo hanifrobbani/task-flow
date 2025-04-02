@@ -29,15 +29,19 @@
     }
 </style>
 
-<div class="w-full h-full">
+<div class="w-full h-full max-w-sm bg-white">
     <div class="border-gray-200 border-r border-b flex justify-center items-center h-20">
-        <h1 class="font-bold text-2xl">KONRIX</h1>
+        <img src="{{asset('assets/img/logo.png')}}" alt="" class="w-14 h-14">
+        <div class="flex flex-col items-center justify-start">
+            <h1 class="text-2xl font-bold leading-5"><span class="text-blue-600">Task</span>Flow</h1>
+            <p class=" text-gray-400" style="font-size: 10px;">Management Apps</p>
+        </div>
     </div>
     <div class="h-screen shadow-md">
         <div class="flex w-full justify-start flex-col h-full px-3 py-4 overflow-y-auto no-scrollbar pb-24">
             <div class="">
                 <label for="Menu" class="text-sm text-gray-500 px-3 font-semibold">Menu</label>
-                <a href="/kontol" class="flex mt-2 gap-2 bg-sky-50 text-sky-500 rounded-md py-2 px-3">
+                <a href="/dashboard" class="flex mt-2 gap-2 bg-sky-50 text-sky-500 rounded-md py-2 px-3">
                     <svg width="20" height="20" viewBox="0 0 24 24" stroke-width="0.5" fill="#0ea5e9" xmlns="http://www.w3.org/2000/svg">
                         <path
                             stroke="#0ea5e9"
@@ -160,7 +164,7 @@
                                     stroke-linejoin="round"
                                     d="M21.75 20a.75.75 0 0 1-.75.75H4.5a2.067 2.067 0 0 1-2.25-2.25V4a.75.75 0 0 1 1.5 0v14.5c0 .589.161.75.75.75H21a.75.75 0 0 1 .75.75ZM7 16.75a.75.75 0 0 0 .75-.75v-3a.75.75 0 0 0-1.5 0v3a.75.75 0 0 0 .75.75Zm4 0a.75.75 0 0 0 .75-.75V9a.75.75 0 0 0-1.5 0v7a.75.75 0 0 0 .75.75Zm4 0a.75.75 0 0 0 .75-.75v-5a.75.75 0 0 0-1.5 0v5a.75.75 0 0 0 .75.75Zm4 0a.75.75 0 0 0 .75-.75V5a.75.75 0 0 0-1.5 0v11a.75.75 0 0 0 .75.75Z"></path>
                             </svg>
-                            <p>All Report</p>
+                            <p>Report</p>
                         </div>
                         <div class="arrow-icon">
                             <svg class="group-hover:fill-sky-500 group-hover:stroke-sky-500 stroke-gray-500 fill-gray-500 transition-colors" width="18" height="18" stroke-width="1.5" viewBox="0 0 24 24" fill="" xmlns="http://www.w3.org/2000/svg">
@@ -180,7 +184,7 @@
                                 <li class="pl-10 py-2 hover:bg-gray-100 cursor-pointer text-gray-500">Daily Report</li>
                             </a>
                             <a href="">
-                                <li class="pl-10 py-2 hover:bg-gray-100 cursor-pointer text-gray-500">Monlty Report</li>
+                                <li class="pl-10 py-2 hover:bg-gray-100 cursor-pointer text-gray-500">Monthly Report</li>
                             </a>
                             <a href="">
                                 <li class="pl-10 py-2 hover:bg-gray-100 cursor-pointer text-gray-500">All report</li>

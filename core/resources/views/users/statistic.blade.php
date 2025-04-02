@@ -1,8 +1,7 @@
 @extends('dashboard')
-
 @section('main')
 <div class="w-full bg-white shadow rounded-md flex justify-start gap-5 p-5">
-    <div class="border-r-2 border-gray-300">
+    <div class="border-r-2 border-gray-300 w-full">
         <div class="flex gap-4 w-72 items-center">
             <div class="bg-sky-600 p-3 rounded-full">
                 <svg class=" fill-white" width="40" height="40" viewBox="0 0 24 24" fill="" xmlns="http://www.w3.org/2000/svg">
@@ -20,17 +19,9 @@
             </div>
         </div>
     </div>
-    <div class="border-r-2 border-gray-300">
+    <div class="border-r-2 border-gray-300 w-full">
         <div class="flex gap-4 w-72 items-center">
             <div class="bg-green-600 p-3 rounded-full">
-                <!-- <svg width="44" height="44" stroke-width="1" viewBox="0 0 24 24" fill="#ffffff" xmlns="http://www.w3.org/2000/svg">
-                    <path
-                        stroke="#ffffff"
-                        stroke-width="0.1"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="M18 4h-1.5V3a.5.5 0 0 0-1 0v1h-7V3a.5.5 0 0 0-1 0v1H6C3.71 4 2.5 5.21 2.5 7.5V18c0 2.29 1.21 3.5 3.5 3.5h12c2.29 0 3.5-1.21 3.5-3.5V7.5C21.5 5.21 20.29 4 18 4ZM6 5h1.5v1a.5.5 0 0 0 1 0V5h7v1a.5.5 0 0 0 1 0V5H18c1.729 0 2.5.771 2.5 2.5v1h-17v-1C3.5 5.771 4.271 5 6 5Zm12 15.5H6c-1.729 0-2.5-.771-2.5-2.5V9.5h17V18c0 1.729-.771 2.5-2.5 2.5ZM8.75 13a.75.75 0 1 1-.761-.75H8a.748.748 0 0 1 .75.75Zm4 0a.75.75 0 1 1-.761-.75H12a.748.748 0 0 1 .75.75Zm4 0a.75.75 0 1 1-.761-.75H16a.748.748 0 0 1 .75.75Zm-8 4a.75.75 0 1 1-.761-.75H8a.748.748 0 0 1 .75.75Zm4 0a.75.75 0 1 1-.761-.75H12a.748.748 0 0 1 .75.75Zm4 0a.75.75 0 1 1-.761-.75H16a.748.748 0 0 1 .75.75Z"></path>
-                </svg> -->
                 <svg class="stroke-white" width="40" height="40" stroke-width="1.5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="">
                     <path d="M21.1679 8C19.6247 4.46819 16.1006 2 11.9999 2C6.81459 2 2.55104 5.94668 2.04932 11" stroke="" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
                     <path d="M17 8H21.4C21.7314 8 22 7.73137 22 7.4V3" stroke="" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
@@ -44,7 +35,7 @@
             </div>
         </div>
     </div>
-    <div class="">
+    <div class="w-full">
         <div class="flex gap-4 w-72 items-center">
             <div class="bg-gray-200 p-3 rounded-full">
                 <svg class="fill-gray-600" width="40" height="40" viewBox="0 0 24 24" fill="" xmlns="http://www.w3.org/2000/svg">
@@ -58,6 +49,7 @@
         </div>
     </div>
 </div>
+
 <div class="mt-10 w-full">
     <h1 class="font-medium text-lg text-gray-700 mb-2">Task Progress</h1>
     <div class="flex justify-between gap-5">
@@ -127,7 +119,7 @@
 <div class="w-full gap-5 flex mt-10">
     <div class="bg-white w-2/5 shadow-md rounded py-2 px-4">
         <div class="flex items-center min-h-9 ">
-            <h1 class="text-gray-500 font-medium">Task Summery</h1>
+            <h1 class="text-gray-500 font-medium">Task Summary</h1>
         </div>
         <div class="w-full mt-4 ">
             <div class="flex gap-2 mb-4">
@@ -142,8 +134,8 @@
                     </svg>
                 </div>
                 <div class="">
-                    <h1 class="text-sm text-gray-600 font-semibold">Todo</h1>
-                    <p class="text-sm text-gray-600"><span class="font-medium">3</span> Task</p>
+                    <h1 class="text-sm text-gray-500 font-semibold">Todo</h1>
+                    <p class="text-sm text-gray-500"><span class="font-medium">3</span> Task</p>
                 </div>
             </div>
             <div class="flex gap-2 mb-4">
@@ -155,8 +147,8 @@
                     </svg>
                 </div>
                 <div class="">
-                    <h1 class="text-sm text-gray-600 font-semibold">In Progress</h1>
-                    <p class="text-sm text-gray-600"><span class="font-medium">1</span> Task</p>
+                    <h1 class="text-sm text-gray-500 font-semibold">In Progress</h1>
+                    <p class="text-sm text-gray-500"><span class="font-medium">1</span> Task</p>
                 </div>
             </div>
             <div class="flex gap-2 mb-4">
@@ -171,8 +163,8 @@
                     </svg>
                 </div>
                 <div class="">
-                    <h1 class="text-sm text-gray-600 font-semibold">Done</h1>
-                    <p class="text-sm text-gray-600"><span class="font-medium">6</span> Task</p>
+                    <h1 class="text-sm text-gray-500 font-semibold">Done</h1>
+                    <p class="text-sm text-gray-500"><span class="font-medium">6</span> Task</p>
                 </div>
             </div>
         </div>
@@ -181,9 +173,9 @@
         <div class="flex justify-between items-center">
             <h1 class="text-gray-500 font-medium">Projects Statistic</h1>
             <div class="flex gap-2">
-                <button class="text-sm bg-blue-200 text-sky-700 px-4 py-2 rounded-md hover:bg-sky-600 transition-colors hover:text-white">All</button>
-                <button class="text-sm bg-blue-200 text-sky-700 px-4 py-2 rounded-md hover:bg-sky-600 transition-colors hover:text-white">Day</button>
-                <button class="text-sm bg-blue-200 text-sky-700 px-4 py-2 rounded-md hover:bg-sky-600 transition-colors hover:text-white">Month</button>
+                <button class="text-sm bg-blue-200 text-sky-700 px-4 py-2 rounded-md font-medium hover:bg-sky-600 transition-colors hover:text-white">All</button>
+                <button class="text-sm bg-blue-200 text-sky-700 px-4 py-2 rounded-md font-medium hover:bg-sky-600 transition-colors hover:text-white">Day</button>
+                <button class="text-sm bg-blue-200 text-sky-700 px-4 py-2 rounded-md font-medium hover:bg-sky-600 transition-colors hover:text-white">Month</button>
             </div>
         </div>
     </div>
