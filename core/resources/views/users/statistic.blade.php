@@ -116,68 +116,21 @@
 </div>
 
 
-<div class="w-full gap-5 flex mt-10">
-    <div class="bg-white w-2/5 shadow-md rounded py-2 px-4">
-        <div class="flex items-center min-h-9 ">
-            <h1 class="text-gray-500 font-medium">Task Summary</h1>
-        </div>
-        <div class="w-full mt-4 ">
-            <div class="flex gap-2 mb-4">
-                <div class="p-2 bg-blue-200 rounded-full flex items-center justify-center w-10 h-10">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="#2563eb" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            stroke="#2563eb"
-                            stroke-width="1.3"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="M12 1.5A10.5 10.5 0 1 0 22.5 12 10.512 10.512 0 0 0 12 1.5Zm0 20a9.5 9.5 0 1 1 9.5-9.5 9.511 9.511 0 0 1-9.5 9.5Zm.5-9.571V16.5a.5.5 0 0 1-1 0v-4.571a.5.5 0 0 1 1 0Zm.25-3.429a.75.75 0 1 1-.761-.75H12a.748.748 0 0 1 .75.75Z"></path>
-                    </svg>
-                </div>
-                <div class="">
-                    <h1 class="text-sm text-gray-500 font-semibold">Todo</h1>
-                    <p class="text-sm text-gray-500"><span class="font-medium">3</span> Task</p>
-                </div>
-            </div>
-            <div class="flex gap-2 mb-4">
-                <div class="p-2 bg-yellow-200 rounded-full flex items-center justify-center w-10 h-10">
-                    <svg class="stroke-yellow-600" width="24" height="24" stroke-width="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="">
-                        <path d="M9 2L15 2" stroke="" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                        <path d="M12 10L12 14" stroke="" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                        <path d="M12 22C16.4183 22 20 18.4183 20 14C20 9.58172 16.4183 6 12 6C7.58172 6 4 9.58172 4 14C4 18.4183 7.58172 22 12 22Z" stroke="" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                    </svg>
-                </div>
-                <div class="">
-                    <h1 class="text-sm text-gray-500 font-semibold">In Progress</h1>
-                    <p class="text-sm text-gray-500"><span class="font-medium">1</span> Task</p>
-                </div>
-            </div>
-            <div class="flex gap-2 mb-4">
-                <div class="p-2 bg-green-200 rounded-full flex items-center justify-center w-10 h-10">
-                    <svg class="stroke-green-600" width="20" height="20" viewBox="0 0 24 24" fill="#25314C" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            stroke=""
-                            stroke-width="1.5"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="M9 17.75a.751.751 0 0 1-.532-.224l-4-4.062a.751.751 0 0 1 1.07-1.053L9 15.935l9.47-9.465a.75.75 0 0 1 1.06 1.06l-10 10a.747.747 0 0 1-.53.22Z"></path>
-                    </svg>
-                </div>
-                <div class="">
-                    <h1 class="text-sm text-gray-500 font-semibold">Done</h1>
-                    <p class="text-sm text-gray-500"><span class="font-medium">6</span> Task</p>
-                </div>
-            </div>
+<div class="w-full mt-10 bg-white shadow-md rounded px-2 py-4">
+    <div class="flex justify-between items-center px-4">
+        <h1 class="text-gray-600 font-medium text-lg">Project Statistic</h1>
+        <div class="flex gap-2">
+            <button class="text-sm bg-blue-200 text-sky-700 px-4 py-2 rounded-md font-medium hover:bg-sky-600 transition-colors hover:text-white">All</button>
+            <button class="text-sm bg-blue-200 text-sky-700 px-4 py-2 rounded-md font-medium hover:bg-sky-600 transition-colors hover:text-white">Day</button>
+            <button class="text-sm bg-blue-200 text-sky-700 px-4 py-2 rounded-md font-medium hover:bg-sky-600 transition-colors hover:text-white">Month</button>
         </div>
     </div>
-    <div class="w-full bg-white shadow-md rounded p-2">
-        <div class="flex justify-between items-center">
-            <h1 class="text-gray-500 font-medium">Projects Statistic</h1>
-            <div class="flex gap-2">
-                <button class="text-sm bg-blue-200 text-sky-700 px-4 py-2 rounded-md font-medium hover:bg-sky-600 transition-colors hover:text-white">All</button>
-                <button class="text-sm bg-blue-200 text-sky-700 px-4 py-2 rounded-md font-medium hover:bg-sky-600 transition-colors hover:text-white">Day</button>
-                <button class="text-sm bg-blue-200 text-sky-700 px-4 py-2 rounded-md font-medium hover:bg-sky-600 transition-colors hover:text-white">Month</button>
-            </div>
-        </div>
-    </div>
+    <x-echart-component 
+    chart-id="project-stats"
+    :chart-data="[5, 20, 36, 10, 10, 20, 30]"
+    :categories="['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']"
+    />
+
 </div>
+
 @endsection
