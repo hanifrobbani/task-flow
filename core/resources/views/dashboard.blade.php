@@ -31,16 +31,16 @@
         <!-- Konten Utama -->
         <div class="flex flex-col w-full">
             <!-- Header -->
-            <header class="fixed top-0 z-40 bg-white ml-[20%] w-[calc(100%-20%)] h-20 flex items-center shadow 2k:ml-0 2k:w-full">
+            <header class="fixed top-0 z-40 bg-white  h-20 flex items-center shadow 2k:ml-0 w-full">
                 @include('header')
             </header>
 
             <!-- Main Content -->
-            <main class="h-full ml-[20%] w-[calc(100%-20%)] pt-20 2k:ml-[8%]">
+            <main class="h-full ml-[20%] w-[calc(100%-20%)] pt-20">
                 <div class="flex flex-col max-w-full h-full p-5">
                     <div class="w-full flex justify-between">
-                        <div class="">
-                            <h1 class="font-medium text-lg text-gray-800">@yield('title', 'Dashboard')</h1>
+                        <div>
+                            <h1 class="font-medium text-lg text-gray-600">@yield('title', 'Dashboard')</h1>
                         </div>
 
                         @php

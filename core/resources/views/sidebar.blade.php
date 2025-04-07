@@ -8,10 +8,6 @@
         scrollbar-width: none;
     }
 
-    .arrow-icon {
-        transition: transform 0.3s ease;
-    }
-
     .dropdown-menu {
         max-height: 0;
         overflow: hidden;
@@ -29,7 +25,7 @@
     }
 </style>
 
-<div class="w-full h-full max-w-sm bg-white">
+<div class="w-full h-full bg-white">
     <div class="border-gray-200 border-r border-b flex justify-center items-center h-20">
         <img src="{{asset('assets/img/logo.png')}}" alt="" class="w-14 h-14">
         <div class="flex flex-col items-center justify-start">
@@ -55,18 +51,7 @@
             </div>
             <div class=" mt-4">
                 <label for="Apps" class="text-sm text-gray-500 px-3 font-semibold">Apps</label>
-                <a href="/" class="flex gap-2 mt-2 text-gray-500 rounded-md py-2 px-3 cursor-pointer hover:bg-sky-50 hover:text-sky-500 transition-colors group">
-                    <svg class="group-hover:fill-sky-500 fill-gray-500 stroke-gray-500 group-hover:stroke-sky-500 transition-colors" width="20" height="20" viewBox="0 0 24 24" fill="" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            stroke=""
-                            stroke-width="0.5"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="m20.354 8.646-6-6A.5.5 0 0 0 14 2.5H8C5.71 2.5 4.5 3.71 4.5 6v12c0 2.29 1.21 3.5 3.5 3.5h9c2.29 0 3.5-1.21 3.5-3.5V9a.5.5 0 0 0-.146-.354ZM14.5 4.207 18.793 8.5H17c-1.729 0-2.5-.771-2.5-2.5ZM17 20.5H8c-1.729 0-2.5-.771-2.5-2.5V6c0-1.729.771-2.5 2.5-2.5h5.5V6c0 2.29 1.21 3.5 3.5 3.5h2.5V18c0 1.729-.771 2.5-2.5 2.5Zm-.5-8.5a.5.5 0 0 1-.5.5H9a.5.5 0 0 1 0-1h7a.5.5 0 0 1 .5.5Zm-3 4a.5.5 0 0 1-.5.5H9a.5.5 0 0 1 0-1h4a.5.5 0 0 1 .5.5Z"></path>
-                    </svg>
-                    <p>My Task</p>
-                </a>
-                <a href="/" class="flex gap-2 mt-2 text-gray-500 rounded-md py-2 px-3 cursor-pointer hover:bg-sky-50 hover:text-sky-500 transition-colors group">
+                <a href="/project" class="flex gap-2 mt-2 text-gray-500 rounded-md py-2 px-3 cursor-pointer hover:bg-sky-50 hover:text-sky-500 transition-colors group">
                     <svg class="group-hover:fill-sky-500 fill-gray-500 stroke-gray-500 group-hover:stroke-sky-500 transition-colors" width="20" height="20" viewBox="0 0 24 24" fill="" xmlns="http://www.w3.org/2000/svg">
                         <path
                             stroke=""
@@ -77,7 +62,7 @@
                     </svg>
                     <p>Projects</p>
                 </a>
-                <a href="/" class="flex gap-2 mt-2 text-gray-500 rounded-md py-2 px-3 cursor-pointer hover:bg-sky-50 hover:text-sky-500 transition-colors group">
+                <a href="/file" class="flex gap-2 mt-2 text-gray-500 rounded-md py-2 px-3 cursor-pointer hover:bg-sky-50 hover:text-sky-500 transition-colors group">
                     <svg class="group-hover:fill-sky-500 fill-gray-500 stroke-gray-500 group-hover:stroke-sky-500 transition-colors" width="20" height="20" stroke-width="1.5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="">
                         <path
                             stroke=""
@@ -86,7 +71,7 @@
                             stroke-linejoin="round"
                             d="M2 11V4.6C2 4.26863 2.26863 4 2.6 4H8.77805C8.92127 4 9.05977 4.05124 9.16852 4.14445L12.3315 6.85555C12.4402 6.94876 12.5787 7 12.722 7H21.4C21.7314 7 22 7.26863 22 7.6V11M2 11V19.4C2 19.7314 2.26863 20 2.6 20H21.4C21.7314 20 22 19.7314 22 19.4V11M2 11H22" stroke="#000000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
                     </svg>
-                    <p>Projects File</p>
+                    <p>File Storage</p>
                 </a>
                 <a href="/" class="flex gap-2 mt-2 text-gray-500 rounded-md py-2 px-3 cursor-pointer hover:bg-sky-50 hover:text-sky-500 transition-colors group">
                     <svg viewBox="0 0 24 24" class="group-hover:fill-sky-500 fill-gray-500 stroke-gray-500 group-hover:stroke-sky-500 transition-colors" width="20" height="20" stroke-width="0.5" fill="" xmlns="http://www.w3.org/2000/svg">
@@ -148,7 +133,7 @@
                             stroke-linejoin="round"
                             d="M18 4.5H6C3.71 4.5 2.5 5.71 2.5 8v9c0 2.29 1.21 3.5 3.5 3.5h12c2.29 0 3.5-1.21 3.5-3.5V8c0-2.29-1.21-3.5-3.5-3.5ZM20.5 17c0 1.729-.771 2.5-2.5 2.5H6c-1.729 0-2.5-.771-2.5-2.5V8c0-1.729.771-2.5 2.5-2.5h12c1.729 0 2.5.771 2.5 2.5Zm-2.6-8.294a.5.5 0 0 1-.11.7l-4.912 3.573a1.495 1.495 0 0 1-1.764 0L6.206 9.4a.5.5 0 0 1 .588-.8l4.912 3.572a.5.5 0 0 0 .588 0L17.206 8.6a.5.5 0 0 1 .694.106Z"></path>
                     </svg>
-                    <p>Mail</p>
+                    <p>Message</p>
                 </a>
             </div>
             <div class=" mt-4">

@@ -27,3 +27,13 @@ Route::group([
         return view('users.index');
     });
 });
+Route::group([
+    'prefix' => 'project',
+], function () {
+    Route::get('/', function () {
+        return view('projects.index');
+    });
+    Route::get('/create', function () {
+        return view('projects.create');
+    });
+});

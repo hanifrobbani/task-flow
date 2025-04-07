@@ -1,4 +1,4 @@
-<div class="flex justify-end w-full items-center px-4 ">
+<div class="flex justify-end w-full items-center px-4">
     <div class="flex flex-row-reverse gap-4 relative items-center">
         <div class="relative">
             <button id="profileButton" class="flex items-center gap-3 justify-center focus:outline-none">
