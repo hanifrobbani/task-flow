@@ -36,4 +36,15 @@ Route::group([
     Route::get('/create', function () {
         return view('projects.create');
     });
+
+    // kanban: /project/id/kanban
+    // detail: /project/id/detail (button detail ada di kanban project)
+});
+
+Route::group([
+    'prefix' => 'my-task',
+], function () {
+    Route::get('/', function () {
+        return view('tasks.index');
+    });
 });

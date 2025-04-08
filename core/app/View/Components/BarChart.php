@@ -4,18 +4,20 @@ namespace App\View\Components;
 
 use Illuminate\View\Component;
 
-class EchartComponent extends Component
+class BarChart extends Component
 {
     public $chartId;
-    public $chartData;
+    public $barChartName;
+    public $dataBarChart;
     public $categories;
     public $title;
     public $height;
 
-    public function __construct($chartId = 'chart-' . null, $chartData = [], $categories = [], $title = '', $height = null)
+    public function __construct($chartId = 'chart-' . null, $barChartName = '', $dataBarChart = [], $categories = [], $title = '', $height = null)
     {
         $this->chartId = $chartId ?? 'chart-' . uniqid();
-        $this->chartData = $chartData;
+        $this->barChartName = $barChartName;
+        $this->dataBarChart = $dataBarChart;
         $this->categories = $categories;
         $this->title = $title;
         $this->height = $height;
@@ -23,7 +25,7 @@ class EchartComponent extends Component
 
     public function render()
     {
-        return view('components.echart-component');
+        return view('components.bar-chart');
     }
 }
 

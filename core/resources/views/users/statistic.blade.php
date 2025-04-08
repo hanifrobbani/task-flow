@@ -115,22 +115,33 @@
     </div>
 </div>
 
+<div class="mt-10 flex gap-4">
+    <div class="min-w-72 bg-white shadow-md rounded px-2 py-4">
+        @php
+        $dummyData = [
+        ['value' => 1048, 'name' => 'Done'],
+        ['value' => 735, 'name' => 'Pending'],
+        ];
+        @endphp
+        <h1 class="text-gray-600 font-medium text-lg">Monthly Target</h1>
+        <x-pie-chart chart-id="pie1" :data-pie-chart="$dummyData" pie-chart-name="Monthly Target"/>
 
-<div class="w-full mt-10 bg-white shadow-md rounded px-2 py-4">
-    <div class="flex justify-between items-center px-4">
-        <h1 class="text-gray-600 font-medium text-lg">Project Statistic</h1>
-        <div class="flex gap-2">
-            <button class="text-sm bg-blue-200 text-sky-700 px-4 py-2 rounded-md font-medium hover:bg-sky-600 transition-colors hover:text-white">All</button>
-            <button class="text-sm bg-blue-200 text-sky-700 px-4 py-2 rounded-md font-medium hover:bg-sky-600 transition-colors hover:text-white">Day</button>
-            <button class="text-sm bg-blue-200 text-sky-700 px-4 py-2 rounded-md font-medium hover:bg-sky-600 transition-colors hover:text-white">Month</button>
-        </div>
     </div>
-    <x-echart-component 
-    chart-id="project-stats"
-    :chart-data="[5, 20, 36, 10, 10, 20, 30]"
-    :categories="['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']"
-    />
-
+    <div class="w-full bg-white shadow-md rounded px-2 py-4">
+        <div class="flex justify-between items-center px-4">
+            <h1 class="text-gray-600 font-medium text-lg">Working Hour</h1>
+            <div class="flex gap-2">
+                <button class="text-sm bg-blue-200 text-sky-700 px-4 py-2 rounded-md font-medium hover:bg-sky-600 transition-colors hover:text-white">All</button>
+                <button class="text-sm bg-blue-200 text-sky-700 px-4 py-2 rounded-md font-medium hover:bg-sky-600 transition-colors hover:text-white">Day</button>
+                <button class="text-sm bg-blue-200 text-sky-700 px-4 py-2 rounded-md font-medium hover:bg-sky-600 transition-colors hover:text-white">Month</button>
+            </div>
+        </div>
+        <x-bar-chart
+            chart-id="project-stats"
+            bar-chart-name="Working Hour"
+            :data-bar-chart="[5, 20, 36, 10, 10, 20, 30]"
+            :categories="['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']" />
+    </div>
 </div>
 
 @endsection

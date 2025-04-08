@@ -14,8 +14,13 @@
 <form class="flex justify-between gap-4" action="">
     <div class=" block w-full max-w-xs">
         <div class="bg-white p-5 rounded shadow-md w-full">
-            <h1 class="mb-2 text-sm font-medium text-gray-800">Selected Member</h1>
-            <div class="border border-gray-300 w-full rounded-lg h-40"></div>
+            <div class="flex items-center">
+                <svg width="28" height="28" viewBox="0 0 24 24" class="fill-gray-600" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M16.08 10.389a.75.75 0 0 1 .931-.509 1.156 1.156 0 0 0 .329.04 1.583 1.583 0 0 0 .4-3.114.75.75 0 0 1 .377-1.452 3.083 3.083 0 0 1-.778 6.066 2.645 2.645 0 0 1-.751-.1.75.75 0 0 1-.508-.931Zm2.82 1.542h-.03a.75.75 0 0 0-.027 1.5 2.383 2.383 0 0 1 2.407 2.58V18a.75.75 0 0 0 1.5 0v-1.99a3.822 3.822 0 0 0-3.85-4.079ZM6.67 11.42a2.655 2.655 0 0 0 .751-.1A.75.75 0 1 0 7 9.88a1.156 1.156 0 0 1-.329.04 1.588 1.588 0 0 1-.394-3.12.75.75 0 1 0-.377-1.456 3.087 3.087 0 0 0 .77 6.076Zm-.811 1.23a.74.74 0 0 0-.779-.719 3.823 3.823 0 0 0-3.83 4.079V18a.75.75 0 0 0 1.5 0v-1.99a2.351 2.351 0 0 1 2.391-2.58.749.749 0 0 0 .718-.78ZM8.258 7a3.75 3.75 0 1 1 3.75 3.75A3.754 3.754 0 0 1 8.258 7Zm1.5 0a2.25 2.25 0 1 0 2.25-2.25A2.253 2.253 0 0 0 9.758 7Zm4.019 5.139h-3.554a4.889 4.889 0 0 0-5.2 5.211V20a.75.75 0 0 0 1.5 0v-2.65a3.441 3.441 0 0 1 3.7-3.711h3.554a3.441 3.441 0 0 1 3.7 3.711V20a.75.75 0 0 0 1.5 0v-2.65a4.889 4.889 0 0 0-5.2-5.211Z"></path>
+                </svg>
+                <h1 class="text-sm font-medium text-gray-600">Selected Member</h1>
+            </div>
+            <div class="border border-gray-400 w-full rounded-lg h-40 mt-2"></div>
         </div>
         <div class="bg-white p-5 rounded shadow-md w-full mt-5">
             <div class="relative">

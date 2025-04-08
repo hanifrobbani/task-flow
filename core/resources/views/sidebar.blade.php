@@ -51,6 +51,17 @@
             </div>
             <div class=" mt-4">
                 <label for="Apps" class="text-sm text-gray-500 px-3 font-semibold">Apps</label>
+                <a href="/my-task" class="flex gap-2 mt-2 text-gray-500 rounded-md py-2 px-3 cursor-pointer hover:bg-sky-50 hover:text-sky-500 transition-colors group">
+                    <svg class="group-hover:fill-sky-500 fill-gray-500 stroke-gray-500 group-hover:stroke-sky-500 transition-colors" width="20" height="20" viewBox="0 0 24 24" fill="" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            stroke=""
+                            stroke-width="0.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="m20.354 8.646-6-6A.5.5 0 0 0 14 2.5H8C5.71 2.5 4.5 3.71 4.5 6v12c0 2.29 1.21 3.5 3.5 3.5h9c2.29 0 3.5-1.21 3.5-3.5V9a.5.5 0 0 0-.146-.354ZM14.5 4.207 18.793 8.5H17c-1.729 0-2.5-.771-2.5-2.5ZM17 20.5H8c-1.729 0-2.5-.771-2.5-2.5V6c0-1.729.771-2.5 2.5-2.5h5.5V6c0 2.29 1.21 3.5 3.5 3.5h2.5V18c0 1.729-.771 2.5-2.5 2.5Zm-.5-8.5a.5.5 0 0 1-.5.5H9a.5.5 0 0 1 0-1h7a.5.5 0 0 1 .5.5Zm-3 4a.5.5 0 0 1-.5.5H9a.5.5 0 0 1 0-1h4a.5.5 0 0 1 .5.5Z"></path>
+                    </svg>
+                    <p>My Task</p>
+                </a>
                 <a href="/project" class="flex gap-2 mt-2 text-gray-500 rounded-md py-2 px-3 cursor-pointer hover:bg-sky-50 hover:text-sky-500 transition-colors group">
                     <svg class="group-hover:fill-sky-500 fill-gray-500 stroke-gray-500 group-hover:stroke-sky-500 transition-colors" width="20" height="20" viewBox="0 0 24 24" fill="" xmlns="http://www.w3.org/2000/svg">
                         <path
