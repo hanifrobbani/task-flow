@@ -123,7 +123,7 @@
         ['value' => 735, 'name' => 'Pending'],
         ];
         @endphp
-        <h1 class="text-gray-600 font-medium text-lg">Monthly Target</h1>
+        <h1 class="text-gray-600 font-medium text-lg px-4">Monthly Target</h1>
         <x-pie-chart chart-id="pie1" :data-pie-chart="$dummyData" pie-chart-name="Monthly Target"/>
 
     </div>

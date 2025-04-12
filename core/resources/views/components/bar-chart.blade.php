@@ -55,9 +55,9 @@
 
             barChart.setOption(option);
 
-            // window.addEventListener('resize', function () {
-            //     barChart.resize();
-            // });
+            window.addEventListener('resize', function () {
+                barChart.resize();
+            });
         });
     });
 </script>
