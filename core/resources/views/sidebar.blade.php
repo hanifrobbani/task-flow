@@ -1,12 +1,4 @@
 <style>
-    .no-scrollbar::-webkit-scrollbar {
-        display: none;
-    }
-
-    .no-scrollbar {
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-    }
 
     .dropdown-menu {
         max-height: 0;
@@ -34,7 +26,9 @@
         </div>
     </div>
     <div class="h-screen shadow-md">
-        <div class="flex w-full justify-start flex-col h-full px-3 py-4 overflow-y-auto no-scrollbar pb-24">
+        <div class="flex w-full justify-start flex-col h-full px-3 py-4 overflow-y-auto [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar]:h-2
+      [&::-webkit-scrollbar-thumb]:bg-gray-200
+      [&::-webkit-scrollbar-thumb]:rounded-full pb-24">
             <div class="">
                 <label for="Menu" class="text-sm text-gray-500 px-3 font-semibold">Menu</label>
                 <a href="/dashboard" class="flex mt-2 gap-2 bg-sky-50 text-sky-500 rounded-md py-2 px-3">
