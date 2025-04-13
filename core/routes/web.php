@@ -39,6 +39,9 @@ Route::group([
     Route::get('/kanban', function () {
         return view('projects.kanban');
     });
+    Route::get('/detail', function () {
+        return view('projects.detail');
+    });
 
     // kanban: /project/id/kanban
     // detail: /project/id/detail (button detail ada di kanban project)
