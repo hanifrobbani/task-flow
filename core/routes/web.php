@@ -21,10 +21,13 @@ Route::group([
 });
 
 Route::group([
-    'prefix' => 'profile',
+    'prefix' => 'user',
 ], function () {
-    Route::get('/', function () {
+    Route::get('/profile', function () {
         return view('users.index');
+    });
+    Route::get('/setting', function () {
+        return view('users.setting');
     });
 });
 Route::group([

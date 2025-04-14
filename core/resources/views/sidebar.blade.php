@@ -119,10 +119,10 @@
 
                     <div class="dropdown-menu bg-white rounded-md">
                         <ul class="py-2">
-                            <a href="">
+                            <a href="/user/profile">
                                 <li class="pl-10 py-2 hover:bg-gray-100 cursor-pointer text-gray-500">Profile</li>
                             </a>
-                            <a href="">
+                            <a href="/user/setting">
                                 <li class="pl-10 py-2 hover:bg-gray-100 cursor-pointer text-gray-500">Settings</li>
                             </a>
                         </ul>
