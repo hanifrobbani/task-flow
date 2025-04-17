@@ -64,7 +64,7 @@
                 </path>
             </svg>
 
-            Setting</button>
+            Detail</button>
     </div>
 
     <div class="overflow-x-auto max-h-screen [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar]:h-2
@@ -149,7 +149,7 @@
             var KanbanTest = new jKanban({
                 element: "#myKanban",
                 gutter: "10px",
-                widthBoard: "320px",
+                widthBoard: "300px",
                 dragBoards: false,
                 itemHandleOptions: {
                     enabled: false,
@@ -162,7 +162,7 @@
                     title: "To Do",
                     item: [{
                         id: "task1",
-                        title: `<div">
+                        title: `<div>
                                     <p class="bg-blue-600 text-white py-1 px-2 inline-block rounded-md text-sm">Badge</p>
                                     <h1 class="font-medium text-gray-600 mt-2">Title task</h1>
                                     <div class="flex gap-2 mt-2">
@@ -217,7 +217,7 @@
                     id: "_working",
                     title: "In Progress",
                     item: [{
-                        title: `<div">
+                        title: `<div>
                                     <p class="bg-blue-600 text-white py-1 px-2 inline-block rounded-md text-sm">Badge</p>
                                     <h1 class="font-medium text-gray-600 mt-2">Title task</h1>
                                     <div class="flex gap-2 mt-2">
@@ -272,7 +272,7 @@
                     id: "_done",
                     title: "Done",
                     item: [{
-                        title: `<div">
+                        title: `<div>
                                     <p class="bg-blue-600 text-white py-1 px-2 inline-block rounded-md text-sm">Badge</p>
                                     <h1 class="font-medium text-gray-600 mt-2">Title task</h1>
                                     <div class="flex gap-2 mt-2">
