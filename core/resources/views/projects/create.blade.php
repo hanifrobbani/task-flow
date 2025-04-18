@@ -90,55 +90,6 @@
                                     </div>
                                 </div>
                             </li>
-                            <li class="w-full">
-                                <div class="flex p-2 rounded-sm hover:bg-gray-100 w-full items-center container-member">
-                                    <div class="flex items-center h-5">
-                                        <input aria-describedby="helper-checkbox-text-1" type="checkbox" value=""
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 focus:ring-2 hover:cursor-pointer member-checkbox">
-                                    </div>
-                                    <div class="ms-2 text-sm flex gap-2 member-box" data-member-id="ridwan">
-                                        <div class="">
-                                            <img src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/jese-leos.png"
-                                                alt="" class="w-8 h-8 rounded-full object-cover object-center">
-
-                                        </div>
-                                        <div class="">
-                                            <label for="helper-checkbox-3"
-                                                class="font-medium text-gray-900 dark:text-gray-300">
-                                                <p class="member-name">Ridwan Fauzan</p>
-                                                <p id="helper-checkbox-text-3"
-                                                    class="text-xs font-normal text-gray-500 dark:text-gray-300">Designer
-                                                </p>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="w-full">
-                                <div class="flex p-2 rounded-sm hover:bg-gray-100 w-full items-center container-member">
-                                    <div class="flex items-center h-5">
-                                        <input aria-describedby="helper-checkbox-text-1" type="checkbox" value=""
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 focus:ring-2 hover:cursor-pointer member-checkbox">
-                                    </div>
-                                    <div class="ms-2 text-sm flex gap-2 member-box" data-member-id="ridwan">
-                                        <div class="">
-                                            <img src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/jese-leos.png"
-                                                alt="" class="w-8 h-8 rounded-full object-cover object-center">
-
-                                        </div>
-                                        <div class="">
-                                            <label for="helper-checkbox-3"
-                                                class="font-medium text-gray-900 dark:text-gray-300">
-                                                <p class="member-name">Ridwan Fauzan</p>
-                                                <p id="helper-checkbox-text-3"
-                                                    class="text-xs font-normal text-gray-500 dark:text-gray-300">Designer
-                                                </p>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-
                         </ul>
                     </div>
                 </div>
@@ -272,7 +223,8 @@
                         const clone = memberName.cloneNode(true);
                         clone.id = `selected-${memberId}`;
                         clone.classList.add("text-xs", "text-gray-600", "font-medium", "p-1", "shadow-md", "rounded-lg", "bg-gray-50")
-    
+                        
+                        selectedContainer.classList.remove("min-h-40")
                         selectedContainer.appendChild(clone);
                     } else {
                         const existing = document.querySelector(`#selected-${memberId}`);
