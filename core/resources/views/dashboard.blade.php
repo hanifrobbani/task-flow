@@ -10,13 +10,17 @@
     <!-- font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+        rel="stylesheet">
 
-    <!-- dragula -->
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.3/dragula.min.js'></script>
+    <!-- alphine js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
     <!-- EChart -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.6.0/echarts.min.js" integrity="sha512-XSmbX3mhrD2ix5fXPTRQb2FwK22sRMVQTpBP2ac8hX7Dh/605hA2QDegVWiAvZPiXIxOV0CbkmUjGionDpbCmw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.6.0/echarts.min.js"
+        integrity="sha512-XSmbX3mhrD2ix5fXPTRQb2FwK22sRMVQTpBP2ac8hX7Dh/605hA2QDegVWiAvZPiXIxOV0CbkmUjGionDpbCmw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     @yield('css')
 </head>
@@ -44,8 +48,8 @@
                         </div>
 
                         @php
-                        use App\Helpers\BreadcrumbHelper;
-                        $breadcrumbs = BreadcrumbHelper::generate();
+                            use App\Helpers\BreadcrumbHelper;
+                            $breadcrumbs = BreadcrumbHelper::generate();
                         @endphp
 
                         <nav class="flex" aria-label="Breadcrumb">
@@ -57,21 +61,25 @@
                                 </li>
 
                                 @foreach ($breadcrumbs as $key => $breadcrumb)
-                                <li @if ($loop->last) aria-current="page" @endif>
-                                    <div class="flex items-center">
-                                        <svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4" />
-                                        </svg>
+                                    <li @if ($loop->last) aria-current="page" @endif>
+                                        <div class="flex items-center">
+                                            <svg class="rtl:rotate-180 w-3 h-3 text-gray-400 mx-1" aria-hidden="true"
+                                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                                    stroke-width="2" d="m1 9 4-4-4-4" />
+                                            </svg>
 
-                                        @if ($loop->last)
-                                        <span class="ms-1 text-sm font-medium text-gray-400 md:ms-2">{{ $breadcrumb['name'] }}</span>
-                                        @else
-                                        <a href="{{ $breadcrumb['url'] }}" class="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2">
-                                            {{ $breadcrumb['name'] }}
-                                        </a>
-                                        @endif
-                                    </div>
-                                </li>
+                                            @if ($loop->last)
+                                                <span
+                                                    class="ms-1 text-sm font-medium text-gray-400 md:ms-2">{{ $breadcrumb['name'] }}</span>
+                                            @else
+                                                <a href="{{ $breadcrumb['url'] }}"
+                                                    class="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2">
+                                                    {{ $breadcrumb['name'] }}
+                                                </a>
+                                            @endif
+                                        </div>
+                                    </li>
                                 @endforeach
                             </ol>
                         </nav>
@@ -81,6 +89,9 @@
                     <div class="pt-4">
                         @yield('main')
 
+                        <!-- <x-toast-notification :show="true" title="Sukses!" message="Data berhasil disimpan."
+                            :duration="4000" /> -->
+                            
                     </div>
                 </div>
                 @include('footer')

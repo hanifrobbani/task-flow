@@ -56,26 +56,26 @@
             Edit
         </button>
     </div>
-    <div class="grid grid-cols-2 gap-x-10 gap-y-4">
+    <div class="grid grid-cols-2 gap-x-10 gap-y-4 mt-2">
         <div>
-            <label class="text-gray-600 text-sm block">Name</label>
-            <p class="text-gray-800 text-sm font-semibold">Hanif Ridwan</p>
+            <label class="text-gray-800 text-sm block font-medium">Name</label>
+            <p class="text-gray-600 text-sm ">Hanif Ridwan</p>
         </div>
         <div>
-            <label class="text-gray-600 text-sm block">Status</label>
-            <p class="text-gray-800 text-sm font-semibold">None</p>
+            <label class="text-gray-800 text-sm block font-medium">Status</label>
+            <p class="text-gray-600 text-sm ">None</p>
         </div>
         <div>
-            <label class="text-gray-600 text-sm block">Email address</label>
-            <p class="text-gray-800 text-sm font-semibold">ridwanhanif12@mail.com</p>
+            <label class="text-gray-800 text-sm block font-medium">Email address</label>
+            <p class="text-gray-600 text-sm ">ridwanhanif12@mail.com</p>
         </div>
         <div>
-            <label class="text-gray-600 text-sm block">Phone</label>
-            <p class="text-gray-800 text-sm font-semibold">+62-876-987-5687</p>
+            <label class="text-gray-800 text-sm block font-medium">Phone</label>
+            <p class="text-gray-600 text-sm ">+62-876-987-5687</p>
         </div>
         <div class="col-span-2">
-            <label class="text-gray-600 text-sm block">Bio</label>
-            <p class="text-gray-800 text-sm font-semibold">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iusto, nisi! Minima ad expedita ullam fuga dolorum mollitia soluta id unde?</p>
+            <label class="text-gray-800 text-sm block font-medium">Bio</label>
+            <p class="text-gray-600 text-sm ">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Iusto, nisi! Minima ad expedita ullam fuga dolorum mollitia soluta id unde?</p>
         </div>
     </div>
 

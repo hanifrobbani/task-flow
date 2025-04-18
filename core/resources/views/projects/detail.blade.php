@@ -65,8 +65,11 @@
                 </div>
             </div>
             <div class=" flex gap-4 items-center w-full">
-            <svg class="fill-gray-600" width="48" height="48" viewBox="0 0 24 24" fill="" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M20 4.25h-1.275a2.246 2.246 0 0 0-2.225-2h-9a2.246 2.246 0 0 0-2.225 2H4A1.752 1.752 0 0 0 2.25 6v1.65a4.024 4.024 0 0 0 3.568 4.05 6.765 6.765 0 0 0 5.432 4v1.6c-1.938.258-3 1.543-3 3.7v.75h7.5V21c0-2.153-1.062-3.438-3-3.7v-1.6a6.765 6.765 0 0 0 5.432-4 4.024 4.024 0 0 0 3.568-4.05V6A1.752 1.752 0 0 0 20 4.25ZM3.75 7.65V6A.25.25 0 0 1 4 5.75h1.25V9a6.844 6.844 0 0 0 .085 1.019A2.448 2.448 0 0 1 3.75 7.65Zm10.437 12.6H9.813c.2-1.043.887-1.5 2.187-1.5s1.985.457 2.187 1.5Zm-2.187-6A5.256 5.256 0 0 1 6.75 9V4.5a.751.751 0 0 1 .75-.75h9a.751.751 0 0 1 .75.75V9A5.256 5.256 0 0 1 12 14.25Zm8.247-6.6a2.448 2.448 0 0 1-1.585 2.369A6.844 6.844 0 0 0 18.75 9V5.75H20a.25.25 0 0 1 .25.25Z"></path>
+                <svg class="fill-gray-600" width="48" height="48" viewBox="0 0 24 24" fill=""
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M20 4.25h-1.275a2.246 2.246 0 0 0-2.225-2h-9a2.246 2.246 0 0 0-2.225 2H4A1.752 1.752 0 0 0 2.25 6v1.65a4.024 4.024 0 0 0 3.568 4.05 6.765 6.765 0 0 0 5.432 4v1.6c-1.938.258-3 1.543-3 3.7v.75h7.5V21c0-2.153-1.062-3.438-3-3.7v-1.6a6.765 6.765 0 0 0 5.432-4 4.024 4.024 0 0 0 3.568-4.05V6A1.752 1.752 0 0 0 20 4.25ZM3.75 7.65V6A.25.25 0 0 1 4 5.75h1.25V9a6.844 6.844 0 0 0 .085 1.019A2.448 2.448 0 0 1 3.75 7.65Zm10.437 12.6H9.813c.2-1.043.887-1.5 2.187-1.5s1.985.457 2.187 1.5Zm-2.187-6A5.256 5.256 0 0 1 6.75 9V4.5a.751.751 0 0 1 .75-.75h9a.751.751 0 0 1 .75.75V9A5.256 5.256 0 0 1 12 14.25Zm8.247-6.6a2.448 2.448 0 0 1-1.585 2.369A6.844 6.844 0 0 0 18.75 9V5.75H20a.25.25 0 0 1 .25.25Z">
+                    </path>
                 </svg>
                 <div>
                     <p class="font-semibold text-gray-600">40%</p>
@@ -82,7 +85,13 @@
             <div class="border-b">
                 <div class="p-4 flex justify-between">
                     <h1 class="font-medium text-gray-600">About Project</h1>
-                    <a href="" class="hidden group-hover:flex items-center text-gray-600 text-sm"><svg width="20" height="20" viewBox="0 0 24 24" stroke-width="2" fill="none" xmlns="http://www.w3.org/2000/svg" color="#4b5563"><path d="M14.3632 5.65156L15.8431 4.17157C16.6242 3.39052 17.8905 3.39052 18.6716 4.17157L20.0858 5.58579C20.8668 6.36683 20.8668 7.63316 20.0858 8.41421L18.6058 9.8942M14.3632 5.65156L4.74749 15.2672C4.41542 15.5993 4.21079 16.0376 4.16947 16.5054L3.92738 19.2459C3.87261 19.8659 4.39148 20.3848 5.0115 20.33L7.75191 20.0879C8.21972 20.0466 8.65806 19.8419 8.99013 19.5099L18.6058 9.8942M14.3632 5.65156L18.6058 9.8942" stroke="#4b5563" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>Edit</a>
+                    <a href="" class="hidden group-hover:flex items-center text-gray-600 text-sm"><svg width="20"
+                            height="20" viewBox="0 0 24 24" stroke-width="2" fill="none" xmlns="http://www.w3.org/2000/svg"
+                            color="#4b5563">
+                            <path
+                                d="M14.3632 5.65156L15.8431 4.17157C16.6242 3.39052 17.8905 3.39052 18.6716 4.17157L20.0858 5.58579C20.8668 6.36683 20.8668 7.63316 20.0858 8.41421L18.6058 9.8942M14.3632 5.65156L4.74749 15.2672C4.41542 15.5993 4.21079 16.0376 4.16947 16.5054L3.92738 19.2459C3.87261 19.8659 4.39148 20.3848 5.0115 20.33L7.75191 20.0879C8.21972 20.0466 8.65806 19.8419 8.99013 19.5099L18.6058 9.8942M14.3632 5.65156L18.6058 9.8942"
+                                stroke="#4b5563" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>Edit</a>
                 </div>
             </div>
             <div class="p-4">
@@ -124,10 +133,17 @@
                 </div>
             </div>
         </div>
-        <div class="w-1/2 bg-white rounded-lg shadow-md min-h-32 max-h-screen">
+        <div class="w-1/2 bg-white rounded-lg shadow-md min-h-32 max-h-screen hover:bg-gray-50 transition-colors group">
             <div class="border-b">
-                <div class="p-4">
+                <div class="p-4 flex justify-between">
                     <h1 class="font-medium text-gray-600">Team Member</h1>
+                    <button class="hidden group-hover:flex items-center text-gray-600 text-sm"><svg width="20" height="20"
+                            viewBox="0 0 24 24" stroke-width="2" fill="none" xmlns="http://www.w3.org/2000/svg"
+                            color="#4b5563">
+                            <path
+                                d="M14.3632 5.65156L15.8431 4.17157C16.6242 3.39052 17.8905 3.39052 18.6716 4.17157L20.0858 5.58579C20.8668 6.36683 20.8668 7.63316 20.0858 8.41421L18.6058 9.8942M14.3632 5.65156L4.74749 15.2672C4.41542 15.5993 4.21079 16.0376 4.16947 16.5054L3.92738 19.2459C3.87261 19.8659 4.39148 20.3848 5.0115 20.33L7.75191 20.0879C8.21972 20.0466 8.65806 19.8419 8.99013 19.5099L18.6058 9.8942M14.3632 5.65156L18.6058 9.8942"
+                                stroke="#4b5563" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg>Edit</button>
                 </div>
             </div>
             <div class="w-full">
@@ -140,7 +156,8 @@
                             <p class="text-gray-600">bonejames@mail.com</p>
                         </div>
                         <div class="border">
-                        <p class="inline-block py-1 px-2 text-xs font-medium bg-purple-300 text-purple-800 rounded-md">PM</p>
+                            <p class="inline-block py-1 px-2 text-xs font-medium bg-purple-300 text-purple-800 rounded-md">
+                                PM</p>
                         </div>
                     </div>
                 </div>
@@ -153,7 +170,8 @@
                             <p class="text-gray-600">bonejames@mail.com</p>
                         </div>
                         <div class="border">
-                        <p class="inline-block py-1 px-2 text-xs font-medium bg-blue-300 text-blue-800 rounded-md">Backend</p>
+                            <p class="inline-block py-1 px-2 text-xs font-medium bg-blue-300 text-blue-800 rounded-md">
+                                Backend</p>
                         </div>
                     </div>
                 </div>
@@ -166,11 +184,12 @@
                             <p class="text-gray-600">bonejames@mail.com</p>
                         </div>
                         <div class="border">
-                        <p class="inline-block py-1 px-2 text-xs font-medium bg-green-300 text-green-800 rounded-md">Frontend</p> <!-- max 12 kata -->
+                            <p class="inline-block py-1 px-2 text-xs font-medium bg-green-300 text-green-800 rounded-md">
+                                Frontend</p> <!-- max 12 kata -->
                         </div>
                     </div>
                 </div>
-                
+
             </div>
         </div>
     </div>
