@@ -27,15 +27,20 @@
 
 <body class="font-family-thin overflow-y-auto">
     <div class="min-h-screen flex w-full relative bg-[#F5F5F5]">
+        <div class="">
+        {{ $slot ?? '' }}
+        <x-modal-component />
+        </div>
+
         <!-- Sidebar -->
-        <aside class="w-1/5 min-h-screen fixed z-50">
+        <aside class="w-1/5 min-h-screen fixed z-40">
             @include('sidebar')
         </aside>
 
         <!-- Konten Utama -->
-        <div class="flex flex-col w-full">
+        <div class="flex flex-col w-full" >
             <!-- Header -->
-            <header class="fixed top-0 z-40 bg-white  h-20 flex items-center shadow 2k:ml-0 w-full">
+            <header class="fixed top-0 z-30 bg-white  h-20 flex items-center shadow 2k:ml-0 w-full">
                 @include('header')
             </header>
 
@@ -91,7 +96,6 @@
 
                         <!-- <x-toast-notification :show="true" title="Sukses!" message="Data berhasil disimpan."
                             :duration="4000" /> -->
-                            
                     </div>
                 </div>
                 @include('footer')
