@@ -22,6 +22,10 @@
         integrity="sha512-XSmbX3mhrD2ix5fXPTRQb2FwK22sRMVQTpBP2ac8hX7Dh/605hA2QDegVWiAvZPiXIxOV0CbkmUjGionDpbCmw=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+    <!-- DevIcon -->
+    <link rel="stylesheet" type='text/css' href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
+          
+
     @yield('css')
 </head>
 
