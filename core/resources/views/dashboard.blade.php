@@ -106,8 +106,6 @@
                             </button>
 
                             <x-modal-form>
-
-
                                 <form class="max-w-sm mx-auto">
                                     <div class="mb-5">
                                         <label for="email"
