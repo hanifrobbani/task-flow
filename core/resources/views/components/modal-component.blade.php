@@ -5,6 +5,16 @@
         message = $event.detail.message;
         variant = $event.detail.variant;
         buttonName = $event.detail.buttonName;
+
+        if (variant === 'danger') {
+            $refs.actionButton.classList.add('bg-red-600');
+        } else if (variant === 'info') {
+            $refs.actionButton.classList.add('bg-blue-600');
+        }  else if (variant === 'warning') {
+            $refs.actionButton.classList.add('bg-yellow-500');
+        } else {
+            $refs.actionButton.classList.add('bg-gray-600');
+        }
     " x-on:keydown.escape.window="show = false" x-bind:variant="variant"
     x-effect="document.body.classList.toggle('overflow-hidden', show)"
     class="fixed inset-0 z-50 flex items-center justify-center">
@@ -47,8 +57,8 @@
                 class="text-sm font-medium border border-gray-300 px-3 py-1 rounded-md hover:bg-gray-50 transition-colors">
                 Cancel
             </button>
-            <button x-text="buttonName"
-                class="text-sm font-medium bg-red-600 text-white px-3 py-1 rounded-md hover:opacity-80 transition">
+            <button x-text="buttonName" x-ref="actionButton"
+                class="text-sm font-medium text-white px-3 py-1 rounded-md hover:opacity-80 transition">
             </button>
         </div>
     </div>
