@@ -45,7 +45,7 @@
                 <div class="border-t p-2" x-data>
                     <button @click="$dispatch('open-modal', { 
                         title: 'Logout', 
-                        message: 'Are you sure want to logout from your account?'})" class="flex gap-1 w-full text-left px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 rounded-lg">
+                        message: 'Are you sure want to logout from your account?',  variant: 'danger', buttonName: 'Logout'})" class="flex gap-1 w-full text-left px-4 py-2 text-sm text-gray-800 hover:bg-gray-100 rounded-lg">
                         <svg class="stroke-gray-900" width="20" height="20" stroke-width="1.5" viewBox="0 0 24 24"
                             fill="none" xmlns="http://www.w3.org/2000/svg" color="">
                             <path d="M12 12H19M19 12L16 15M19 12L16 9" stroke="#000000" stroke-width="1.5"

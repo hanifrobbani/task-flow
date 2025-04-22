@@ -100,20 +100,35 @@
     </div>
 
     <div class="w-full bg-white p-6 mt-5">
-        <h1 class="font-semibold">Skills</h1>
-        <div class="flex flex-wrap gap-2 items-center mt-2 border">
-
-            <div class="p-2 bg-gray-100 rounded-lg">
-                <i class="devicon-html5-plain-wordmark colored" style="font-size: 3rem;"></i>
+    <div class="flex justify-between">
+            <h1 class="font-semibold">Skills</h1>
+            <button
+                class="border border-gray-400 rounded-full py-2 px-4 text-sm flex gap-1 items-center hover:bg-gray-100 transition">
+                <svg class="w-4 h-4 text-gray-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
+                    height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M10.779 17.779 4.36 19.918 6.5 13.5m4.279 4.279 8.364-8.643a3.027 3.027 0 0 0-2.14-5.165 3.03 3.03 0 0 0-2.14.886L6.5 13.5m4.279 4.279L6.499 13.5m2.14 2.14 6.213-6.504M12.75 7.04 17 11.28" />
+                </svg>
+                Edit
+            </button>
+        </div>
+        <div class="flex flex-wrap gap-4 items-center mt-2">
+            <!--  -->
+            <div class="p-2 bg-gray-100 rounded-xl cursor-pointer flex gap-1 items-center">
+                <i class="devicon-html5-plain-wordmark colored" style="font-size: 1.5rem;"></i>
+                <p class="text-gray-600 text-sm">HTML</p>
             </div>
-            <div class="p-2 bg-gray-100 rounded-lg">
-                <i class="devicon-css3-plain-wordmark colored" style="font-size: 3rem;"></i>
+            <div class="p-2 bg-gray-100 rounded-xl cursor-pointer flex gap-1 items-center">
+                <i class="devicon-javascript-plain colored" style="font-size: 1.5rem;"></i>
+                <p class="text-gray-600 text-sm">Javascript</p>
             </div>
-            <div class="p-2 bg-gray-100 rounded-lg">
-                <i class="devicon-javascript-plain colored" style="font-size: 3rem;"></i>
+            <div class="p-2 bg-gray-100 rounded-xl cursor-pointer flex gap-1 items-center">
+                <i class="devicon-css3-plain-wordmark colored" style="font-size: 1.5rem;"></i>
+                <p class="text-gray-600 text-sm">CSS</p>
             </div>
-            <div class="p-2 bg-gray-100 rounded-lg">
-                <i class="devicon-laravel-original colored" style="font-size: 3rem;"></i>
+            <div class="p-2 bg-gray-100 rounded-xl cursor-pointer flex gap-1 items-center">
+                <i class="devicon-laravel-original colored" style="font-size: 1.5rem;"></i>
+                <p class="text-gray-600 text-sm">Laravel</p>
             </div>
 
         </div>
