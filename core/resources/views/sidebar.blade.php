@@ -31,9 +31,9 @@
             <div class="">
                 <label for="Menu" class="text-sm text-gray-500 px-3 font-semibold">Menu</label>
                 <a href="/dashboard"
-                    class="flex mt-2 gap-2 rounded-md py-2 px-3 cursor-pointer hover:bg-sky-50 hover:text-sky-500 transition-colors group {{ Request::is('dashboard*') ? 'text-sky-500 bg-sky-50' : 'text-gray-500' }}">
+                    class="flex mt-2 gap-2 rounded-md py-2 px-3 cursor-pointer hover:bg-sky-50 hover:text-sky-500 transition-colors group {{ Request::is('dashboard*', '/') ? 'text-sky-500 bg-sky-50' : 'text-gray-500' }}">
                     <svg width="20" height="20" viewBox="0 0 24 24"
-                        class="{{ Request::is('dashboard*') ? 'fill-sky-500' : 'fill-gray-500' }} group-hover:fill-sky-500 fill-gray-500"
+                        class="{{ Request::is('dashboard*', '/') ? 'fill-sky-500' : 'fill-gray-500' }} group-hover:fill-sky-500 fill-gray-500"
                         stroke-width="0.5" fill="" xmlns="http://www.w3.org/2000/svg">
                         <path stroke="" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"
                             d="M18 21.75h-4.25V16.5a1.75 1.75 0 0 0-3.5 0v5.25H6A3.383 3.383 0 0 1 2.25 18v-6.35c0-2.122.586-2.716 1.542-3.509l6.12-5.131a3.244 3.244 0 0 1 4.176 0l6.12 5.131c.956.793 1.542 1.387 1.542 3.509V18A3.383 3.383 0 0 1 18 21.75Zm-2.75-1.5H18c1.577 0 2.25-.673 2.25-2.25v-6.35c0-1.525-.252-1.734-1-2.355l-6.125-5.136a1.75 1.75 0 0 0-2.25 0L4.749 9.3c-.747.621-1 .83-1 2.355V18c0 1.577.673 2.25 2.25 2.25H8.75V16.5a3.25 3.25 0 0 1 6.5 0Z">
@@ -89,7 +89,7 @@
                 <a href="/company"
                     class="flex gap-2 mt-2 text-gray-500 rounded-md py-2 px-3 cursor-pointer hover:bg-sky-50 hover:text-sky-500 transition-colors group {{ Request::is('company*') ? 'text-sky-500 bg-sky-50' : 'text-gray-500' }}">
                     <svg width="20" height="20"
-                        class="stroke-gray-500 group-hover:stroke-sky-500 transition-colors {{ Request::is('calender*') ? 'stroke-sky-500' : 'stroke-gray-500' }}"
+                        class="stroke-gray-500 group-hover:stroke-sky-500 transition-colors {{ Request::is('company*') ? 'stroke-sky-500' : 'stroke-gray-500' }}"
                         stroke-width="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="">
                         <path d="M7 9.01L7.01 8.99889" stroke="" stroke-width="2" stroke-linecap="round"
                             stroke-linejoin="round"></path>

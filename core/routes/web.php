@@ -57,3 +57,11 @@ Route::group([
         return view('tasks.index');
     });
 });
+
+Route::group([
+    'prefix' => 'company',
+], function () {
+    Route::get('/', function () {
+        return view('company.index');
+    });
+});
