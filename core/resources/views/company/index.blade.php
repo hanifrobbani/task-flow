@@ -36,7 +36,7 @@
         <div class="p-5 bg-white rounded-lg shadow-md w-full">
             <h1 class="text-gray-800 font-medium">Team Member</h1>
             <div class="overflow-x-auto sm:rounded-lg">
-                <div class="py-4 px-2 flex justify-between">
+                <div class="py-4 px-2 flex justify-between items-center">
                     <label for="table-search" class="sr-only">Search</label>
                     <div class="relative">
                         <div class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -53,7 +53,7 @@
 
                     <button
                         class="p-2 bg-blue-600 text-white text-xs rounded-md flex gap-1 items-center hover:opacity-80"><svg
-                            width="24" height="24" stroke-width="1.5" viewBox="0 0 24 24" fill="none"
+                            width="20" height="20" stroke-width="1.5" viewBox="0 0 24 24" fill="none"
                             xmlns="http://www.w3.org/2000/svg" color="#ffffff">
                             <path d="M17 10H20M23 10H20M20 10V7M20 10V13" stroke="#ffffff" stroke-width="1.5"
                                 stroke-linecap="round" stroke-linejoin="round"></path>
