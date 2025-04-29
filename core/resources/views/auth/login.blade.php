@@ -143,7 +143,8 @@
             </div>
         </div>
         <div class="w-full">
-            <form action="" method="post" class="flex flex-col justify-center items-center h-full ">
+            <form action="/login" method="post" class="flex flex-col justify-center items-center h-full">
+                @csrf
                 <div class="w-full max-w-xl p-20">
                     <h1 class="text-3xl mb-4 font-semibold">Welcome Back!</h1>
                     <div class="mt-4">

@@ -20,7 +20,6 @@
             <div class="p-5 w-full flex items-center h-full">
                 <div class="flex justify-center w-full">
 
-
                     <svg xmlns="http://www.w3.org/2000/svg" width="400" height="400"
                         viewBox="0 0 883.70798 724.22538" xmlns:xlink="http://www.w3.org/1999/xlink" role="img"
                         artist="Katerina Limpitsouni" source="https://undraw.co/">
@@ -115,9 +114,10 @@
             </div>
         </div>
         <div class="w-full">
-            <form action="" method="post" class="flex flex-col justify-center items-center h-full ">
+            <form action="/register" method="post" class="flex flex-col justify-center items-center h-full">
+                @csrf
                 <div class="w-full max-w-xl p-20">
-                    <h1 class="text-3xl mb-4 font-semibold">Welcome to TaskFlow!</h1>
+                    <h1 class="text-3xl mb-4 font-semibold">Welcome to <span class="text-blue-600">TaskFlow!</span></h1>
                     <div class="mt-4">
                         <label for="email" class="text-gray-700">Name</label>
                         <input type="text" name="name"
