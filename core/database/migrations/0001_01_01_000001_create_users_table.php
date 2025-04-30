@@ -15,9 +15,13 @@ return new class extends Migration
             $table->id();
             $table->string('name')->nullable();
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
+            $table->timestamp('email_verified_at')->nullable(); 
             $table->string('password');
             $table->string('img_user')->nullable();
+            $table->string('phone_number')->nullable();
+            $table->text('bio')->nullable();
+            $table->string('address')->nullable();
+            $table->foreignId('user_positions_id')->nullable()->constrained('user_positions')->onDelete('cascade');
             $table->rememberToken();
             $table->timestamps();
         });

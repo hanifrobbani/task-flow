@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -18,6 +19,11 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $guarded = ['id'];
+    protected $table = 'users';
+    public function user_positions(): BelongsTo
+    {
+        return $this->belongsTo(UserPositions::class, 'id');
+    }
 
     /**
      * The attributes that should be hidden for serialization.
