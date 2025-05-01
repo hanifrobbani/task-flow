@@ -28,6 +28,10 @@ class User extends Authenticatable
         return $this->hasMany(UserSkills::class, 'users_id');
     }
 
+    public function userPosition(){
+       return $this->belongsTo(UserPosition::class, 'user_positions_id');
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

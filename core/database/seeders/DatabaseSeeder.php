@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use App\Models\Skill;
 use App\Models\Socials;
+use App\Models\UserPosition;
 use App\Models\UserSkills;
 use App\Models\UserSocial;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -46,7 +47,9 @@ class DatabaseSeeder extends Seeder
             'socials_id' => '1',
             'users_id' => '1',
         ]);
-
+        UserPosition::create([
+            'name' => 'Tech Lead',
+        ]);
 
     }
 }

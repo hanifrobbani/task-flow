@@ -15,7 +15,7 @@
                     <h1 class="font-semibold">{{ $data->name }}</h1>
                     <div class="flex mt-1 items-center">
                         <div class="border-r border-gray-300 pr-2">
-                            <p class="text-sm text-gray-600">{{ $data->position }}</p>
+                            <p class="text-sm text-gray-600">{{ $data->userPosition->name }}</p>
                         </div>
                         <div class="border-l border-gray-300 pl-2">
                             <p class="text-sm text-gray-600">{{ $data->address }}</p>
