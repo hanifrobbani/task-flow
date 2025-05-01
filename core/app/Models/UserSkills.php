@@ -10,13 +10,13 @@ class UserSkills extends Model
     protected $table = 'user_skills';
     protected $guarded = ['id'];
 
-    public function user_skills(): BelongsTo
+    public function skills(): BelongsTo
     {
-        return $this->belongsTo(Skill::class, 'id');
+        return $this->belongsTo(Skill::class, 'skills_id');
     }
 
     public function user_id(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'id');
+        return $this->belongsTo(User::class, 'users_id');
     }
 }

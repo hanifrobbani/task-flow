@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('phone_number')->nullable();
             $table->text('bio')->nullable();
             $table->string('address')->nullable();
-            $table->foreignId('user_positions_id')->nullable()->constrained('user_positions')->onDelete('cascade');
+            $table->string('position')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

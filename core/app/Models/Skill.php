@@ -10,7 +10,7 @@ class Skill extends Model
     protected $table = 'skills';
     protected $guarded = ['id'];
 
-    public function user_skills(): HasMany
+    public function skills(): HasMany
     {
         return $this->hasMany(UserSkills::class, 'skills_id');
     }

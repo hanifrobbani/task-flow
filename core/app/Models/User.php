@@ -4,7 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -20,9 +20,12 @@ class User extends Authenticatable
      */
     protected $guarded = ['id'];
     protected $table = 'users';
-    public function user_positions(): BelongsTo
-    {
-        return $this->belongsTo(UserPositions::class, 'id');
+
+    public function UserSocials(): HasMany{
+        return $this->hasMany(UserSocial::class, 'users_id');
+    }
+    public function UserSkills(): HasMany{
+        return $this->hasMany(UserSkills::class, 'users_id');
     }
 
     /**
