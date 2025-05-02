@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Exception;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -31,9 +33,7 @@ class AuthController extends Controller
             return redirect()->intended('dashboard');
         }
 
-        return back()->withErrors([
-            'email' => 'Email or Password Incorrect',
-        ]);
+        return back()->with('loginError','Email or Password Incorrect');
     }
     public function logout(Request $request): RedirectResponse
     {
@@ -56,8 +56,13 @@ class AuthController extends Controller
 
         $credentials['password'] = Hash::make($request->password);
 
-        $user = User::create($credentials);
-        Auth::login($user);
-        return redirect()->intended('dashboard');
+        try {
+            $user = User::create($credentials);
+            Auth::login($user);
+            return redirect()->intended('dashboard');
+        } catch (Exception $e) {
+            Log::error($e);
+            return redirect()->with('registerError', 'Error, cannot register a new user');
+        }
     }
 }

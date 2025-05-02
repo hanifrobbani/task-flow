@@ -12,16 +12,24 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
         rel="stylesheet">
+
+    <!-- alphine js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
 </head>
 
 <body>
+
+    @if (session()->has('loginError'))
+        <x-toast-notification :show="true" variant="error" title="Error!" message="{{ session('loginError') }}" :duration="4000" />
+    @endif
     <div class="flex w-full min-h-screen justify-between">
         <div class="w-full bg-blue-500 min-h-full">
-            <div class="p-5 w-full flex items-center h-full">   
+            <div class="p-5 w-full flex items-center h-full">
                 <div class="flex justify-center w-full">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="300" height="300"
-                        viewBox="0 0 858.823 768.554" xmlns:xlink="http://www.w3.org/1999/xlink" role="img"
-                        artist="Katerina Limpitsouni" source="https://undraw.co/">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" viewBox="0 0 858.823 768.554"
+                        xmlns:xlink="http://www.w3.org/1999/xlink" role="img" artist="Katerina Limpitsouni"
+                        source="https://undraw.co/">
                         <g id="Group_86" data-name="Group 86" transform="translate(-520 -155.723)">
                             <path id="Path_1356-3700" data-name="Path 1356"
                                 d="M899.8,331.9H427.318a18.062,18.062,0,0,1-18.041-18.041V178.167a18.062,18.062,0,0,1,18.041-18.041H939.787a18.062,18.062,0,0,1,18.041,18.041v95.7A58.1,58.1,0,0,1,899.8,331.9Z"
@@ -149,7 +157,7 @@
                     <h1 class="text-3xl mb-4 font-semibold">Welcome Back!</h1>
                     <div class="mt-4">
                         <label for="email" class="text-gray-700">Email</label>
-                        <input type="text" name="email"
+                        <input type="email" name="email"
                             class="mt-2 w-full h-12 border-2 rounded-lg py-2 px-3 focus:border-blue-200 focus:ring-4 focus:ring-blue-200 outline-none transition-colors text-gray-700"
                             autocomplete="off" placeholder="Enter your email">
                     </div>

@@ -15,14 +15,18 @@
 </head>
 
 <body>
+    @if (session()->has('registerError'))
+        <x-toast-notification :show="true" variant="error" title="Error!" message="{{ session('registerError') }}"
+            :duration="4000" />
+    @endif
     <div class="flex w-full min-h-screen justify-between">
         <div class="w-full bg-blue-500 min-h-full">
             <div class="p-5 w-full flex items-center h-full">
                 <div class="flex justify-center w-full">
 
-                    <svg xmlns="http://www.w3.org/2000/svg" width="400" height="400"
-                        viewBox="0 0 883.70798 724.22538" xmlns:xlink="http://www.w3.org/1999/xlink" role="img"
-                        artist="Katerina Limpitsouni" source="https://undraw.co/">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 883.70798 724.22538"
+                        xmlns:xlink="http://www.w3.org/1999/xlink" role="img" artist="Katerina Limpitsouni"
+                        source="https://undraw.co/">
                         <path
                             d="M815.4375,655.50781H541.437a16.519,16.519,0,0,1-16.5-16.5V442.00732a16.51868,16.51868,0,0,1,16.5-16.5H815.4375a16.519,16.519,0,0,1,16.5,16.5V639.00781A16.51929,16.51929,0,0,1,815.4375,655.50781Z"
                             transform="translate(-157.896 -87.88731)" fill="#e6e6e6" />

@@ -14,7 +14,7 @@ class ToastNotification extends Component
     public $show;
     public $duration;
 
-    public function __construct($message = '', $title = '', $variant = 'success', $show = false, $duration = 3000)
+    public function __construct($message = '', $title = '', $variant = '', $show = false, $duration = 3000)
     {
         $this->message = $message;
         $this->title = $title;
