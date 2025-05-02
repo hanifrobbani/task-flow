@@ -140,6 +140,30 @@
                             </x-modal-form>
                         </div> -->
 
+                        <button class="px-4 py-2 bg-blue-600 text-white font-medium rounded-lg text-sm hover:opacity-80 transition" onclick="my_modal_1.showModal()">Open Form Modal</button>
+
+                        <dialog id="my_modal_1" class="modal">
+                            <div class="modal-box">
+                                <h3 class="font-bold text-lg">Tambah Data User</h3>
+
+                                <form action="/submit-user" method="POST">
+                                    @csrf
+                                    <div class="form-control">
+                                        <label class="label">Nama</label>
+                                        <input type="text" name="name" class="input input-bordered w-full" required>
+                                    </div>
+                                    <div class="form-control mt-4">
+                                        <label class="label">Email</label>
+                                        <input type="email" name="email" class="input input-bordered w-full" required>
+                                    </div>
+                                    <div class="modal-action mt-4">
+                                        <button type="submit" class="btn btn-success">Simpan</button>
+                                        <button type="button" onclick="my_modal_1.close()" class="btn">Batal</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </dialog>
+
                     </div>
                 </div>
                 @include('footer')
