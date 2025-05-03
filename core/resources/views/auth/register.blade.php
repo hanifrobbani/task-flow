@@ -23,7 +23,6 @@
         <div class="w-full bg-blue-500 min-h-full">
             <div class="p-5 w-full flex items-center h-full">
                 <div class="flex justify-center w-full">
-
                     <svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 883.70798 724.22538"
                         xmlns:xlink="http://www.w3.org/1999/xlink" role="img" artist="Katerina Limpitsouni"
                         source="https://undraw.co/">
