@@ -10,7 +10,10 @@
     <div class="w-full bg-white p-6">
 
     @if (session()->has('errorUpdateUser'))
-        <x-toast-notification :show="true" variant="error" title="Error!" message="{{ session('errorUpdateUser') }}" :duration="10000" />
+        <x-toast-notification :show="true" variant="error" title="Error!" message="{{ session('errorUpdateUser') }}" :duration="7000" />
+    @endif
+    @if (session()->has('successUpdateUser'))
+        <x-toast-notification :show="true" variant="success" title="Success!" message="{{ session('successUpdateUser') }}" :duration="7000" />
     @endif
 
         <div class="flex justify-between items-center">
@@ -31,15 +34,9 @@
             </div>
             <div class="flex items-center gap-4">
                 @foreach ($data->UserSocials as $socialUser)
-                    <!-- <p>{{ $socialUser->social->name }}</p> -->
                     <a href="{{ $socialUser->link }}"
                         class="border border-gray-400 rounded-full p-2 text-center text-sm hover:bg-gray-100 transition">
-                        <svg class="w-6 h-6 text-gray-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
-                            height="24" fill="currentColor" viewBox="0 0 24 24">
-                            <path fill-rule="evenodd"
-                                d="M13.135 6H15V3h-1.865a4.147 4.147 0 0 0-4.142 4.142V9H7v3h2v9.938h3V12h2.021l.592-3H12V6.591A.6.6 0 0 1 12.592 6h.543Z"
-                                clip-rule="evenodd" />
-                        </svg>
+                        {!! $socialUser->social->logo !!}
                     </a>
                 @endforeach
                 <button type="button" onclick="modal_edit_main_user.showModal()"
@@ -75,8 +72,7 @@
 
             <div class="flex flex-col items-center gap-2 mt-2">
                 <div class="flex w-full gap-2 items-center">
-                    <img src="{{ auth()->user()->img_user ? asset('storage/' . auth()->user()->img_user) : asset('assets/img/no-profile.svg') }}"
-                        alt="" class="w-20 h-20 rounded-full">
+                    <img src="{{ auth()->user()->img_user ? asset('storage/' . auth()->user()->img_user) : asset('assets/img/no-profile.svg') }}" alt="" class="w-20 h-20 rounded-full" id="img-container">
                     <input type="file" name="img_user" class="block w-full border border-gray-400 rounded-md text-sm text-gray-500
                                         file:me-4 file:p-3
                                         file:rounded-md file:border-0
@@ -84,7 +80,7 @@
                                         file:bg-gray-600 file:text-white
                                         hover:file:bg-gray-700
                                         transition-colors
-                                        file:disabled:opacity-50 file:disabled:pointer-events-none">
+                                        file:disabled:opacity-50 file:disabled:pointer-events-none" onchange="previewImg()" id="img-user">
                 </div>
                 <div class="w-full flex gap-2">
                     <div class="block w-full">
@@ -209,5 +205,19 @@
 
         </div>
     </div>
+
+    <script>
+        function previewImg(){
+            const img = document.getElementById('img-user')
+            const imgContainer = document.getElementById('img-container')
+
+            const oFReader = new FileReader()
+            oFReader.readAsDataURL(img.files[0])
+
+            oFReader.onload = function(e){
+                imgContainer.src = e.target.result
+            }
+        }
+    </script>
 
 @endsection

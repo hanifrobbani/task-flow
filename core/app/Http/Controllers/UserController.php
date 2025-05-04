@@ -31,7 +31,7 @@ class UserController extends Controller
             'user_positions_id' => 'required',
             'address' => 'required|string',
             'phone_number' => 'string|max:99',
-            'img_user' => 'nullable|image|file|max:1024',
+            'img_user' => 'nullable|image|file',
         ]);
 
         $validatedSocialUser = $request->validate([
@@ -53,10 +53,7 @@ class UserController extends Controller
             $validatedUser['img_user'] = $newFilePath;
         }
 
-        // dd($validatedUser, $validatedSocialUser);
-        echo "test";
-
-        // try {
+        try {
             if ($validatedSocialUser && isset($validatedSocialUser['socials'])) {
                 foreach ($validatedSocialUser['socials'] as $social) {
                     if (!empty($social['link'])) {
@@ -81,10 +78,10 @@ class UserController extends Controller
 
         User::findOrFail($user)->update($validatedUser);
         return redirect('/user/profile')->with('successUpdateUser', 'User berhasil diperbarui!');
-        // } catch (Exception $e) {
-        //     Log::error($e);
-        //     return redirect('/user/profile')->with('errorUpdateUser', 'Error!' . $e);
-        // }
+        } catch (Exception $e) {
+            Log::error($e);
+            return redirect('/user/profile')->with('errorUpdateUser', 'Error!' . $e);
+        }
 
 
 

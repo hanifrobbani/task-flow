@@ -3,19 +3,21 @@
     x-transition:enter-start="opacity-0 translate-y-2" x-transition:enter-end="opacity-100 translate-y-0"
     x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100 translate-y-0"
     x-transition:leave-end="opacity-0 translate-y-2"
-    class="fixed top-4 right-4 z-50 max-w-md p-4 bg-white shadow-lg rounded-lg text-sm">
+    class="fixed top-4 right-4 z-50 min-w-60 p-4 bg-white shadow-lg rounded-lg text-sm">
     <div class="flex justify-between">
         <div class="flex items-center gap-2">
             <div id="variant" data-type-variant="{{ $variant }}">
-                <svg id="success" width="20" height="20" stroke-width="2.5" viewBox="0 0 24 24" fill="none"
-                    xmlns="http://www.w3.org/2000/svg" color="#16a34a">
-                    <path d="M7 12.5L10 15.5L17 8.5" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round"
-                        stroke-linejoin="round"></path>
-                    <path
-                        d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
-                        stroke="#16a34a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                </svg>
-                <div class="p-2 rounded-full bg-red-200" id="error">
+                <div class="hidden p-2 rounded-full bg-green-200" id="success">
+                    <svg width="20" height="20" stroke-width="2.5" viewBox="0 0 24 24" fill="none"
+                        xmlns="http://www.w3.org/2000/svg" color="#16a34a">
+                        <path d="M7 12.5L10 15.5L17 8.5" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round"
+                            stroke-linejoin="round"></path>
+                        <path
+                            d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+                            stroke="#16a34a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                </div>
+                <div class="hidden p-2 rounded-full bg-red-200" id="error">
                     <svg width="20" height="20" stroke-width="1.5" viewBox="0 0 24 24" fill="none"
                         xmlns="http://www.w3.org/2000/svg" color="#b91c1c">
                         <path
@@ -26,7 +28,7 @@
                             stroke-linejoin="round"></path>
                     </svg>
                 </div>
-                <div class="p-2 rounded-full bg-blue-200" id="info">
+                <div id="info" class="hidden p-2 rounded-full bg-blue-200">
                     <svg width="20" height="20" stroke-width="2" viewBox="0 0 24 24" fill="none"
                         xmlns="http://www.w3.org/2000/svg" color="#1d4ed8">
                         <path d="M12 11.5V16.5" stroke="#1d4ed8" stroke-width="2" stroke-linecap="round"
@@ -54,24 +56,20 @@
 </div>
 
 <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const logoError = document.getElementById('error')
+        const logoInfo = document.getElementById('info')
+        const logoSuccess = document.getElementById('success')
 
-    const logoError = document.getElementById('error')
-    const logoInfo = document.getElementById('info')
-    const logoSuccess = document.getElementById('success')
+        const variant = document.getElementById("variant")
+        const typeVariant = variant.dataset.typeVariant
 
-    let variant = document.getElementById("variant")
-    let typeVariant = variant.dataset.typeVariant
-    console.log("Test: ", typeVariant);
-
-    if (typeVariant == "error") {
-        logoInfo.classList.add('hidden')
-        logoSuccess.classList.add('hidden')
-    } else if (typeVariant == "info") {
-        logoError.classList.add('hidden')
-        logoSuccess.classList.add('hidden')
-    } else if (typeVariant == "success") {
-        logoError.classList.add('hidden')
-        logoInfo.classList.add('hidden')
-    }
-
+        if (typeVariant === "error") {
+            logoError?.classList.remove('hidden')
+        } else if (typeVariant === "info") {
+            logoInfo?.classList.remove('hidden')
+        } else if (typeVariant === "success") {
+            logoSuccess?.classList.remove('hidden')
+        }
+    })
 </script>
