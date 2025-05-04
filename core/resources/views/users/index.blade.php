@@ -8,6 +8,11 @@
         }
     </style>
     <div class="w-full bg-white p-6">
+
+    @if (session()->has('errorUpdateUser'))
+        <x-toast-notification :show="true" variant="error" title="Error!" message="{{ session('errorUpdateUser') }}" :duration="10000" />
+    @endif
+
         <div class="flex justify-between items-center">
             <div class="flex items-center gap-4">
                 <img src="{{ auth()->user()->img_user ? asset('storage/' . auth()->user()->img_user) : asset('assets/img/no-profile.svg') }}"
@@ -52,8 +57,9 @@
 
     <!-- modal edit main user info -->
     <dialog id="modal_edit_main_user" class="modal">
-        <form action="" method="POST" class="relative max-w-xl bg-white rounded-lg shadow-md px-5 py-4 w-full">
+        <form action="{{ url('/user/profile/edit') }}" method="POST" class="relative max-w-xl bg-white rounded-lg shadow-md px-5 py-4 w-full" enctype="multipart/form-data">
             @csrf
+            @method('PUT')
             <div class="flex justify-between items-center border-b border-gray-200">
                 <h1 class="text-gray-800 font-medium">Edit Your Personal Information</h1>
                 <button type="button" onclick="modal_edit_main_user.close()"
@@ -71,7 +77,7 @@
                 <div class="flex w-full gap-2 items-center">
                     <img src="{{ auth()->user()->img_user ? asset('storage/' . auth()->user()->img_user) : asset('assets/img/no-profile.svg') }}"
                         alt="" class="w-20 h-20 rounded-full">
-                    <input type="file" class="block w-full border border-gray-400 rounded-md text-sm text-gray-500
+                    <input type="file" name="img_user" class="block w-full border border-gray-400 rounded-md text-sm text-gray-500
                                         file:me-4 file:p-3
                                         file:rounded-md file:border-0
                                         file:text-xs file:font-medium
@@ -82,23 +88,23 @@
                 </div>
                 <div class="w-full flex gap-2">
                     <div class="block w-full">
-                        <label for="" class="text-sm">Name</label>
+                        <label for="name" class="text-sm">Name</label>
                         <input type="text"
-                            class="w-full border border-gray-300 text-sm rounded-lg p-2 outline-none text-gray-600 font-medium focus:ring-4 focus:ring-blue-200 transition"
-                            value="{{ $data->name }}">
+                            class="w-full border border-gray-300 text-sm rounded-lg p-2 outline-none text-gray-600  focus:ring-4 focus:ring-blue-200 transition"
+                            value="{{ $data->name }}" name="name">
                     </div>
                     <div class="block w-full">
-                        <label for="" class="text-sm">Phone Number</label>
+                        <label for="phone_number" class="text-sm">Phone Number</label>
                         <input type="text"
-                            class="w-full border border-gray-300 text-sm rounded-lg p-2 outline-none text-gray-600 font-medium focus:ring-4 focus:ring-blue-200 transition"
-                            value="{{ $data->phone_number }}">
+                            class="w-full border border-gray-300 text-sm rounded-lg p-2 outline-none text-gray-600  focus:ring-4 focus:ring-blue-200 transition"
+                            value="{{ $data->phone_number }}" name="phone_number">
                     </div>
                 </div>
                 <div class="w-full flex gap-2">
                     <div class="block w-full">
-                        <label for="" class="text-sm">Position</label>
-                        <select id="countries"
-                            class="bg-gray-50 border border-gray-300 text-gray-800 text-sm rounded-lg block w-full p-2.5 outline-none focus:ring-4 focus:ring-blue-200 transition">
+                        <label for="user_positions_id" class="text-sm">Position</label>
+                        <select id="user_positions_id"
+                            class="bg-gray-50 border border-gray-300 text-gray-800 text-sm rounded-lg block w-full p-2.5 outline-none focus:ring-4 focus:ring-blue-200 transition" name="user_positions_id">
                             @foreach ($userPosition as $item)
                                 <option value="{{ $item->id }}" {{ $item->id == $data->userPosition->id ? 'selected' : '' }}>
                                     {{ $item->name }}</option>
@@ -106,10 +112,10 @@
                         </select>
                     </div>
                     <div class="block w-full">
-                        <label for="" class="text-sm">Address</label>
+                        <label for="address" class="text-sm">Address</label>
                         <input type="text"
-                            class="w-full border border-gray-300 text-sm rounded-lg p-2 outline-none text-gray-600 font-medium focus:ring-4 focus:ring-blue-200 transition"
-                            value="{{ $data->address }}">
+                            class="w-full border border-gray-300 text-sm rounded-lg p-2 outline-none text-gray-600  focus:ring-4 focus:ring-blue-200 transition"
+                            value="{{ $data->address }}" name="address">
                     </div>
                 </div>
 
@@ -119,12 +125,13 @@
                         <!-- exp -->
                         @foreach ($userSocial as $item)
                             @php
-                                $userValue = $data->UserSocials->firstWhere('social_id', $item->id);
+                                $userValue = $data->UserSocials->firstWhere('socials_id', $item->id);
                             @endphp
 
                             <div class="flex gap-2 items-center mb-2">
                                 {!! $item->logo !!}
-                                <input type="text" name="socials[{{ $item->id }}]" value="{{ $userValue?->value ?? '' }}"
+                                <input type="hidden" name="socials[{{ $item->id }}][socials_id]" value="{{ $item->id }}">
+                                <input type="text" name="socials[{{ $item->id }}][link]" value="{{ $userValue?->link ?? '' }}"
                                     class="w-full border border-gray-300 text-sm rounded-lg p-2 outline-none text-gray-600 font-medium focus:ring-4 focus:ring-blue-200 transition">
                             </div>
                         @endforeach
@@ -202,4 +209,5 @@
 
         </div>
     </div>
+
 @endsection

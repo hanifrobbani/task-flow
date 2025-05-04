@@ -29,6 +29,7 @@ Route::group(['middleware' => 'auth'], function(){
         'prefix' => 'user',
     ], function () {
         Route::get('/profile', [UserController::class, 'index']);
+        Route::put('/profile/edit', [UserController::class, 'update']);
         Route::get('/setting', function () {
             return view('users.setting');
         });
