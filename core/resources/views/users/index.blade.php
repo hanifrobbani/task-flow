@@ -9,13 +9,12 @@
     </style>
     <div class="w-full bg-white p-6">
 
-        @if (session()->has('errorUpdateUser'))
-            <x-toast-notification :show="true" variant="error" title="Error!" message="{{ session('errorUpdateUser') }}"
+        @if (session()->has('errorUser'))
+            <x-toast-notification :show="true" variant="error" title="Error!" message="{{ session('errorUser') }}"
                 :duration="7000" />
         @endif
-        @if (session()->has('successUpdateUser'))
-            <x-toast-notification :show="true" variant="success" title="Success!" message="{{ session('successUpdateUser') }}"
-                :duration="7000" />
+        @if (session()->has('successUser'))
+            <x-toast-notification :show="true" variant="success" title="Success!" message="{{ session('successUser') }}" :duration="7000" />
         @endif
 
         <div class="flex justify-between items-center">
@@ -36,7 +35,7 @@
             </div>
             <div class="flex items-center gap-4">
                 @foreach ($data->UserSocials as $socialUser)
-                    <a href="{{ $socialUser->link }}"
+                    <a href="{{ $socialUser->link }}" target="_blank"
                         class="border border-gray-400 rounded-full p-2 text-center text-sm hover:bg-gray-100 transition">
                         {!! $socialUser->social->logo !!}
                     </a>

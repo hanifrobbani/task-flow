@@ -80,10 +80,10 @@ class UserController extends Controller
             }
 
             User::findOrFail($user)->update($validatedUser);
-            return redirect('/user/profile')->with('successUpdateUser', 'User successfully updated!');
+            return redirect()->back()->with('successUser', 'User updated successfully!');
         } catch (Exception $e) {
             Log::error($e->getMessage());
-            return redirect('/user/profile')->with('errorUpdateUser', 'Error!');
+            return redirect()->back()->with('errorUser', 'Error, please try again later!.');
         }
     }
 
@@ -109,10 +109,10 @@ class UserController extends Controller
                 UserSkills::insert($skillsData);
             }
 
-            return redirect()->back()->with('success', 'Skills updated successfully.');
+            return redirect()->back()->with('successUser', 'Skills updated successfully.');
         } catch (Exception $e) {
             Log::error($e->getMessage());
-            return redirect()->back()->with('error', 'Error, please try again later!.');
+            return redirect()->back()->with('errorUser', 'Error, please try again later!.');
         }
     }
 
