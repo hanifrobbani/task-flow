@@ -25,9 +25,7 @@
         </div>
     </div>
     <div class="h-screen shadow-md">
-        <div class="flex w-full justify-start flex-col h-full px-3 py-4 overflow-y-auto [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar]:h-2
-      [&::-webkit-scrollbar-thumb]:bg-gray-200
-      [&::-webkit-scrollbar-thumb]:rounded-full pb-24">
+        <div class="flex w-full justify-start flex-col h-full px-3 py-4 overflow-y-auto pb-24 scrollable">
             <div class="">
                 <label for="Menu" class="text-sm text-gray-500 px-3 font-semibold">Menu</label>
                 <a href="/dashboard"

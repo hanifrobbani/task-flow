@@ -24,7 +24,6 @@
 
     <!-- DevIcon -->
     <link rel="stylesheet" type='text/css' href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
-
     @yield('css')
 </head>
 
@@ -97,7 +96,7 @@
                     <div class="pt-4">
                         @yield('main')
                         <!-- <x-toast-notification :show="true" variant="info" title="Success!" message="Test" :duration="7000" /> -->
-                        
+
                     </div>
                 </div>
                 @include('footer')
@@ -108,4 +107,5 @@
     @stack('scripts')
     @yield('js')
 </body>
+
 </html>

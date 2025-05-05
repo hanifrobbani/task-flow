@@ -32,6 +32,7 @@ class UserController extends Controller
             'address' => 'required|string',
             'phone_number' => 'string|max:99',
             'img_user' => 'nullable|image|file',
+            'bio' => 'nullable'
         ]);
 
         $validatedSocialUser = $request->validate([
@@ -77,7 +78,7 @@ class UserController extends Controller
             
 
         User::findOrFail($user)->update($validatedUser);
-        return redirect('/user/profile')->with('successUpdateUser', 'User berhasil diperbarui!');
+        return redirect('/user/profile')->with('successUpdateUser', 'User successfully updated!');
         } catch (Exception $e) {
             Log::error($e);
             return redirect('/user/profile')->with('errorUpdateUser', 'Error!' . $e);
