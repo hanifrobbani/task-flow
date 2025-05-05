@@ -225,4 +225,78 @@
 
         </div>
     </div>
+
+    <div class="mt-5 flex gap-2">
+        <div class="p-5 bg-white rounded-lg shadow-md w-full">
+            <div class="flex justify-between items-center mb-4">
+                <h1>Employee Position</h1>
+                <button class="p-2 bg-blue-600 text-white text-xs rounded-md flex gap-1 items-center hover:opacity-80">
+                        <svg width="20" height="20" stroke-width="1.5" viewBox="0 0 24 24" fill="none"
+                            xmlns="http://www.w3.org/2000/svg" color="#ffffff">
+                            <path d="M8 12H12M16 12H12M12 12V8M12 12V16" stroke="#ffffff" stroke-width="1.5"
+                                stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path
+                                d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+                                stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg></button>
+            </div>
+            <div class="overflow-x-auto sm:rounded-lg">
+                <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr>
+                            <th scope="col" class="px-6 py-3">
+                                Position
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Action
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr
+                            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
+                            <td class="px-6 py-4">
+                                Tech Lead
+                            </td>
+                            <td class="px-6 py-4">
+                                <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit
+                                    position</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="p-5 bg-white rounded-lg shadow-md w-full">
+            <h1>Employee Activity</h1>
+            <table class="mt-4 w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                        <th scope="col" class="px-6 py-3">
+                            Name
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Working Hour
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="bg-white">
+                        <th scope="row" class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
+                            <img class="w-10 h-10 rounded-full"
+                                src="https://flowbite.com/application-ui/demo/images/users/joseph-mcfall.png"
+                                alt="Jese image">
+                            <div class="ps-3">
+                                <div class="text-base font-semibold">Neil Sims</div>
+                                <div class="font-normal text-gray-500">neil.sims@flowbite.com</div>
+                            </div>
+                        </th>
+                        <td class="px-6 py-4">
+                            <p class="font-medium text-blue-600 dark:text-blue-500 text-center">120h</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 @endsection
