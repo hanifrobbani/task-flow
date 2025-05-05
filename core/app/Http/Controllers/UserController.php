@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Skill;
 use App\Models\Socials;
 use App\Models\User;
 use App\Models\UserPosition;
+use App\Models\UserSkills;
 use App\Models\UserSocial;
 use Exception;
 use Illuminate\Http\Request;
@@ -19,8 +21,9 @@ class UserController extends Controller
         $data = User::with(['UserSocials.social', 'UserSkills.skills', 'userPosition'])->find(Auth::id());
         $userPosition = UserPosition::latest()->get();
         $userSocial = Socials::latest()->get();
+        $skills = Skill::latest()->get();
 
-        return view('users.index', compact('data', 'userPosition', 'userSocial'));
+        return view('users.index', compact('data', 'userPosition', 'userSocial', 'skills'));
     }
 
     public function update(Request $request)
@@ -75,16 +78,44 @@ class UserController extends Controller
                     }
                 }
             }
-            
 
-        User::findOrFail($user)->update($validatedUser);
-        return redirect('/user/profile')->with('successUpdateUser', 'User successfully updated!');
+            User::findOrFail($user)->update($validatedUser);
+            return redirect('/user/profile')->with('successUpdateUser', 'User successfully updated!');
         } catch (Exception $e) {
-            Log::error($e);
-            return redirect('/user/profile')->with('errorUpdateUser', 'Error!' . $e);
+            Log::error($e->getMessage());
+            return redirect('/user/profile')->with('errorUpdateUser', 'Error!');
+        }
+    }
+
+    public function updateSkills(Request $request)
+    {
+        $user = Auth::user();
+        $selectedSkillIds = array_keys($request->input('skillsId', []));
+
+        UserSkills::where('users_id', $user->id)->delete();
+
+        $skillsData = [];
+        foreach ($selectedSkillIds as $skillId) {
+            $skillsData[] = [
+                'skills_id' => $skillId,
+                'users_id' => $user->id,
+                'created_at' => now(),
+                'updated_at' => now()
+            ];
         }
 
+        try {
+            if (!empty($skillsData)) {
+                UserSkills::insert($skillsData);
+            }
 
-
+            return redirect()->back()->with('success', 'Skills updated successfully.');
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+            return redirect()->back()->with('error', 'Error, please try again later!.');
+        }
     }
+
 }
+
+

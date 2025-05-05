@@ -30,6 +30,7 @@ Route::group(['middleware' => 'auth'], function(){
     ], function () {
         Route::get('/profile', [UserController::class, 'index']);
         Route::put('/profile/edit', [UserController::class, 'update']);
+        Route::put('/skills/edit', [UserController::class, 'updateSkills']);
         Route::get('/setting', function () {
             return view('users.setting');
         });

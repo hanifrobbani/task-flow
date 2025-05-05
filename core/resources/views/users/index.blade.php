@@ -78,13 +78,13 @@
                     <img src="{{ auth()->user()->img_user ? asset('storage/' . auth()->user()->img_user) : asset('assets/img/no-profile.svg') }}"
                         alt="" class="w-20 h-20 rounded-full" id="img-container">
                     <input type="file" name="img_user" class="block w-full border border-gray-400 rounded-md text-sm text-gray-500
-                                                        file:me-4 file:p-3
-                                                        file:rounded-md file:border-0
-                                                        file:text-xs file:font-medium
-                                                        file:bg-gray-600 file:text-white
-                                                        hover:file:bg-gray-700
-                                                        transition-colors
-                                                        file:disabled:opacity-50 file:disabled:pointer-events-none"
+                                                                file:me-4 file:p-3
+                                                                file:rounded-md file:border-0
+                                                                file:text-xs file:font-medium
+                                                                file:bg-gray-600 file:text-white
+                                                                hover:file:bg-gray-700
+                                                                transition-colors
+                                                                file:disabled:opacity-50 file:disabled:pointer-events-none"
                         onchange="previewImg()" id="img-user">
                 </div>
                 <div class="w-full flex gap-2">
@@ -222,6 +222,8 @@
         <dialog id="modal_edit_skill_user" class="modal">
             <form action="{{ url('/user/skills/edit') }}" method="POST"
                 class="relative max-w-2xl bg-white rounded-lg shadow-md px-5 py-4 w-full">
+                @csrf
+                @method('PUT')
                 <div class="flex justify-between items-center border-b border-gray-200">
                     <h1 class="text-gray-800 font-medium">Edit Your Skills</h1>
                     <button type="button" onclick="modal_edit_skill_user.close()"
@@ -236,48 +238,25 @@
                 </div>
 
                 <div class="grid grid-cols-4 mt-4">
-                    <div class="flex items-center gap-1 mb-4">
-                        <input id="skills" type="checkbox" value=""
-                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500">
-                        <div class="flex items-center gap-1 p-1 bg-gray-100 rounded-lg">
-                            <i class="devicon-laravel-original colored"></i>
-                            <label for="skills" class="text-gray-700 text-sm">Laravel</label>
+                    @foreach ($skills as $item)
+                        @php
+                            $isChecked = $data->UserSkills->contains('skills_id', $item->id);
+                        @endphp
+                        <div class="flex items-center gap-1 mb-4">
+                            <input id="skill_{{ $item->id }}" type="checkbox" name="skillsId[{{ $item->id }}]"
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500" {{ $isChecked ? 'checked' : '' }}>
+                            <div class="flex items-center gap-1 py-1 px-2 bg-gray-100 rounded-lg">
+                                {!! $item->logo !!}
+                                <label for="skill_{{ $item->id }}" class="text-gray-700 text-sm">{{ $item->name }}</label>
+                            </div>
                         </div>
-                    </div>
-                    <div class="flex items-center gap-1 mb-4">
-                        <input id="skills" type="checkbox" value=""
-                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500">
-                        <div class="flex items-center gap-1 p-1 bg-gray-100 rounded-lg">
-                            <i class="devicon-laravel-original colored"></i>
-                            <label for="skills" class="text-gray-700 text-sm">Laravel</label>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-1 mb-4">
-                        <input id="skills" type="checkbox" value=""
-                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500">
-                        <div class="flex items-center gap-1 p-1 bg-gray-100 rounded-lg">
-                            <i class="devicon-laravel-original colored"></i>
-                            <label for="skills" class="text-gray-700 text-sm">Laravel</label>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-1 mb-4">
-                        <input id="skills" type="checkbox" value=""
-                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500">
-                        <div class="flex items-center gap-1 p-1 bg-gray-100 rounded-lg">
-                            <i class="devicon-laravel-original colored"></i>
-                            <label for="skills" class="text-gray-700 text-sm">Laravel</label>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-1 mb-4">
-                        <input id="skills" type="checkbox" value=""
-                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500">
-                        <div class="flex items-center gap-1 p-1 bg-gray-100 rounded-lg">
-                            <i class="devicon-laravel-original colored"></i>
-                            <label for="skills" class="text-gray-700 text-sm">Laravel</label>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
 
+                <button type="submit"
+                    class="text-sm mt-5 font-medium bg-blue-600 text-white px-5 py-2 rounded-md hover:opacity-80 transition">
+                    Save
+                </button>
             </form>
         </dialog>
     </div>
