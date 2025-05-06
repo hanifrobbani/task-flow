@@ -90,8 +90,7 @@
                     </div>
                     <div class="pt-4">
                         @yield('main')
-                        <!-- <x-toast-notification :show="true" variant="info" title="Success!" message="Test" :duration="7000" /> -->
-
+                        
                     </div>
                 </div>
                 @include('footer')

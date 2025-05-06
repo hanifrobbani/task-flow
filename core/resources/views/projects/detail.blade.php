@@ -1,5 +1,5 @@
 @extends('dashboard')
-@section('title', 'Project Name')
+@section('title', $data->title)
 
 @section('main')
     <div class="w-full bg-white rounded-lg shadow-md min-h-32">
@@ -95,21 +95,16 @@
                 </div>
             </div>
             <div class="p-4">
-                <p class="text-gray-600 text-sm">Lorem ipsum dolor sit amet consectetur adipisicing elit. Amet dolores
-                    adipisci magni dolor nostrum natus provident blanditiis nulla perspiciatis laudantium eligendi
-                    necessitatibus placeat asperiores sapiente, nisi maiores quo molestias vitae aliquid. Fuga sed dicta
-                    maxime, similique voluptatibus accusamus assumenda et!<br><br>Lorem ipsum dolor sit amet consectetur
-                    adipisicing elit. Totam maiores soluta voluptatem, commodi incidunt modi perferendis molestiae nulla
-                    deleniti vero voluptate ipsa fugit culpa non, sed odit minima iste quo.</p>
+                <p class="text-gray-600 text-sm">{{ $data->description }}</p>
 
                 <div class="flex justify-between w-full mt-10">
                     <div class="">
                         <h1 class="text-gray-600">Start Date</h1>
-                        <p class="text-gray-700 font-medium">17 May, 2020</p>
+                        <p class="text-gray-700 font-medium">{{ $data->start_date->format('d M, Y') }}</p>
                     </div>
                     <div class="">
                         <h1 class="text-gray-600">Due Date</h1>
-                        <p class="text-gray-700 font-medium">30 Oct, 2020</p>
+                        <p class="text-gray-700 font-medium">{{ $data->end_date->format('d M, Y') }}</p>
                     </div>
                     <div class="">
                         <h1 class="text-gray-600">Owner</h1>
@@ -147,49 +142,21 @@
                 </div>
             </div>
             <div class="w-full">
-                <div class="flex px-4 py-2 gap-2 mb-2 border-b">
-                    <img src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/jese-leos.png" alt=""
-                        class="w-12 h-12 rounded-full object-cover object-center">
-                    <div class="text-sm w-full flex justify-between items-center">
-                        <div class="">
-                            <h1 class="font-medium text-gray-700">James Bone</h1>
-                            <p class="text-gray-600">bonejames@mail.com</p>
-                        </div>
-                        <div class="border">
-                            <p class="inline-block py-1 px-2 text-xs font-medium bg-purple-300 text-purple-800 rounded-md">
-                                PM</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="flex px-4 py-2 gap-2 mb-2 border-b">
-                    <img src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/jese-leos.png" alt=""
-                        class="w-12 h-12 rounded-full object-cover object-center">
-                    <div class="text-sm w-full flex justify-between items-center">
-                        <div class="">
-                            <h1 class="font-medium text-gray-700">James Bone</h1>
-                            <p class="text-gray-600">bonejames@mail.com</p>
-                        </div>
-                        <div class="border">
-                            <p class="inline-block py-1 px-2 text-xs font-medium bg-blue-300 text-blue-800 rounded-md">
-                                Backend</p>
+                @foreach ($data->teamMembers as $member)
+                    <div class="flex px-4 py-2 gap-2 mb-2 border-b">
+                        <img src="{{ $member->user->img_user ? asset('storage/' . $member->user->img_user) : asset('assets/img/no-profile.svg') }}"
+                            alt="" class="w-12 h-12 rounded-full object-cover object-center">
+                        <div class="text-sm w-full flex justify-between items-center">
+                            <div class="">
+                                <h1 class="font-medium text-gray-700">{{ $member->user->name }}</h1>
+                                <p class="text-gray-600">{{ $member->user->email }}</p>
+                            </div>
+                            <div class="border">
+                                <p class="inline-block py-1 px-2 text-xs font-medium bg-purple-300 text-purple-800 rounded-md">{{ $member->user->userPosition->name }}</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="flex px-4 py-2 gap-2 mb-2 border-b">
-                    <img src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/jese-leos.png" alt=""
-                        class="w-12 h-12 rounded-full object-cover object-center">
-                    <div class="text-sm w-full flex justify-between items-center">
-                        <div class="">
-                            <h1 class="font-medium text-gray-700">James Bone</h1>
-                            <p class="text-gray-600">bonejames@mail.com</p>
-                        </div>
-                        <div class="border">
-                            <p class="inline-block py-1 px-2 text-xs font-medium bg-green-300 text-green-800 rounded-md">
-                                Frontend</p> <!-- max 12 kata -->
-                        </div>
-                    </div>
-                </div>
-
+                @endforeach
             </div>
         </div>
     </div>

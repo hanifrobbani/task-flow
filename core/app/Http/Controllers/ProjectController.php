@@ -16,7 +16,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $data = Projects::orderByRaw("FIELD(priority, 'high', 'medium', 'low')")
+        $data = Projects::with('teamMembers.user')->orderByRaw("FIELD(priority, 'high', 'medium', 'low')")
             ->orderByDesc('created_at')
             ->get();
 
@@ -51,7 +51,7 @@ class ProjectController extends Controller
 
         $selectedMember = array_keys($request->input('memberId', []));
         $validatedProject['status'] = 'On Going';
-        // dd($validatedProject, $selectedMember);
+
         try {
             $project = Projects::create($validatedProject);
             $member = [];
@@ -78,7 +78,8 @@ class ProjectController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $data = Projects::with('teamMembers.user.userPosition')->findOrFail($id);
+        return view('projects.detail', compact('data'));
     }
 
     /**

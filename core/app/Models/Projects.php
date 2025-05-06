@@ -11,6 +11,11 @@ class Projects extends Model
     protected $guarded = [];
     public $incrementing = false;
     protected $keyType = 'string';
+    protected $casts = [
+        'start_date' => 'datetime',
+        'end_date' => 'datetime',
+    ];
+
 
     protected static function boot()
     {
@@ -23,7 +28,9 @@ class Projects extends Model
         });
     }
 
-    public function User(){
-        $this->hasMany(ProjectTeamMember::class, 'users_id');
+    public function teamMembers()
+    {
+        return $this->hasMany(ProjectTeamMember::class, 'projects_id');
     }
+
 }
