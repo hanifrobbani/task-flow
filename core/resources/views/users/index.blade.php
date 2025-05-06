@@ -28,7 +28,7 @@
                             <p class="text-sm text-gray-600">{{ $data->userPosition->name }}</p>
                         </div>
                         <div class="border-l border-gray-300 pl-2">
-                            <p class="text-sm text-gray-600">{{ $data->address }}</p>
+                            <p class="text-sm text-gray-600">{{ $data->address ?? 'No Address' }}</p>
                         </div>
                     </div>
                 </div>
@@ -94,7 +94,7 @@
                             value="{{ $data->name }}" name="name">
                     </div>
                     <div class="block w-full">
-                        <label for="phone_number" class="text-sm">Email</label>
+                        <label for="email" class="text-sm">Email</label>
                         <input type="text"
                             class="w-full border border-gray-300 text-sm rounded-lg p-2 outline-none text-gray-600  focus:ring-4 focus:ring-blue-200 transition"
                             value="{{ $data->email }}" readonly>
@@ -187,11 +187,11 @@
             </div>
             <div>
                 <label class="text-gray-800 text-sm block font-medium">Phone</label>
-                <p class="text-gray-600 text-sm ">{{ $data->phone_number }}</p>
+                <p class="text-gray-600 text-sm ">{{ $data->phone_number ?? '-' }}</p>
             </div>
             <div class="col-span-2">
                 <label class="text-gray-800 text-sm block font-medium">Bio</label>
-                <p class="text-gray-600 text-sm ">{{ $data->bio }}</p>
+                <p class="text-gray-600 text-sm ">{{ $data->bio ?? '-' }}</p>
             </div>
         </div>
     </div>
@@ -210,14 +210,19 @@
             </button>
         </div>
         <div class="flex flex-wrap gap-4 items-center mt-2">
+            @if (count($data->UserSkills))
             @foreach ($data->UserSkills as $skillUser)
                 <div class="p-2 bg-gray-100 rounded-xl cursor-pointer flex gap-1 items-center">
                     {!! $skillUser->skills->logo !!}
                     <p class="text-gray-600 text-sm">{{ $skillUser->skills->name }}</p>
                 </div>
             @endforeach
+            @else
+            <p class="text-gray-600 text-sm">No Skills Added Yet!</p>
+            @endif
         </div>
 
+        <!-- Modal form skill -->
         <dialog id="modal_edit_skill_user" class="modal">
             <form action="{{ url('/user/skills/edit') }}" method="POST"
                 class="relative max-w-2xl bg-white rounded-lg shadow-md px-5 py-4 w-full">

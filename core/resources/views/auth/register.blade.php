@@ -117,7 +117,7 @@
             </div>
         </div>
         <div class="w-full">
-            <form action="/register" method="post" class="flex flex-col justify-center items-center h-full">
+            <form action="/register" method="POST" class="flex flex-col justify-center items-center h-full">
                 @csrf
                 <div class="w-full max-w-xl p-20">
                     <h1 class="text-3xl mb-4 font-semibold">Welcome to <span class="text-blue-600">TaskFlow!</span></h1>

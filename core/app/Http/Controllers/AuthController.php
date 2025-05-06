@@ -55,6 +55,7 @@ class AuthController extends Controller
         ]);
 
         $credentials['password'] = Hash::make($request->password);
+        $credentials['user_positions_id'] = 1;
 
         try {
             $user = User::create($credentials);
