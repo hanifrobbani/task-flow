@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -38,22 +39,17 @@ Route::group(['middleware' => 'auth'], function(){
     Route::group([
         'prefix' => 'project',
     ], function () {
-        Route::get('/', function () {
-            return view('projects.index');
-        });
-        Route::get('/create', function () {
-            return view('projects.create');
-        });
         Route::get('/kanban', function () {
             return view('projects.kanban');
         });
         Route::get('/detail', function () {
             return view('projects.detail');
         });
-    
         // kanban: /project/id/kanban
         // detail: /project/id/detail (button detail ada di kanban project)
     });
+
+    Route::resource('/project', ProjectController::class);
     
     Route::group([
         'prefix' => 'my-task',

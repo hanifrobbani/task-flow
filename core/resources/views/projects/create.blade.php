@@ -1,17 +1,8 @@
 @extends('dashboard')
 @section('main')
 @section('title', 'Create Project')
-    <style>
-        .no-scrollbar::-webkit-scrollbar {
-            display: none;
-        }
-
-        .no-scrollbar {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-        }
-    </style>
-    <form class="flex justify-between gap-4" action="">
+    <form class="flex justify-between gap-4" action="{{ url('/project') }}" method="POST">
+        @csrf
         <div class=" block w-full max-w-xs">
             <div class="bg-white p-5 rounded shadow-md w-full">
                 <div class="flex items-center">
@@ -23,8 +14,9 @@
                     </svg>
                     <h1 class="text-sm font-medium text-gray-600">Selected Member</h1>
                 </div>
-                <div class="border border-gray-300 w-full rounded-lg min-h-40 p-2 mt-2 flex items-start flex-wrap gap-2" id="selected-members"></div> <!-- display flex, wrap space bug -->
-                
+                <div class="border border-gray-300 w-full rounded-lg min-h-40 p-2 mt-2 flex items-start flex-wrap gap-2"
+                    id="selected-members"></div> <!-- display flex, wrap space bug -->
+
             </div>
             <div class="bg-white p-5 rounded shadow-md w-full mt-5">
                 <div class="relative">
@@ -39,57 +31,37 @@
                     </button>
                     <!-- Dropdown menu -->
                     <div id="dropdownHelper"
-                        class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-md border absolute max-h-96 overflow-y-scroll no-scrollbar">
+                        class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow-md border absolute max-h-96 overflow-y-scroll scrollable">
                         <ul class="p-3 flex items-center flex-wrap text-sm text-gray-700"
                             aria-labelledby="dropdownHelperButton">
-                            <li class="w-full">
-                                <div class="flex p-2 rounded-sm hover:bg-gray-100 w-full items-center container-member">
-                                    <div class="flex items-center h-5">
-                                        <input aria-describedby="helper-checkbox-text-1" type="checkbox" value=""
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 focus:ring-2 hover:cursor-pointer member-checkbox">
-                                    </div>
-                                    <div class="ms-2 text-sm flex gap-2 member-box" data-member-id="ridwan">
-                                        <div class="">
-                                            <img src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/jese-leos.png"
-                                                alt="" class="w-8 h-8 rounded-full object-cover object-center">
-
+                            @foreach ($user as $item)
+                                <li class="w-full">
+                                    <div class="flex p-2 rounded-sm hover:bg-gray-100 w-full items-center container-member">
+                                        <div class="flex items-center h-5">
+                                            <input aria-describedby="helper-checkbox-text-1" type="checkbox"
+                                                value="{{ $item->id }}"
+                                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 focus:ring-2 hover:cursor-pointer member-checkbox"
+                                                name="memberId[{{ $item->id }}]">
                                         </div>
-                                        <div class="">
-                                            <label for="helper-checkbox-3"
-                                                class="font-medium text-gray-900 dark:text-gray-300">
-                                                <p class="member-name">Ridwan Fauzan</p>
-                                                <p id="helper-checkbox-text-3"
-                                                    class="text-xs font-normal text-gray-500 dark:text-gray-300">Designer
-                                                </p>
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="w-full">
-                                <div class="flex p-2 rounded-sm hover:bg-gray-100 w-full items-center container-member">
-                                    <div class="flex items-center h-5">
-                                        <input aria-describedby="helper-checkbox-text-1" type="checkbox" value=""
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 focus:ring-2 hover:cursor-pointer member-checkbox">
-                                    </div>
-                                    <div class="ms-2 text-sm flex gap-2 member-box" data-member-id="ridwan">
-                                        <div class="">
-                                            <img src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/jese-leos.png"
-                                                alt="" class="w-8 h-8 rounded-full object-cover object-center">
-
-                                        </div>
-                                        <div class="">
-                                            <label for="helper-checkbox-3"
-                                                class="font-medium text-gray-900 dark:text-gray-300">
-                                                <p class="member-name">Ridwan Fauzan</p>
-                                                <p id="helper-checkbox-text-3"
-                                                    class="text-xs font-normal text-gray-500 dark:text-gray-300">Designer
-                                                </p>
-                                            </label>
+                                        <div class="ms-2 text-sm flex gap-2 member-box" data-member-id="{{ $item->id }}">
+                                            <div class="">
+                                                <img src="{{ $item->img_user ? asset('storage/' . $item->img_user) : asset('assets/img/no-profile.svg') }}"
+                                                    alt="" class="w-8 h-8 rounded-full object-cover object-center">
+                                            </div>
+                                            <div class="">
+                                                <label for="helper-checkbox-3"
+                                                    class="font-medium text-gray-900 dark:text-gray-300">
+                                                    <p class="member-name">{{ $item->name }}</p>
+                                                    <p id="helper-checkbox-text-3"
+                                                        class="text-xs font-normal text-gray-500 dark:text-gray-300">
+                                                        {{ $item->userPosition->name }}
+                                                    </p>
+                                                </label>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </li>
+                                </li>
+                            @endforeach
                         </ul>
                     </div>
                 </div>
@@ -101,46 +73,62 @@
                 <div class="w-full">
                     <label for="countries" class="block mb-1 text-sm font-medium text-gray-800">Badge Project</label>
                     <select id="countries"
-                        class="bg-gray-50 border border-gray-300 text-gray-800 text-sm rounded-lg block w-full p-2.5 outline-none focus:ring-4 focus:ring-blue-200 transition">
+                        class="bg-gray-50 border border-gray-300 text-gray-800 text-sm rounded-lg block w-full p-2.5 outline-none focus:ring-4 focus:ring-blue-200 transition"
+                        name="badge">
                         <option selected disabled>Select Badge</option>
-                        <option value="US">Web Development</option>
-                        <option value="US">Design</option>
+                        <option value="web development">Web Development</option>
+                        <option value="design">Design</option>
+                        <option value="marekting">Marketing</option>
                     </select>
+                    @error('badge')
+                        <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                    @enderror
                 </div>
                 <div class="w-full">
                     <label for="countries" class="block mb-1 text-sm font-medium text-gray-800">Prority</label>
                     <select id="countries"
-                        class="bg-gray-50 border border-gray-300 text-gray-800 text-sm rounded-lg block w-full p-2.5 outline-none focus:ring-4 focus:ring-blue-200 transition">
+                        class="bg-gray-50 border border-gray-300 text-gray-800 text-sm rounded-lg block w-full p-2.5 outline-none focus:ring-4 focus:ring-blue-200 transition"
+                        name="priority">
                         <option selected disabled>Select Priority</option>
-                        <option value="US">Low</option>
-                        <option value="US">Medium</option>
-                        <option value="US">High</option>
+                        <option value="low">Low</option>
+                        <option value="medium">Medium</option>
+                        <option value="high">High</option>
                     </select>
+                    @error('priority')
+                        <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                    @enderror
                 </div>
             </div>
 
             <div class="my-3">
                 <label for="countries" class="block mb-1 text-sm font-medium">Project Title</label>
                 <input type="text"
-                    class="block w-full border border-gray-300 text-sm rounded-lg p-2 outline-none text-gray-600 font-medium focus:ring-4 focus:ring-blue-200 transition">
+                    class="block w-full border border-gray-300 text-sm rounded-lg p-2 outline-none text-gray-600 font-medium focus:ring-4 focus:ring-blue-200 transition"
+                    name="title">
+                @error('title')
+                    <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                @enderror
             </div>
             <div class="my-3">
                 <label for="countries" class="block mb-1 text-sm font-medium">Description Project</label>
-                <textarea name="" id=""
+                <textarea name="description" id=""
                     class="block w-full border border-gray-300 text-sm rounded-lg p-2 outline-none min-h-40 text-gray-600 font-medium focus:ring-4 focus:ring-blue-200 transition"></textarea>
+                @error('description')
+                    <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
             <div class="my-3">
                 <label for="countries" class="block mb-1 text-sm font-medium">Status</label>
                 <div class="flex gap-4 items-center">
                     <div class="flex items-center">
-                        <input checked id="radio-type-1" type="radio" name="default-radio"
+                        <input checked id="radio-type-1" type="radio" value="0" name="is_private"
                             class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
                         <label for="radio-type" class="ms-1 text-sm font-medium text-gray-800">Public</label>
                     </div>
 
                     <div class="flex items-center">
-                        <input id="radio-type-2" type="radio" value="" name="default-radio" class="w-4 h-4">
+                        <input id="radio-type-2" type="radio" value="1" name="is_private" class="w-4 h-4">
                         <label for="default-radio-2" class="ms-1 text-sm font-medium text-gray-800">Private</label>
                     </div>
                 </div>
@@ -149,6 +137,9 @@
                     <p class="text-red-600 -mt-1">*</p>
                     <p class="text-sm font-medium text-blue-600" id="radio-text"></p>
                 </div>
+                @error('is_private')
+                    <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
 
@@ -156,84 +147,96 @@
                 <div class="w-full">
                     <label for="countries" class="block mb-1 text-sm font-medium text-gray-800">Start Date</label>
                     <input type="date"
-                        class="w-full p-2 border border-gray-400 rounded-lg text-gray-600 text-sm focus:ring-4 focus:ring-blue-200 transition outline-none">
+                        class="w-full p-2 border border-gray-400 rounded-lg text-gray-600 text-sm focus:ring-4 focus:ring-blue-200 transition outline-none"
+                        name="start_date">
+                    @error('start_date')
+                        <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                    @enderror
                 </div>
                 <div class="w-full">
                     <label for="countries" class="block mb-1 text-sm font-medium">Due Date</label>
                     <input type="date"
-                        class="w-full p-2 border border-gray-400 rounded-lg  text-gray-600 text-sm focus:ring-4 focus:ring-blue-200 transition outline-none">
+                        class="w-full p-2 border border-gray-400 rounded-lg  text-gray-600 text-sm focus:ring-4 focus:ring-blue-200 transition outline-none"
+                        name="end_date">
+                    @error('end_date')
+                        <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                    @enderror
                 </div>
             </div>
 
             <div class="mt-5 flex flex-row-reverse gap-2">
-                <button
+                <button type="submit"
                     class="px-4 py-2 bg-blue-600 text-white font-medium rounded-lg text-sm hover:opacity-80 transition">Save</button>
                 <a href="/project"
                     class="px-4 py-2 bg-red-600 text-white font-medium rounded-lg text-sm hover:opacity-80 transition">Cancel</a>
             </div>
         </div>
-        </>
+    </form>
+
 @endsection
 
-    @section('js')
-        <script>
-            const radioPublic = document.getElementById('radio-type-1');
-            const radioPrivate = document.getElementById('radio-type-2');
-            const radioText = document.getElementById('radio-text');
+@section('js')
+    <script>
+        const radioPublic = document.getElementById('radio-type-1');
+        const radioPrivate = document.getElementById('radio-type-2');
+        const radioText = document.getElementById('radio-text');
 
-            function updateText() {
-                if (radioPublic.checked) {
-                    radioText.innerText = "All your team can see this project";
-                    console.log("radio public");
-                } else if (radioPrivate.checked) {
-                    radioText.innerText = "Only you and your selected team can access this project";
-                    console.log("radio private");
-                }
+        function updateText() {
+            if (radioPublic.checked) {
+                radioText.innerText = "All your team can see this project";
+                console.log("radio public");
+            } else if (radioPrivate.checked) {
+                radioText.innerText = "Only you and your selected team can access this project";
+                console.log("radio private");
             }
+        }
 
-            document.addEventListener('DOMContentLoaded', function () {
-                updateText();
+        document.addEventListener('DOMContentLoaded', function () {
+            updateText();
 
-                radioPublic.addEventListener('change', updateText);
-                radioPrivate.addEventListener('change', updateText);
+            radioPublic.addEventListener('change', updateText);
+            radioPrivate.addEventListener('change', updateText);
 
-                const toggleButton = document.getElementById('dropdownHelperButton');
-                const dropdown = document.getElementById('dropdownHelper');
+            const toggleButton = document.getElementById('dropdownHelperButton');
+            const dropdown = document.getElementById('dropdownHelper');
 
-                toggleButton.addEventListener('click', function () {
-                    dropdown.classList.toggle('hidden');
-                });
-
-                document.addEventListener('click', function (event) {
-                    if (!dropdown.contains(event.target) && !toggleButton.contains(event.target)) {
-                        dropdown.classList.add('hidden');
-                    }
-                });
+            toggleButton.addEventListener('click', function () {
+                dropdown.classList.toggle('hidden');
             });
 
-            const checkboxes = document.querySelectorAll(".member-checkbox");
-            const selectedContainer = document.querySelector("#selected-members");
+            document.addEventListener('click', function (event) {
+                if (!dropdown.contains(event.target) && !toggleButton.contains(event.target)) {
+                    dropdown.classList.add('hidden');
+                }
+            });
+        });
 
-            checkboxes.forEach((checkbox) => {
-                checkbox.addEventListener("change", function () {
-                    const memberName = document.querySelector(".member-name");
-                    const memberId = memberName.dataset.memberId;
-    
-                    if (this.checked) {
+        const checkboxes = document.querySelectorAll(".member-checkbox");
+        const selectedContainer = document.querySelector("#selected-members");
+
+        checkboxes.forEach((checkbox) => {
+            checkbox.addEventListener("change", function () {
+                const memberBox = this.closest(".container-member").querySelector(".member-box");
+                const memberName = memberBox.querySelector(".member-name");
+                const memberId = memberBox.dataset.memberId;
+
+                if (this.checked) {
+                    if (!document.querySelector(`#selected-${memberId}`)) {
                         const clone = memberName.cloneNode(true);
                         clone.id = `selected-${memberId}`;
-                        clone.classList.add("text-xs", "text-gray-600", "font-medium", "p-1", "shadow-md", "rounded-lg", "bg-gray-50")
-                        
-                        selectedContainer.classList.remove("min-h-40")
-                        selectedContainer.appendChild(clone);
-                    } else {
-                        const existing = document.querySelector(`#selected-${memberId}`);
-                        if (existing) {
-                            existing.remove();
-                        }
-                    }
-                });
-            })
-        </script>
+                        clone.classList.add("text-xs", "text-gray-600", "font-medium", "p-1", "shadow-md", "rounded-lg", "bg-gray-50");
 
-    @endsection
+                        selectedContainer.classList.remove("min-h-40");
+                        selectedContainer.appendChild(clone);
+                    }
+                } else {
+                    const existing = document.querySelector(`#selected-${memberId}`);
+                    if (existing) {
+                        existing.remove();
+                    }
+                }
+            });
+        });
+    </script>
+
+@endsection
