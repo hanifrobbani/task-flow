@@ -18,10 +18,10 @@ return new class extends Migration
             $table->string('badge');
             $table->string('priority');
             $table->timestamp('start_date')->nullable();
-            $table->timestamp('end_date')->nullable();            
+            $table->timestamp('end_date')->nullable();        
             $table->string('status');
             $table->boolean('is_private');
-            $table->string('progress')->nullable();
+            $table->integer('progress')->default(0);
             $table->timestamps();
         });
     }

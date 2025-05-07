@@ -50,6 +50,7 @@ Route::group(['middleware' => 'auth'], function(){
     });
 
     Route::resource('/project', ProjectController::class);
+    Route::put('/project/member/{id}', [ProjectController::class, 'updateTeamMember']);;
     
     Route::group([
         'prefix' => 'my-task',

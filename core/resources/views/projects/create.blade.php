@@ -142,7 +142,6 @@
                 @enderror
             </div>
 
-
             <div class="my-3 flex items-center gap-5">
                 <div class="w-full">
                     <label for="countries" class="block mb-1 text-sm font-medium text-gray-800">Start Date</label>
@@ -184,10 +183,8 @@
         function updateText() {
             if (radioPublic.checked) {
                 radioText.innerText = "All your team can see this project";
-                console.log("radio public");
             } else if (radioPrivate.checked) {
                 radioText.innerText = "Only you and your selected team can access this project";
-                console.log("radio private");
             }
         }
 

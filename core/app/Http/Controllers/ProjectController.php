@@ -69,7 +69,7 @@ class ProjectController extends Controller
             return redirect('/project')->with('successProject', 'Project successfully created!.');
         } catch (Exception $e) {
             Log::error($e->getMessage());
-            return redirect('/project')->with('errorProject', 'Error, please try again later!.');
+            return redirect('/project')->with('errorProject', 'Error, please try again later!');
         }
     }
 
@@ -79,7 +79,8 @@ class ProjectController extends Controller
     public function show(string $id)
     {
         $data = Projects::with('teamMembers.user.userPosition')->findOrFail($id);
-        return view('projects.detail', compact('data'));
+        $user = User::with('userPosition')->get();
+        return view('projects.detail', compact('data', 'user'));
     }
 
     /**
@@ -95,7 +96,26 @@ class ProjectController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $project = Projects::findOrFail($id);
+
+        $validatedProject = $request->validate([
+            'title' => 'required|min:3',
+            'description' => 'required',
+            'badge' => 'required',
+            'priority' => 'required',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date',
+            'status' => 'nullable',
+            'is_private' => 'required|boolean',
+        ]);
+
+        try {
+            $project->update($validatedProject);
+            return redirect()->back()->with('successProject', 'Project successfully updated!');
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+            return redirect()->back()->with('errorProject', 'Error, please try again later!');
+        }
     }
 
     /**
@@ -104,5 +124,33 @@ class ProjectController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function updateTeamMember(Request $request, string $id)
+    {
+        $selectedMemberId = array_keys($request->input('memberId', []));
+
+        try {
+            ProjectTeamMember::where('projects_id', $id)->delete();
+
+            $memberData = [];
+            foreach ($selectedMemberId as $memberId) {
+                $memberData[] = [
+                    'users_id' => $memberId,
+                    'projects_id' => $id,
+                    'created_at' => now(),
+                    'updated_at' => now()
+                ];
+            }
+
+            if (!empty($memberData)) {
+                ProjectTeamMember::insert($memberData);
+            }
+
+            return redirect()->back()->with('successProject', 'Team Member updated successfully.');
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+            return redirect()->back()->with('errorProject', 'Error, please try again later!.');
+        }
     }
 }

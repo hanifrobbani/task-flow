@@ -3,6 +3,15 @@
 
 @section('main')
     <div class="w-full bg-white rounded-lg shadow-md min-h-32">
+        @if (session()->has('errorProject'))
+            <x-toast-notification :show="true" variant="error" title="Error!" message="{{ session('errorProject') }}"
+                :duration="7000" />
+        @endif
+        @if (session()->has('successProject'))
+            <x-toast-notification :show="true" variant="success" title="Success!" message="{{ session('successProject') }}"
+                :duration="7000" />
+        @endif
+
         <div class="border-b">
             <div class="p-4">
                 <h1 class="font-medium text-gray-600">Project Overview</h1>
@@ -72,7 +81,7 @@
                     </path>
                 </svg>
                 <div>
-                    <p class="font-semibold text-gray-600">40%</p>
+                    <p class="font-semibold text-gray-600">{{ $data->progress }}%</p>
                     <p class="text-gray-600 text-sm">Progress</p>
                 </div>
             </div>
@@ -85,13 +94,14 @@
             <div class="border-b">
                 <div class="p-4 flex justify-between">
                     <h1 class="font-medium text-gray-600">About Project</h1>
-                    <a href="" class="hidden group-hover:flex items-center text-gray-600 text-sm"><svg width="20"
-                            height="20" viewBox="0 0 24 24" stroke-width="2" fill="none" xmlns="http://www.w3.org/2000/svg"
+                    <button type="button" onclick="modal_edit_project.showModal()"
+                        class="hidden group-hover:flex items-center text-gray-600 text-sm"><svg width="20" height="20"
+                            viewBox="0 0 24 24" stroke-width="2" fill="none" xmlns="http://www.w3.org/2000/svg"
                             color="#4b5563">
                             <path
                                 d="M14.3632 5.65156L15.8431 4.17157C16.6242 3.39052 17.8905 3.39052 18.6716 4.17157L20.0858 5.58579C20.8668 6.36683 20.8668 7.63316 20.0858 8.41421L18.6058 9.8942M14.3632 5.65156L4.74749 15.2672C4.41542 15.5993 4.21079 16.0376 4.16947 16.5054L3.92738 19.2459C3.87261 19.8659 4.39148 20.3848 5.0115 20.33L7.75191 20.0879C8.21972 20.0466 8.65806 19.8419 8.99013 19.5099L18.6058 9.8942M14.3632 5.65156L18.6058 9.8942"
                                 stroke="#4b5563" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                        </svg>Edit</a>
+                        </svg>Edit</button>
                 </div>
             </div>
             <div class="p-4">
@@ -132,7 +142,8 @@
             <div class="border-b">
                 <div class="p-4 flex justify-between">
                     <h1 class="font-medium text-gray-600">Team Member</h1>
-                    <button class="hidden group-hover:flex items-center text-gray-600 text-sm"><svg width="20" height="20"
+                    <button type="button" onclick="modal_edit_member.showModal()"
+                        class="hidden group-hover:flex items-center text-gray-600 text-sm"><svg width="20" height="20"
                             viewBox="0 0 24 24" stroke-width="2" fill="none" xmlns="http://www.w3.org/2000/svg"
                             color="#4b5563">
                             <path
@@ -142,22 +153,247 @@
                 </div>
             </div>
             <div class="w-full">
+                @php
+                    $bgColors = [
+                        'bg-red-300 text-red-800',
+                        'bg-green-300 text-green-800',
+                        'bg-blue-300 text-blue-800',
+                        'bg-yellow-300 text-yellow-800',
+                        'bg-purple-300 text-purple-800',
+                        'bg-teal-300 text-teal-800',
+                    ];
+                @endphp
+
                 @foreach ($data->teamMembers as $member)
+                    @php
+                        $randomColor = $bgColors[array_rand($bgColors)];
+                    @endphp
                     <div class="flex px-4 py-2 gap-2 mb-2 border-b">
                         <img src="{{ $member->user->img_user ? asset('storage/' . $member->user->img_user) : asset('assets/img/no-profile.svg') }}"
                             alt="" class="w-12 h-12 rounded-full object-cover object-center">
                         <div class="text-sm w-full flex justify-between items-center">
-                            <div class="">
+                            <div>
                                 <h1 class="font-medium text-gray-700">{{ $member->user->name }}</h1>
                                 <p class="text-gray-600">{{ $member->user->email }}</p>
                             </div>
                             <div class="border">
-                                <p class="inline-block py-1 px-2 text-xs font-medium bg-purple-300 text-purple-800 rounded-md">{{ $member->user->userPosition->name }}</p>
+                                <p class="inline-block py-1 px-2 text-xs font-medium rounded-md {{ $randomColor }}">
+                                    {{ $member->user->userPosition->name }}
+                                </p>
                             </div>
                         </div>
                     </div>
                 @endforeach
+
             </div>
         </div>
     </div>
+
+    <!-- Modal form project -->
+    <dialog id="modal_edit_project" class="modal">
+        <form action="{{ url('/project/' . $data->id) }}" method="POST"
+            class="relative max-w-2xl bg-white rounded-lg shadow-md p-5 w-full">
+            @csrf
+            @method('PUT')
+            <div class="flex justify-between items-center border-b border-gray-200">
+                <h1 class="text-gray-800 font-medium">Edit Project</h1>
+                <button type="button" onclick="modal_edit_project.close()"
+                    class="hover:bg-gray-100 transition-colors rounded-lg p-2">
+                    <svg width="24" height="24" stroke-width="2" viewBox="0 0 24 24" fill="none"
+                        xmlns="http://www.w3.org/2000/svg" color="#000000">
+                        <path
+                            d="M6.75827 17.2426L12.0009 12M17.2435 6.75736L12.0009 12M12.0009 12L6.75827 6.75736M12.0009 12L17.2435 17.2426"
+                            stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="max-h-96 overflow-y-auto scrollable px-2">
+                <div class="mb-2 flex justify-between gap-5">
+                    <div class="w-full">
+                        <label for="countries" class="block mb-1 text-sm font-medium text-gray-800">Badge Project</label>
+                        <select id="countries"
+                            class="bg-gray-50 border border-gray-300 text-gray-800 text-sm rounded-lg block w-full p-2.5 outline-none focus:ring-4 focus:ring-blue-200 transition"
+                            name="badge">
+                            <option disabled {{ $data->badge ? '' : 'selected' }}>Select Badge</option>
+                            <option value="web development" {{ $data->badge == 'web development' ? 'selected' : '' }}>Web
+                                Development</option>
+                            <option value="design" {{ $data->badge == 'design' ? 'selected' : '' }}>Design</option>
+                            <option value="marketing" {{ $data->badge == 'marketing' ? 'selected' : '' }}>Marketing</option>
+                        </select>
+
+                        @error('badge')
+                            <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div class="w-full">
+                        <label for="countries" class="block mb-1 text-sm font-medium text-gray-800">Prority</label>
+                        <select id="countries"
+                            class="bg-gray-50 border border-gray-300 text-gray-800 text-sm rounded-lg block w-full p-2.5 outline-none focus:ring-4 focus:ring-blue-200 transition"
+                            name="priority">
+                            <option disabled {{ $data->priority == '' ? 'selected' : '' }}>Select Priority</option>
+                            <option value="low" {{ $data->priority == 'low' ? 'selected' : '' }}>Low</option>
+                            <option value="medium" {{ $data->priority == 'medium' ? 'selected' : '' }}>Medium</option>
+                            <option value="high" {{ $data->priority == 'high' ? 'selected' : '' }}>High</option>
+                        </select>
+                        @error('priority')
+                            <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+                </div>
+
+                <div class="my-3">
+                    <label for="countries" class="block mb-1 text-sm font-medium">Project Title</label>
+                    <input type="text"
+                        class="block w-full border border-gray-300 text-sm rounded-lg p-2 outline-none text-gray-600 font-medium focus:ring-4 focus:ring-blue-200 transition"
+                        name="title" value="{{ old('title', $data->title) }}">
+                    @error('title')
+                        <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+                <div class="my-3">
+                    <label for="countries" class="block mb-1 text-sm font-medium">Description Project</label>
+                    <textarea name="description" id=""
+                        class="block w-full border border-gray-300 text-sm rounded-lg p-2 outline-none min-h-40 text-gray-600 font-medium focus:ring-4 focus:ring-blue-200 transition">{{ old('description', $data->description) }}</textarea>
+                    @error('description')
+                        <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <div class="my-3">
+                    <label for="countries" class="block mb-1 text-sm font-medium">Status</label>
+                    <div class="flex gap-4 items-center">
+                        <div class="flex items-center">
+                            <input {{ $data->is_private == '0' ? 'checked' : '' }} id="radio-type-1" type="radio" value="0"
+                                name="is_private" class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
+                            <label for="radio-type" class="ms-1 text-sm font-medium text-gray-800">Public</label>
+                        </div>
+
+                        <div class="flex items-center">
+                            <input id="radio-type-2" type="radio" {{ $data->is_private == '1' ? 'checked' : '' }} value="1"
+                                name="is_private" class="w-4 h-4">
+                            <label for="default-radio-2" class="ms-1 text-sm font-medium text-gray-800">Private</label>
+                        </div>
+                    </div>
+
+                    <div class="flex mt-1">
+                        <p class="text-red-600 -mt-1">*</p>
+                        <p class="text-sm font-medium text-blue-600" id="radio-text"></p>
+                    </div>
+                    @error('is_private')
+                        <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <div class="my-3 flex items-center gap-5">
+                    <div class="w-full">
+                        <label for="countries" class="block mb-1 text-sm font-medium text-gray-800">Start Date</label>
+                        <input type="date"
+                            class="w-full p-2 border border-gray-400 rounded-lg text-gray-600 text-sm focus:ring-4 focus:ring-blue-200 transition outline-none"
+                            name="start_date" value="{{ old('start_date', $data->start_date->format('Y-m-d')) }}">
+                        @error('start_date')
+                            <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+                    <div class="w-full">
+                        <label for="countries" class="block mb-1 text-sm font-medium">Due Date</label>
+                        <input type="date"
+                            class="w-full p-2 border border-gray-400 rounded-lg  text-gray-600 text-sm focus:ring-4 focus:ring-blue-200 transition outline-none"
+                            name="end_date" value="{{ old('end_date', $data->end_date->format('Y-m-d')) }}">
+                        @error('end_date')
+                            <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                        @enderror
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit"
+                class="text-sm mt-5 font-medium bg-blue-600 text-white px-5 py-2 rounded-md hover:opacity-80 transition">
+                Save
+            </button>
+        </form>
+    </dialog>
+
+    <!-- Modal form member -->
+    <dialog id="modal_edit_member" class="modal">
+        <form action="{{ url('/project/member/' . $data->id) }}" method="POST"
+            class="relative max-w-2xl bg-white rounded-lg shadow-md p-5 w-full">
+            @csrf
+            @method('PUT')
+            <div class="flex justify-between items-center border-b border-gray-200">
+                <h1 class="text-gray-800 font-medium">Edit Member</h1>
+                <button type="button" onclick="modal_edit_member.close()"
+                    class="hover:bg-gray-100 transition-colors rounded-lg p-2">
+                    <svg width="24" height="24" stroke-width="2" viewBox="0 0 24 24" fill="none"
+                        xmlns="http://www.w3.org/2000/svg" color="#000000">
+                        <path
+                            d="M6.75827 17.2426L12.0009 12M17.2435 6.75736L12.0009 12M12.0009 12L6.75827 6.75736M12.0009 12L17.2435 17.2426"
+                            stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="dropdown w-full">
+                <div tabindex="0" role="button"
+                    class="bg-gray-50 border border-gray-300 text-gray-800 text-sm rounded-lg inline-flex justify-between items-center w-full p-2.5 outline-none">
+                    Select Team Member
+                    <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 10 6">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="m1 1 4 4 4-4" />
+                    </svg>
+                </div>
+                <ul tabindex="0"
+                    class="dropdown-content z-[1] bg-white border shadow-md rounded-lg w-full max-h-96 overflow-y-auto mt-2 p-2">
+                    @foreach ($user as $item)
+                        <li>
+                            <label class="flex items-center gap-2 p-2 hover:bg-gray-100 rounded-sm cursor-pointer">
+                                <input type="checkbox" name="memberId[{{ $item->id }}]" value="{{ $item->id }}"
+                                    class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 focus:ring-2 hover:cursor-pointer item-checkbox"
+                                    {{ $data->teamMembers->contains('users_id', $item->id) ? 'checked' : '' }} />
+                                <img src="{{ $item->img_user ? asset('storage/' . $item->img_user) : asset('assets/img/no-profile.svg') }}"
+                                    class="w-8 h-8 rounded-full object-cover object-center" />
+                                <div>
+                                    <p class="text-sm font-medium text-gray-800">{{ $item->name }}</p>
+                                    <p class="text-xs text-gray-500">{{ $item->userPosition->name }}</p>
+                                </div>
+                            </label>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+
+
+            <button type="submit"
+                class="text-sm mt-5 font-medium bg-blue-600 text-white px-5 py-2 rounded-md hover:opacity-80 transition">
+                Save
+            </button>
+        </form>
+    </dialog>
+@endsection
+
+@section('js')
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const radioPublic = document.getElementById('radio-type-1');
+            const radioPrivate = document.getElementById('radio-type-2');
+            const radioText = document.getElementById('radio-text');
+
+            function updateText() {
+                if (radioPublic.checked) {
+                    radioText.innerText = "All your team can see this project";
+                } else if (radioPrivate.checked) {
+                    radioText.innerText = "Only you and your selected team can access this project";
+                }
+            }
+
+            updateText();
+
+            radioPublic.addEventListener('change', updateText);
+            radioPrivate.addEventListener('change', updateText);
+
+        });
+    </script>
+
+
 @endsection

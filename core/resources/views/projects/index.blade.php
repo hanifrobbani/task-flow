@@ -13,58 +13,62 @@
 
         <div class="grid grid-cols-[repeat(auto-fill,minmax(19rem,1fr))] gap-5">
             @foreach ($data as $item)
-            <a href="/project/{{ $item->id }}">
-                <div class="bg-white shadow rounded px-5 py-2">
-                    <div class="flex justify-between items-center border-b py-2">
-                        <h1 class="font-medium">{{ $item->badge }}</h1>
-                        <p class="text-sm bg-green-600 py-1 px-3 text-white rounded-lg">{{ $item->status }}</p>
-                    </div>
-                    <div class="flex flex-col border-b border-gray-400 py-2">
-                        <div>
-                            <h1 class="font-semibold">{{ $item->title }}</h1>
-                            <p class="text-sm text-gray-600 mt-1">
-                                {{ \Illuminate\Support\Str::limit($item->description, 80, '...') }}
-                            </p>
+                <a href="/project/{{ $item->id }}">
+                    <div class="bg-white shadow rounded px-5 py-2">
+                        <div class="flex justify-between items-center border-b py-2">
+                            <h1 class="font-medium">{{ $item->badge }}</h1>
+                            <p class="text-sm bg-green-600 py-1 px-3 text-white rounded-lg">{{ $item->status }}</p>
                         </div>
-
-                        <div class="flex -space-x-3 mt-5">
-                            @foreach ($item->teamMembers->take(4) as $member)
-                                <img class="w-12 h-12 border-2 border-white rounded-full dark:border-gray-800"
-                                    src="{{ $member->user->img_user ? asset('storage/' . $member->user->img_user) : asset('assets/img/no-profile.svg') }}"
-                                    alt="">
-                            @endforeach
-
-                            @if ($item->teamMembers->count() > 4)
-                                <a class="flex items-center justify-center w-12 h-12 text-xs font-medium text-gray-800 bg-gray-300 border-2 border-white rounded-full"
-                                    href="#">{{ $item->teamMembers->count() - 4 }}+</a>
-                            @else
-
-                            @endif
-                        </div>
-                    </div>
-                    <div class="w-full flex justify-between items-center mt-4">
-                        <div class="flex gap-4 items-start w-full">
-                            <div class="flex items-center text-left gap-1">
-                                <svg viewBox="0 0 24 24" class="fill-gray-500 stroke-gray-500 font-semibold" width="24"
-                                    height="24" stroke-width="0.5" fill="" xmlns="http://www.w3.org/2000/svg">
-                                    <path stroke="" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"
-                                        d="M18 4h-1.5V3a.5.5 0 0 0-1 0v1h-7V3a.5.5 0 0 0-1 0v1H6C3.71 4 2.5 5.21 2.5 7.5V18c0 2.29 1.21 3.5 3.5 3.5h12c2.29 0 3.5-1.21 3.5-3.5V7.5C21.5 5.21 20.29 4 18 4ZM6 5h1.5v1a.5.5 0 0 0 1 0V5h7v1a.5.5 0 0 0 1 0V5H18c1.729 0 2.5.771 2.5 2.5v1h-17v-1C3.5 5.771 4.271 5 6 5Zm12 15.5H6c-1.729 0-2.5-.771-2.5-2.5V9.5h17V18c0 1.729-.771 2.5-2.5 2.5ZM8.75 13a.75.75 0 1 1-.761-.75H8a.748.748 0 0 1 .75.75Zm4 0a.75.75 0 1 1-.761-.75H12a.748.748 0 0 1 .75.75Zm4 0a.75.75 0 1 1-.761-.75H16a.748.748 0 0 1 .75.75Zm-8 4a.75.75 0 1 1-.761-.75H8a.748.748 0 0 1 .75.75Zm4 0a.75.75 0 1 1-.761-.75H12a.748.748 0 0 1 .75.75Zm4 0a.75.75 0 1 1-.761-.75H16a.748.748 0 0 1 .75.75Z">
-                                    </path>
-                                </svg>
-                                <p class="text-sm font-medium text-gray-500 mt-1">{{ $item->end_date->format('M Y') }}</p>
+                        <div class="flex flex-col border-b border-gray-400 py-2">
+                            <div>
+                                <h1 class="font-semibold">{{ $item->title }}</h1>
+                                <p class="text-sm text-gray-600 mt-1">
+                                    {{ \Illuminate\Support\Str::limit($item->description, 80, '...') }}
+                                </p>
                             </div>
 
-                        </div>
-                        <div class="w-full flex gap-2 items-center">
-                            <div class="bg-gray-300 w-full rounded-md h-2">
-                                <div class="w-1/2 h-2 bg-yellow-500 rounded-md"></div>
-                            </div>
-                            <p class="text-sm text-gray-600">50%</p>
-                        </div>
-                    </div>
+                            <div class="flex -space-x-3 mt-5">
+                                @foreach ($item->teamMembers->take(4) as $member)
+                                    <img class="w-12 h-12 border-2 border-white rounded-full dark:border-gray-800"
+                                        src="{{ $member->user->img_user ? asset('storage/' . $member->user->img_user) : asset('assets/img/no-profile.svg') }}"
+                                        alt="">
+                                @endforeach
 
-                </div>
-            </a>
+                                @if ($item->teamMembers->count() > 4)
+                                    <a class="flex items-center justify-center w-12 h-12 text-xs font-medium text-gray-800 bg-gray-300 border-2 border-white rounded-full"
+                                        href="#">{{ $item->teamMembers->count() - 4 }}+</a>
+                                @else
+
+                                @endif
+                            </div>
+                        </div>
+                        <div class="w-full flex justify-between items-center mt-4">
+                            <div class="flex gap-4 items-start w-full">
+                                <div class="flex items-center text-left gap-1">
+                                    <svg viewBox="0 0 24 24" class="fill-gray-500 stroke-gray-500 font-semibold" width="24"
+                                        height="24" stroke-width="0.5" fill="" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke="" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"
+                                            d="M18 4h-1.5V3a.5.5 0 0 0-1 0v1h-7V3a.5.5 0 0 0-1 0v1H6C3.71 4 2.5 5.21 2.5 7.5V18c0 2.29 1.21 3.5 3.5 3.5h12c2.29 0 3.5-1.21 3.5-3.5V7.5C21.5 5.21 20.29 4 18 4ZM6 5h1.5v1a.5.5 0 0 0 1 0V5h7v1a.5.5 0 0 0 1 0V5H18c1.729 0 2.5.771 2.5 2.5v1h-17v-1C3.5 5.771 4.271 5 6 5Zm12 15.5H6c-1.729 0-2.5-.771-2.5-2.5V9.5h17V18c0 1.729-.771 2.5-2.5 2.5ZM8.75 13a.75.75 0 1 1-.761-.75H8a.748.748 0 0 1 .75.75Zm4 0a.75.75 0 1 1-.761-.75H12a.748.748 0 0 1 .75.75Zm4 0a.75.75 0 1 1-.761-.75H16a.748.748 0 0 1 .75.75Zm-8 4a.75.75 0 1 1-.761-.75H8a.748.748 0 0 1 .75.75Zm4 0a.75.75 0 1 1-.761-.75H12a.748.748 0 0 1 .75.75Zm4 0a.75.75 0 1 1-.761-.75H16a.748.748 0 0 1 .75.75Z">
+                                        </path>
+                                    </svg>
+                                    <p class="text-sm font-medium text-gray-500 mt-1">{{ $item->end_date->format('M Y') }}</p>
+                                </div>
+
+                            </div>
+                            <div class="w-full flex gap-2 items-center">
+                                <div class="bg-gray-300 w-full rounded-md h-2 overflow-hidden">
+                                    <div class="h-2 rounded-md {{ $item->progress < 40 ? 'bg-red-500' : ($item->progress < 70 ? 'bg-yellow-500' : 'bg-green-500') }}"
+                                        style="width: {{ $item->progress }}%;">
+                                    </div>
+                                </div>
+                                <p class="text-sm text-gray-600">{{ $item->progress }}%</p>
+                            </div>
+
+
+                        </div>
+
+                    </div>
+                </a>
             @endforeach
 
             <a href="/project/create"
