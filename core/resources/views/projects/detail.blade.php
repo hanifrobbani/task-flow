@@ -391,6 +391,7 @@
             </button>
         </form>
     </dialog>
+    
     <!-- Modal delete project -->
     <dialog id="modal_delete_project" class="modal">
         <form action="{{ url('/project/' . $data->id) }}" method="POST" class="relative max-w-md bg-white rounded-lg shadow-md p-6 z-50 w-full">
