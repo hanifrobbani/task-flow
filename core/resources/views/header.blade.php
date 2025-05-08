@@ -79,7 +79,9 @@
                             </svg>
                         </div>
                     </div>
-                    <h1 class="text-lg font-semibold text-gray-800 mb-2">Logout</h1>
+                    <div class="my-2">
+                        <h1 class="text-lg font-semibold text-gray-800 mb-2">Logout</h1>
+                    </div>
                 </div>
                 <p class="text-sm text-gray-600">Are you sure want to logout?</p>
                 <div class="flex justify-end gap-2 mt-4">

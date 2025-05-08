@@ -123,7 +123,15 @@ class ProjectController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $project = Projects::findOrFail($id);
+        
+        try {
+            $project->delete();
+            return redirect('/project')->with('successProject', 'Project successfully deleted!');
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+            return redirect()->back()->with('errorProject', 'Error, please try again later!');
+        }
     }
 
     public function updateTeamMember(Request $request, string $id)
