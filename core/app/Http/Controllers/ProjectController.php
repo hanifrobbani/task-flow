@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Projects;
 use App\Models\ProjectTeamMember;
+use App\Models\Task;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -160,5 +161,12 @@ class ProjectController extends Controller
             Log::error($e->getMessage());
             return redirect()->back()->with('errorProject', 'Error, please try again later!.');
         }
+    }
+
+    public function kanbanProject(string $id){
+        $data = Projects::findOrFail($id);
+        $tasks = Task::all();
+        $user = User::all();
+        return view('projects.kanban', compact('data', 'user', 'tasks'));
     }
 }

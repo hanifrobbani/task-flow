@@ -1,5 +1,5 @@
 @extends('dashboard')
-@section('title', 'Project Name')
+@section('title', $data->title)
 
 @section('css')
     <link rel="stylesheet" href="{{ asset('/dist/jkanban.min.css') }}">
@@ -49,6 +49,14 @@
 
 @section('main')
     <div class="flex px-2 justify-between">
+    @if (session()->has('errorTask'))
+            <x-toast-notification :show="true" variant="error" title="Error!" message="{{ session('errorTask') }}"
+                :duration="7000" />
+        @endif
+        @if (session()->has('successTask'))
+            <x-toast-notification :show="true" variant="success" title="Success!" message="{{ session('successTask') }}"
+                :duration="7000" />
+        @endif
         <button type="button" onclick="modal_create_task.showModal()"
             class="px-3 py-2 bg-blue-600 rounded-md text-white text-sm flex items-center hover:opacity-80 transition">
             <svg width="20" height="20" stroke-width="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
@@ -68,15 +76,12 @@
             Detail</button>
     </div>
 
-    <div class="overflow-x-auto max-h-screen [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar]:h-2
-                                              [&::-webkit-scrollbar-track]:bg-gray-100
-                                              [&::-webkit-scrollbar-thumb]:bg-gray-300
-                                              [&::-webkit-scrollbar-thumb]:rounded-full pb-2 mt-4">
+    <div class="overflow-x-auto max-h-screen pb-2 mt-4">
         <div id="myKanban" class="p-0 m-0"></div>
     </div>
     <!-- Modal form member -->
     <dialog id="modal_create_task" class="modal">
-        <form action="{{ url('/project/task/') }}" method="POST"
+        <form action="{{ url('/task/create') }}" method="POST"
             class="relative max-w-xl bg-white rounded-lg shadow-md p-5 w-full">
             @csrf
             <div class="flex justify-between items-center border-b border-gray-200">
@@ -92,11 +97,14 @@
                 </button>
             </div>
             <div class="flex flex-col max-h-96 overflow-y-auto scrollable px-2">
-                <div class="">
+                <div class="w-full">
                     <label for="">Title</label>
                     <input type="text"
                         class="block w-full border border-gray-300 text-sm rounded-lg p-2 outline-none text-gray-600 font-medium focus:ring-4 focus:ring-blue-200 transition"
                         name="title">
+                    @error('title')
+                        <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                    @enderror
                 </div>
                 <div class="my-4 flex items-center gap-5">
                     <div class="w-full">
@@ -123,13 +131,13 @@
                         <label for="countries" class="block mb-1 text-sm font-medium text-gray-800">Badge</label>
                         <select id="countries"
                             class="bg-gray-50 border border-gray-300 text-gray-800 text-sm rounded-lg block w-full p-2.5 outline-none focus:ring-4 focus:ring-blue-200 transition"
-                            name="priority">
+                            name="badge">
                             <option selected disabled>Select Badge</option>
-                            <option value="low">Low</option>
-                            <option value="medium">Medium</option>
-                            <option value="high">High</option>
+                            <option value="Design">Design</option>
+                            <option value="Backend">Backend</option>
+                            <option value="Frontend">Frontend</option>
                         </select>
-                        @error('start_date')
+                        @error('badge')
                             <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                         @enderror
                     </div>
@@ -137,20 +145,22 @@
                         <label for="countries" class="block mb-1 text-sm font-medium">Assign To</label>
                         <select id="countries"
                             class="bg-gray-50 border border-gray-300 text-gray-800 text-sm rounded-lg block w-full p-2.5 outline-none focus:ring-4 focus:ring-blue-200 transition"
-                            name="priority">
+                            name="users_id">
                             <option selected disabled>Select User</option>
-                            <option value="low">Low</option>
-                            <option value="medium">Medium</option>
-                            <option value="high">High</option>
+                            @foreach ($user as $item)
+                                <option value="{{ $item->id }}" {{ auth()->user()->id == $item->id ? 'selected' : '' }}>
+                                    {{ $item->name }}
+                                </option>
+                            @endforeach
                         </select>
-                        @error('end_date')
+                        @error('users_id')
                             <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                         @enderror
                     </div>
                 </div>
                 <div class="">
                     <label for="countries" class="block mb-1 text-sm font-medium">Description</label>
-                    <textarea name="description" id=""
+                    <textarea name="description"
                         class="block w-full border border-gray-300 text-sm rounded-lg p-2 outline-none min-h-40 text-gray-600 font-medium focus:ring-4 focus:ring-blue-200 transition"></textarea>
                     @error('description')
                         <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
@@ -159,22 +169,31 @@
                 <div class="my-3 flex items-center gap-5">
                     <div class="w-full">
                         <label for="countries" class="block mb-1 text-sm font-medium text-gray-800">Point</label>
-                        <input type="text"
-                        class="block w-full border border-gray-300 text-sm rounded-lg p-2 outline-none text-gray-600 font-medium focus:ring-4 focus:ring-blue-200 transition"
-                        name="title">
-                        @error('start_date')
+                        <input type="number"
+                            class="block w-full border border-gray-300 text-sm rounded-lg p-2 outline-none text-gray-600 font-medium focus:ring-4 focus:ring-blue-200 transition"
+                            name="point">
+                        @error('point')
                             <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                         @enderror
                     </div>
                     <div class="w-full">
                         <label for="countries" class="block mb-1 text-sm font-medium">Progress</label>
-                        <input type="range" min="0" max="100" value="50" class="range range-sm" />
-                        @error('end_date')
+                        <div class="p-2 border border-gray-200 rounded-md shadow">
+                            <div class="relative w-full">
+                                <div class="tooltip tooltip-open absolute -top-1 left-1/2 -translate-x-1/2"
+                                    id="sliderTooltip" data-tip="50"></div>
+                                <input id="rangeInput" name="progress" type="range" min="0" max="100" value="50" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"/>
+                            </div>
+                        </div>
+
+                        @error('progress')
                             <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                         @enderror
                     </div>
                 </div>
             </div>
+            <input type="hidden" name="list_name" value="_todo">
+            <input type="hidden" name="projects_id" value="{{ $data->id }}">
 
             <button type="submit"
                 class="text-sm mt-5 font-medium bg-blue-600 text-white px-5 py-2 rounded-md hover:opacity-80 transition">
@@ -182,12 +201,183 @@
             </button>
         </form>
     </dialog>
-
+ 
 @endsection
 
 @section('js')
     <script src="{{ asset('/dist/jkanban.min.js') }}"></script>
     <script>
+
+        const boards = [{
+                    id: "_todo",
+                    title: "To Do",
+                    item: [ @foreach ($tasks->where('list_name', 'todo') as $task)
+                    {
+                    id: "{{ $task->id }}",
+                    title: `<div>
+                                <p class="bg-blue-600 text-white py-1 px-2 inline-block rounded-md text-sm">{{ $task->badge }}</p>
+                                <h1 class="font-medium text-gray-600 mt-2">{{ $task->title }}</h1>
+                                <div class="flex gap-2 mt-2">
+                                    <div class="flex gap-1 bg-green-600 items-center p-1 rounded-md">
+                                        <svg width="16" height="16" stroke-width="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="#ffffff">
+                                            <path d="M12 6L12 12L18 12" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                        </svg>
+                                        <p class="text-white text-xs">{{ $task->start_date->format('D M') }}</p>
+                                    </div>
+                                    <div class="flex gap-1 bg-green-600 items-center p-1 rounded-md">
+                                        <svg width="16" height="16" stroke-width="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="#ffffff">
+                                            <path d="M12 6L12 12L18 12" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                            <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                        </svg>
+                                        <p class="text-white text-xs">{{ $task->end_date->format('D M') }}</p>
+                                    </div>
+                                </div>
+                                 <div class="flex mt-4 items-center gap-4">
+                                    <div class="">
+                                        <img src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/jese-leos.png" alt="" class="w-10 h-10 rounded-full object-cover object-center">
+                                    </div>
+                                    <div class="flex gap-4">
+                                        <div class="flex gap-1 items-center">
+                                            <svg width="20" height="20" viewBox="0 0 24 24" class="fill-gray-600" xmlns="http://www.w3.org/2000/svg" stroke-width="2.5">
+                                                <path stroke-width="2.5" d="M20 4.25h-2.025A1.5 1.5 0 0 0 16.5 3h-9a1.5 1.5 0 0 0-1.475 1.25H4A1.752 1.752 0 0 0 2.25 6v1.65a4.072 4.072 0 0 0 4.1 4.1h.321a6 6 0 0 0 4.579 3.2v3.11Q9 18.408 9 21h6q0-2.6-2.25-2.942v-3.11a6 6 0 0 0 4.579-3.2h.321a4.072 4.072 0 0 0 4.1-4.1V6A1.752 1.752 0 0 0 20 4.25ZM3.75 7.65V6A.25.25 0 0 1 4 5.75h2V9a6.09 6.09 0 0 0 .127 1.231A2.562 2.562 0 0 1 3.75 7.65Zm16.5 0a2.562 2.562 0 0 1-2.377 2.581A6.09 6.09 0 0 0 18 9V5.75h2a.25.25 0 0 1 .25.25Z"></path>
+                                            </svg>
+                                            <p class="text-gray-500 font-medium text-sm">{{ $task->point }}</p>
+                                        </div>
+                                        <div class="flex gap-1 items-center">
+                                            <svg width="16" height="16" viewBox="0 0 24 24" class="fill-gay-600 stroke-gray-600" stroke-width="2.5" fill="none" xmlns="http://www.w3.org/2000/svg" color="">
+                                                <path d="M12 6L12 12L18 12" stroke="" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                <path d="M21.8883 10.5C21.1645 5.68874 17.013 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C16.1006 22 19.6248 19.5318 21.1679 16" stroke="" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                <path d="M17 16H21.4C21.7314 16 22 16.2686 22 16.6V21" stroke="" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                            </svg>
+                                            <p class="text-gray-500 font-medium text-sm">{{ $task->working_hour }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt-4">
+                                    <div class="w-full bg-gray-200 rounded-xl">
+                                        <div class="w-40 bg-green-600 h-4 rounded-xl">
+                                            <p class="text-center font-medium text-white text-xs">{{ $task->progress }}%</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>`
+                    }
+                    @endforeach
+                    ],
+                    class: "my-board"
+                },
+                {
+                    id: "_working",
+                    title: "In Progress",
+                    item: [{
+                        title: `<div>
+                                    <p class="bg-blue-600 text-white py-1 px-2 inline-block rounded-md text-sm">Badge</p>
+                                    <h1 class="font-medium text-gray-600 mt-2">Title task</h1>
+                                    <div class="flex gap-2 mt-2">
+                                        <div class="flex gap-1 bg-green-600 items-center p-1 rounded-md">
+                                            <svg width="16" height="16" stroke-width="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="#ffffff">
+                                                <path d="M12 6L12 12L18 12" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                    <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                            </svg>
+                                            <p class="text-white text-xs">12 Mei</p>
+                                        </div>
+                                        <div class="flex gap-1 bg-green-600 items-center p-1 rounded-md">
+                                            <svg width="16" height="16" stroke-width="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="#ffffff">
+                                                <path d="M12 6L12 12L18 12" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                            </svg>
+                                            <p class="text-white text-xs">12 Mei</p>
+                                        </div>
+                                    </div>
+                                     <div class="flex mt-4 items-center gap-4">
+                                        <div class="">
+                                            <img src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/jese-leos.png" alt="" class="w-10 h-10 rounded-full object-cover object-center">
+                                        </div>
+                                        <div class="flex gap-4">
+                                            <div class="flex gap-1 items-center">
+                                                <svg width="20" height="20" viewBox="0 0 24 24" class="fill-gray-600" xmlns="http://www.w3.org/2000/svg" stroke-width="2.5">
+                                                    <path stroke-width="2.5" d="M20 4.25h-2.025A1.5 1.5 0 0 0 16.5 3h-9a1.5 1.5 0 0 0-1.475 1.25H4A1.752 1.752 0 0 0 2.25 6v1.65a4.072 4.072 0 0 0 4.1 4.1h.321a6 6 0 0 0 4.579 3.2v3.11Q9 18.408 9 21h6q0-2.6-2.25-2.942v-3.11a6 6 0 0 0 4.579-3.2h.321a4.072 4.072 0 0 0 4.1-4.1V6A1.752 1.752 0 0 0 20 4.25ZM3.75 7.65V6A.25.25 0 0 1 4 5.75h2V9a6.09 6.09 0 0 0 .127 1.231A2.562 2.562 0 0 1 3.75 7.65Zm16.5 0a2.562 2.562 0 0 1-2.377 2.581A6.09 6.09 0 0 0 18 9V5.75h2a.25.25 0 0 1 .25.25Z"></path>
+                                                </svg>
+                                                <p class="text-gray-500 font-medium text-sm">12.5</p>
+                                            </div>
+                                            <div class="flex gap-1 items-center">
+                                                <svg width="16" height="16" viewBox="0 0 24 24" class="fill-gay-600 stroke-gray-600" stroke-width="2.5" fill="none" xmlns="http://www.w3.org/2000/svg" color="">
+                                                    <path d="M12 6L12 12L18 12" stroke="" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                    <path d="M21.8883 10.5C21.1645 5.68874 17.013 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C16.1006 22 19.6248 19.5318 21.1679 16" stroke="" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                    <path d="M17 16H21.4C21.7314 16 22 16.2686 22 16.6V21" stroke="" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                </svg>
+                                                <p class="text-gray-500 font-medium text-sm">12h 42m</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mt-4">
+                                        <div class="w-full bg-gray-200 rounded-xl">
+                                            <div class="w-40 bg-green-600 h-4 rounded-xl">
+                                                <p class="text-center font-medium text-white text-xs">50%</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>`
+                    }],
+                    class: "my-board"
+                },
+                {
+                    id: "_done",
+                    title: "Done",
+                    item: [{
+                        title: `<div>
+                                    <p class="bg-blue-600 text-white py-1 px-2 inline-block rounded-md text-sm">Badge</p>
+                                    <h1 class="font-medium text-gray-600 mt-2">Title task</h1>
+                                    <div class="flex gap-2 mt-2">
+                                        <div class="flex gap-1 bg-green-600 items-center p-1 rounded-md">
+                                            <svg width="16" height="16" stroke-width="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="#ffffff">
+                                                <path d="M12 6L12 12L18 12" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                    <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                            </svg>
+                                            <p class="text-white text-xs">12 Mei</p>
+                                        </div>
+                                        <div class="flex gap-1 bg-green-600 items-center p-1 rounded-md">
+                                            <svg width="16" height="16" stroke-width="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="#ffffff">
+                                                <path d="M12 6L12 12L18 12" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                            </svg>
+                                            <p class="text-white text-xs">12 Mei</p>
+                                        </div>
+                                    </div>
+                                     <div class="flex mt-4 items-center gap-4">
+                                        <div class="">
+                                            <img src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/jese-leos.png" alt="" class="w-10 h-10 rounded-full object-cover object-center">
+                                        </div>
+                                        <div class="flex gap-4">
+                                            <div class="flex gap-1 items-center">
+                                                <svg width="20" height="20" viewBox="0 0 24 24" class="fill-gray-600" xmlns="http://www.w3.org/2000/svg" stroke-width="2.5">
+                                                    <path stroke-width="2.5" d="M20 4.25h-2.025A1.5 1.5 0 0 0 16.5 3h-9a1.5 1.5 0 0 0-1.475 1.25H4A1.752 1.752 0 0 0 2.25 6v1.65a4.072 4.072 0 0 0 4.1 4.1h.321a6 6 0 0 0 4.579 3.2v3.11Q9 18.408 9 21h6q0-2.6-2.25-2.942v-3.11a6 6 0 0 0 4.579-3.2h.321a4.072 4.072 0 0 0 4.1-4.1V6A1.752 1.752 0 0 0 20 4.25ZM3.75 7.65V6A.25.25 0 0 1 4 5.75h2V9a6.09 6.09 0 0 0 .127 1.231A2.562 2.562 0 0 1 3.75 7.65Zm16.5 0a2.562 2.562 0 0 1-2.377 2.581A6.09 6.09 0 0 0 18 9V5.75h2a.25.25 0 0 1 .25.25Z"></path>
+                                                </svg>
+                                                <p class="text-gray-500 font-medium text-sm">12.5</p>
+                                            </div>
+                                            <div class="flex gap-1 items-center">
+                                                <svg width="16" height="16" viewBox="0 0 24 24" class="fill-gay-600 stroke-gray-600" stroke-width="2.5" fill="none" xmlns="http://www.w3.org/2000/svg" color="">
+                                                    <path d="M12 6L12 12L18 12" stroke="" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                    <path d="M21.8883 10.5C21.1645 5.68874 17.013 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C16.1006 22 19.6248 19.5318 21.1679 16" stroke="" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                    <path d="M17 16H21.4C21.7314 16 22 16.2686 22 16.6V21" stroke="" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                </svg>
+                                                <p class="text-gray-500 font-medium text-sm">12h 42m</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mt-4">
+                                        <div class="w-full bg-gray-200 rounded-xl">
+                                            <div class="w-40 bg-green-600 h-4 rounded-xl">
+                                                <p class="text-center font-medium text-white text-xs">50%</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>`
+                    }],
+                    class: "my-board"
+                }
+                ]
         document.addEventListener('DOMContentLoaded', function () {
             var KanbanTest = new jKanban({
                 element: "#myKanban",
@@ -200,175 +390,23 @@
                 dropEl: function (el, target, source, sibling) {
                     console.log("Dropped!");
                 },
-                boards: [{
-                    id: "_todo",
-                    title: "To Do",
-                    item: [{
-                        id: "task1",
-                        title: `<div>
-                                                        <p class="bg-blue-600 text-white py-1 px-2 inline-block rounded-md text-sm">Badge</p>
-                                                        <h1 class="font-medium text-gray-600 mt-2">Title task</h1>
-                                                        <div class="flex gap-2 mt-2">
-                                                            <div class="flex gap-1 bg-green-600 items-center p-1 rounded-md">
-                                                                <svg width="16" height="16" stroke-width="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="#ffffff">
-                                                                    <path d="M12 6L12 12L18 12" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                                                    <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                                                </svg>
-                                                                <p class="text-white text-xs">12 Mei</p>
-                                                            </div>
-                                                            <div class="flex gap-1 bg-green-600 items-center p-1 rounded-md">
-                                                                <svg width="16" height="16" stroke-width="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="#ffffff">
-                                                                    <path d="M12 6L12 12L18 12" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                                                    <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                                                </svg>
-                                                                <p class="text-white text-xs">12 Mei</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="flex mt-4 items-center gap-4">
-                                                            <div class="">
-                                                                <img src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/jese-leos.png" alt="" class="w-10 h-10 rounded-full object-cover object-center">
-                                                            </div>
-                                                            <div class="flex gap-4">
-                                                                <div class="flex gap-1 items-center">
-                                                                    <svg width="20" height="20" viewBox="0 0 24 24" class="fill-gray-600" xmlns="http://www.w3.org/2000/svg" stroke-width="2.5">
-                                                                        <path stroke-width="2.5" d="M20 4.25h-2.025A1.5 1.5 0 0 0 16.5 3h-9a1.5 1.5 0 0 0-1.475 1.25H4A1.752 1.752 0 0 0 2.25 6v1.65a4.072 4.072 0 0 0 4.1 4.1h.321a6 6 0 0 0 4.579 3.2v3.11Q9 18.408 9 21h6q0-2.6-2.25-2.942v-3.11a6 6 0 0 0 4.579-3.2h.321a4.072 4.072 0 0 0 4.1-4.1V6A1.752 1.752 0 0 0 20 4.25ZM3.75 7.65V6A.25.25 0 0 1 4 5.75h2V9a6.09 6.09 0 0 0 .127 1.231A2.562 2.562 0 0 1 3.75 7.65Zm16.5 0a2.562 2.562 0 0 1-2.377 2.581A6.09 6.09 0 0 0 18 9V5.75h2a.25.25 0 0 1 .25.25Z"></path>
-                                                                    </svg>
-                                                                    <p class="text-gray-500 font-medium text-sm">12.5</p>
-                                                                </div>
-                                                                <div class="flex gap-1 items-center">
-                                                                    <svg width="16" height="16" viewBox="0 0 24 24" class="fill-gay-600 stroke-gray-600" stroke-width="2.5" fill="none" xmlns="http://www.w3.org/2000/svg" color="">
-                                                                        <path d="M12 6L12 12L18 12" stroke="" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                                                        <path d="M21.8883 10.5C21.1645 5.68874 17.013 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C16.1006 22 19.6248 19.5318 21.1679 16" stroke="" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                                                        <path d="M17 16H21.4C21.7314 16 22 16.2686 22 16.6V21" stroke="" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                                                    </svg>
-                                                                    <p class="text-gray-500 font-medium text-sm">12h 42m</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="mt-4">
-                                                            <div class="w-full bg-gray-200 rounded-xl">
-                                                                <div class="w-40 bg-green-600 h-4 rounded-xl">
-                                                                    <p class="text-center font-medium text-white text-xs">50%</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>`
-                    }],
-                    class: "my-board"
-                },
-                {
-                    id: "_working",
-                    title: "In Progress",
-                    item: [{
-                        title: `<div>
-                                                        <p class="bg-blue-600 text-white py-1 px-2 inline-block rounded-md text-sm">Badge</p>
-                                                        <h1 class="font-medium text-gray-600 mt-2">Title task</h1>
-                                                        <div class="flex gap-2 mt-2">
-                                                            <div class="flex gap-1 bg-green-600 items-center p-1 rounded-md">
-                                                                <svg width="16" height="16" stroke-width="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="#ffffff">
-                                                                    <path d="M12 6L12 12L18 12" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                                                    <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                                                </svg>
-                                                                <p class="text-white text-xs">12 Mei</p>
-                                                            </div>
-                                                            <div class="flex gap-1 bg-green-600 items-center p-1 rounded-md">
-                                                                <svg width="16" height="16" stroke-width="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="#ffffff">
-                                                                    <path d="M12 6L12 12L18 12" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                                                    <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                                                </svg>
-                                                                <p class="text-white text-xs">12 Mei</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="flex mt-4 items-center gap-4">
-                                                            <div class="">
-                                                                <img src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/jese-leos.png" alt="" class="w-10 h-10 rounded-full object-cover object-center">
-                                                            </div>
-                                                            <div class="flex gap-4">
-                                                                <div class="flex gap-1 items-center">
-                                                                    <svg width="20" height="20" viewBox="0 0 24 24" class="fill-gray-600" xmlns="http://www.w3.org/2000/svg" stroke-width="2.5">
-                                                                        <path stroke-width="2.5" d="M20 4.25h-2.025A1.5 1.5 0 0 0 16.5 3h-9a1.5 1.5 0 0 0-1.475 1.25H4A1.752 1.752 0 0 0 2.25 6v1.65a4.072 4.072 0 0 0 4.1 4.1h.321a6 6 0 0 0 4.579 3.2v3.11Q9 18.408 9 21h6q0-2.6-2.25-2.942v-3.11a6 6 0 0 0 4.579-3.2h.321a4.072 4.072 0 0 0 4.1-4.1V6A1.752 1.752 0 0 0 20 4.25ZM3.75 7.65V6A.25.25 0 0 1 4 5.75h2V9a6.09 6.09 0 0 0 .127 1.231A2.562 2.562 0 0 1 3.75 7.65Zm16.5 0a2.562 2.562 0 0 1-2.377 2.581A6.09 6.09 0 0 0 18 9V5.75h2a.25.25 0 0 1 .25.25Z"></path>
-                                                                    </svg>
-                                                                    <p class="text-gray-500 font-medium text-sm">12.5</p>
-                                                                </div>
-                                                                <div class="flex gap-1 items-center">
-                                                                    <svg width="16" height="16" viewBox="0 0 24 24" class="fill-gay-600 stroke-gray-600" stroke-width="2.5" fill="none" xmlns="http://www.w3.org/2000/svg" color="">
-                                                                        <path d="M12 6L12 12L18 12" stroke="" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                                                        <path d="M21.8883 10.5C21.1645 5.68874 17.013 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C16.1006 22 19.6248 19.5318 21.1679 16" stroke="" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                                                        <path d="M17 16H21.4C21.7314 16 22 16.2686 22 16.6V21" stroke="" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                                                    </svg>
-                                                                    <p class="text-gray-500 font-medium text-sm">12h 42m</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="mt-4">
-                                                            <div class="w-full bg-gray-200 rounded-xl">
-                                                                <div class="w-40 bg-green-600 h-4 rounded-xl">
-                                                                    <p class="text-center font-medium text-white text-xs">50%</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>`
-                    }],
-                    class: "my-board"
-                },
-                {
-                    id: "_done",
-                    title: "Done",
-                    item: [{
-                        title: `<div>
-                                                        <p class="bg-blue-600 text-white py-1 px-2 inline-block rounded-md text-sm">Badge</p>
-                                                        <h1 class="font-medium text-gray-600 mt-2">Title task</h1>
-                                                        <div class="flex gap-2 mt-2">
-                                                            <div class="flex gap-1 bg-green-600 items-center p-1 rounded-md">
-                                                                <svg width="16" height="16" stroke-width="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="#ffffff">
-                                                                    <path d="M12 6L12 12L18 12" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                                                    <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                                                </svg>
-                                                                <p class="text-white text-xs">12 Mei</p>
-                                                            </div>
-                                                            <div class="flex gap-1 bg-green-600 items-center p-1 rounded-md">
-                                                                <svg width="16" height="16" stroke-width="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="#ffffff">
-                                                                    <path d="M12 6L12 12L18 12" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                                                    <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                                                </svg>
-                                                                <p class="text-white text-xs">12 Mei</p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="flex mt-4 items-center gap-4">
-                                                            <div class="">
-                                                                <img src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/jese-leos.png" alt="" class="w-10 h-10 rounded-full object-cover object-center">
-                                                            </div>
-                                                            <div class="flex gap-4">
-                                                                <div class="flex gap-1 items-center">
-                                                                    <svg width="20" height="20" viewBox="0 0 24 24" class="fill-gray-600" xmlns="http://www.w3.org/2000/svg" stroke-width="2.5">
-                                                                        <path stroke-width="2.5" d="M20 4.25h-2.025A1.5 1.5 0 0 0 16.5 3h-9a1.5 1.5 0 0 0-1.475 1.25H4A1.752 1.752 0 0 0 2.25 6v1.65a4.072 4.072 0 0 0 4.1 4.1h.321a6 6 0 0 0 4.579 3.2v3.11Q9 18.408 9 21h6q0-2.6-2.25-2.942v-3.11a6 6 0 0 0 4.579-3.2h.321a4.072 4.072 0 0 0 4.1-4.1V6A1.752 1.752 0 0 0 20 4.25ZM3.75 7.65V6A.25.25 0 0 1 4 5.75h2V9a6.09 6.09 0 0 0 .127 1.231A2.562 2.562 0 0 1 3.75 7.65Zm16.5 0a2.562 2.562 0 0 1-2.377 2.581A6.09 6.09 0 0 0 18 9V5.75h2a.25.25 0 0 1 .25.25Z"></path>
-                                                                    </svg>
-                                                                    <p class="text-gray-500 font-medium text-sm">12.5</p>
-                                                                </div>
-                                                                <div class="flex gap-1 items-center">
-                                                                    <svg width="16" height="16" viewBox="0 0 24 24" class="fill-gay-600 stroke-gray-600" stroke-width="2.5" fill="none" xmlns="http://www.w3.org/2000/svg" color="">
-                                                                        <path d="M12 6L12 12L18 12" stroke="" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                                                        <path d="M21.8883 10.5C21.1645 5.68874 17.013 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C16.1006 22 19.6248 19.5318 21.1679 16" stroke="" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                                                        <path d="M17 16H21.4C21.7314 16 22 16.2686 22 16.6V21" stroke="" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                                                    </svg>
-                                                                    <p class="text-gray-500 font-medium text-sm">12h 42m</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="mt-4">
-                                                            <div class="w-full bg-gray-200 rounded-xl">
-                                                                <div class="w-40 bg-green-600 h-4 rounded-xl">
-                                                                    <p class="text-center font-medium text-white text-xs">50%</p>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>`
-                    }],
-                    class: "my-board"
-                }
-                ]
+                boards: boards
             });
+        });
 
+        const range = document.getElementById("rangeInput");
+        const tooltip = document.getElementById("sliderTooltip");
+
+        range.addEventListener("input", function () {
+            const val = +range.value;
+            tooltip.setAttribute("data-tip", val);
+
+            // hitung posisi berdasarkan persentase value
+            const percent = val / (range.max - range.min);
+            const offset = range.offsetWidth * percent;
+
+            tooltip.style.left = `${offset}px`;
+            tooltip.style.transform = "translateX(-50%)";
         });
 
     </script>
