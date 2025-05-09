@@ -17,7 +17,6 @@
         .my-board,
         .kanban-drag {
             border-radius: 8px;
-            /* border: 2px solid ; */
         }
 
         .kanban-board {
@@ -32,7 +31,6 @@
         .kanban-board {
             -ms-overflow-style: none;
             scrollbar-width: none;
-            /* border: 2px solid black */
         }
 
         .kanban-item {
@@ -207,7 +205,7 @@
 @section('js')
     <script src="{{ asset('/dist/jkanban.min.js') }}"></script>
     <script>
-        // Gunakan blade untuk mempersiapkan data terlebih dahulu
+        
 const todoItems = [
     @foreach ($tasks->where('list_name', 'todo') as $task)
     {
@@ -264,7 +262,6 @@ const todoItems = [
     @endforeach
 ];
 
-// Contoh item untuk board lain
 const inProgressItem = {
     title: `<div>
         <p class="bg-blue-600 text-white py-1 px-2 inline-block rounded-md text-sm">Badge</p>
@@ -367,12 +364,11 @@ const doneItem = {
     </div>`
 };
 
-// Definisikan boards setelah data diproses oleh Blade
 const boards = [
     {
         id: "_todo",
         title: "To Do",
-        item: todoItems,  // Gunakan array yang sudah diproses
+        item: todoItems, 
         class: "my-board"
     },
     {
@@ -390,7 +386,7 @@ const boards = [
 ];
 
 document.addEventListener('DOMContentLoaded', function () {
-    var KanbanTest = new jKanban({
+    let KanbanTest = new jKanban({
         element: "#myKanban",
         gutter: "10px",
         widthBoard: "300px",
@@ -403,6 +399,7 @@ document.addEventListener('DOMContentLoaded', function () {
         },
         boards: boards
     });
+    
 });
 
         const range = document.getElementById("rangeInput");
