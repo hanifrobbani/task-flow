@@ -165,7 +165,7 @@ class ProjectController extends Controller
 
     public function kanbanProject(string $id){
         $data = Projects::findOrFail($id);
-        $tasks = Task::all();
+        $tasks = Task::with('user')->get();
         $user = User::all();
         return view('projects.kanban', compact('data', 'user', 'tasks'));
     }
