@@ -28,14 +28,38 @@ class TaskController extends Controller
             'list_name' => 'required',
         ]);
 
-        try{
+        try {
             Task::create($taskValidated);
             return redirect()->back()->with('successTask', 'Task successfully created!');
-        }catch(Exception $e){
+        } catch (Exception $e) {
             Log::error($e->getMessage());
             return redirect()->back()->with('errorTask', 'Error, try again later!');
         }
-
-
     }
+
+    public function updateTaskStatus(Request $request)
+    {
+        try {
+            $validated = $request->validate([
+                'task_id' => 'required|exists:tasks,id',
+                'status' => 'required|in:todo,progress,done',
+            ]);
+
+            $task = Task::findOrFail($validated['task_id']);
+            $task->list_name = $validated['status'];
+            $task->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Task status updated successfully',
+                'data' => $task
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ], 422);
+        }
+    }
+
 }
