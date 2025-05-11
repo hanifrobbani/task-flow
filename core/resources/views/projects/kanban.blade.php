@@ -240,13 +240,13 @@ const todoItems = [
                         </svg>
                         <p class="text-gray-500 font-medium text-sm">{{ $task->point }}</p>
                     </div>
-                    <div class="flex gap-1 items-center">
+                    <div class="flex gap-1 items-center task-time" data-task-id="{{ $task->id }}" data-working-hours="{{ $task->working_hour }}">
                         <svg width="16" height="16" viewBox="0 0 24 24" class="fill-gay-600 stroke-gray-600" stroke-width="2.5" fill="none" xmlns="http://www.w3.org/2000/svg" color="">
                             <path d="M12 6L12 12L18 12" stroke="" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
                             <path d="M21.8883 10.5C21.1645 5.68874 17.013 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C16.1006 22 19.6248 19.5318 21.1679 16" stroke="" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
                             <path d="M17 16H21.4C21.7314 16 22 16.2686 22 16.6V21" stroke="" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
                         </svg>
-                        <p class="text-gray-500 font-medium text-sm">{{ $task->working_hour }}</p>
+                        <p class="text-gray-500 font-medium text-sm task-time-display">{{ $task->working_hour }}</p>
                     </div>
                 </div>
             </div>
@@ -258,12 +258,13 @@ const todoItems = [
                 </div>
             </div>
         </div>`,
-        listName: "todo"
+        listName: "todo",
+        originalWorkingHour: "{{ $task->working_hour }}"
     },
     @endforeach
 ];
 
-const inProgressItem = [
+const progressItems = [
     @foreach ($tasks->where('list_name', 'progress') as $task)
     {
         id: "{{ $task->id }}",
@@ -297,13 +298,13 @@ const inProgressItem = [
                         </svg>
                         <p class="text-gray-500 font-medium text-sm">{{ $task->point }}</p>
                     </div>
-                    <div class="flex gap-1 items-center">
+                    <div class="flex gap-1 items-center task-time" data-task-id="{{ $task->id }}" data-working-hours="{{ $task->working_hour }}">
                         <svg width="16" height="16" viewBox="0 0 24 24" class="fill-gay-600 stroke-gray-600" stroke-width="2.5" fill="none" xmlns="http://www.w3.org/2000/svg" color="">
                             <path d="M12 6L12 12L18 12" stroke="" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
                             <path d="M21.8883 10.5C21.1645 5.68874 17.013 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C16.1006 22 19.6248 19.5318 21.1679 16" stroke="" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
                             <path d="M17 16H21.4C21.7314 16 22 16.2686 22 16.6V21" stroke="" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
                         </svg>
-                        <p class="text-gray-500 font-medium text-sm">{{ $task->working_hour }}</p>
+                        <p class="text-gray-500 font-medium text-sm task-time-display">{{ $task->working_hour }}</p>
                     </div>
                 </div>
             </div>
@@ -315,12 +316,13 @@ const inProgressItem = [
                 </div>
             </div>
         </div>`,
-        listName: "progress"
+        listName: "progress",
+        originalWorkingHour: "{{ $task->working_hour }}"
     },
     @endforeach
 ];
 
-const doneItem = [
+const doneItems = [
    @foreach ($tasks->where('list_name', 'done') as $task)
     {
         id: "{{ $task->id }}",
@@ -354,13 +356,13 @@ const doneItem = [
                         </svg>
                         <p class="text-gray-500 font-medium text-sm">{{ $task->point }}</p>
                     </div>
-                    <div class="flex gap-1 items-center">
+                    <div class="flex gap-1 items-center task-time" data-task-id="{{ $task->id }}" data-working-hours="{{ $task->working_hour }}">
                         <svg width="16" height="16" viewBox="0 0 24 24" class="fill-gay-600 stroke-gray-600" stroke-width="2.5" fill="none" xmlns="http://www.w3.org/2000/svg" color="">
                             <path d="M12 6L12 12L18 12" stroke="" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
                             <path d="M21.8883 10.5C21.1645 5.68874 17.013 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C16.1006 22 19.6248 19.5318 21.1679 16" stroke="" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
                             <path d="M17 16H21.4C21.7314 16 22 16.2686 22 16.6V21" stroke="" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
                         </svg>
-                        <p class="text-gray-500 font-medium text-sm">{{ $task->working_hour }}</p>
+                        <p class="text-gray-500 font-medium text-sm task-time-display">{{ $task->working_hour }}</p>
                     </div>
                 </div>
             </div>
@@ -372,7 +374,8 @@ const doneItem = [
                 </div>
             </div>
         </div>`,
-        listName: "done"
+        listName: "done",
+        originalWorkingHour: "{{ $task->working_hour }}"
     },
     @endforeach
 ];
@@ -381,22 +384,114 @@ const boards = [
     {
         id: "_todo",
         title: "To Do",
-        item: todoItems, 
-        class: "my-board"
+        item: todoItems,
+        class: "my-board-todo"
     },
     {
         id: "_working",
         title: "In Progress",
-        item: [inProgressItem],
-        class: "my-board"
+        item: progressItems,
+        class: "my-board-in-progress"
     },
     {
         id: "_done",
         title: "Done",
-        item: [doneItem],
-        class: "my-board"
+        item: doneItems,
+        class: "my-board-done"
     }
 ];
+
+const taskTimers = {};
+
+function formatTime(seconds) {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const secs = seconds % 60;
+    
+    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+}
+
+function startTaskTimer(taskId) {
+    if (taskTimers[taskId]) {
+        return;
+    }
+    
+    const timeElement = document.querySelector(`[data-task-id="${taskId}"] .task-time-display`);
+    if (!timeElement) return;
+    
+    let currentTime = 0;
+    const timeText = timeElement.textContent.trim();
+    
+    if (timeText.includes(':')) {
+        const [hours, minutes, seconds] = timeText.split(':').map(part => parseInt(part, 10));
+        currentTime = hours * 3600 + minutes * 60 + (seconds || 0);
+    } else {
+        currentTime = parseFloat(timeText) * 3600 || 0;
+    }
+    
+    // start timer
+    taskTimers[taskId] = setInterval(() => {
+        currentTime++;
+        timeElement.textContent = formatTime(currentTime);
+
+        if (currentTime % 30 === 0) {
+            updateTaskWorkingHour(taskId, formatTime(currentTime));
+        }
+    }, 1000);
+}
+
+
+function stopTaskTimer(taskId) {
+    if (taskTimers[taskId]) {
+        clearInterval(taskTimers[taskId]);
+        delete taskTimers[taskId];
+        
+        const timeElement = document.querySelector(`[data-task-id="${taskId}"] .task-time-display`);
+        if (timeElement) {
+            updateTaskWorkingHour(taskId, timeElement.textContent);
+        }
+    }
+}
+
+function updateTaskWorkingHour(taskId, workingHour) {
+    fetch('/task/' + taskId + '/update-working-hour', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        body: JSON.stringify({
+            working_hour: workingHour
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Working hour updated successfully:', data);
+    })
+    .catch(error => {
+        console.error('Error updating working hour:', error);
+    });
+}
+
+function updateTaskListName(taskId, listName) {
+    fetch('/task/' + taskId + '/update-list-name', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        body: JSON.stringify({
+            list_name: listName
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('List name updated successfully:', data);
+    })
+    .catch(error => {
+        console.error('Error updating list name:', error);
+    });
+}
 
 document.addEventListener('DOMContentLoaded', function () {
     let KanbanTest = new jKanban({
@@ -416,10 +511,34 @@ document.addEventListener('DOMContentLoaded', function () {
                 return;
             }
             
+            let newListName;
+            if (targetId === '_todo') {
+                newListName = 'todo';
+                stopTaskTimer(taskId);
+            } else if (targetId === '_working') {
+                newListName = 'progress';
+                startTaskTimer(taskId);
+            } else if (targetId === '_done') {
+                newListName = 'done';
+                stopTaskTimer(taskId);
+            }
+
+            if (newListName) {
+                updateTaskListName(taskId, newListName);
+            }
         },
         boards: boards
     });
+
+    progressItems.forEach(item => {
+        startTaskTimer(item.id);
+    });
     
+    window.addEventListener('beforeunload', function() {
+        Object.keys(taskTimers).forEach(taskId => {
+            stopTaskTimer(taskId);
+        });
+    });
 });
 
         const range = document.getElementById("rangeInput");

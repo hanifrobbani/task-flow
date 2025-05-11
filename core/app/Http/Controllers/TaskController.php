@@ -37,16 +37,15 @@ class TaskController extends Controller
         }
     }
 
-    public function updateTaskStatus(Request $request)
+    public function updateTaskStatus(Request $request, string $task_id)
     {
         try {
             $validated = $request->validate([
-                'task_id' => 'required|exists:tasks,id',
-                'status' => 'required|in:todo,progress,done',
+                'list_name' => 'required|in:todo,progress,done',
             ]);
 
-            $task = Task::findOrFail($validated['task_id']);
-            $task->list_name = $validated['status'];
+            $task = Task::findOrFail($task_id);
+            $task->list_name = $validated['list_name'];
             $task->save();
 
             return response()->json([
@@ -61,5 +60,23 @@ class TaskController extends Controller
             ], 422);
         }
     }
+
+    public function updateWorkingHour(Request $request, string $task_id)
+    {
+        $validatedData = $request->validate([
+            'working_hour' => 'required|string',
+        ]);
+
+        $task = Task::findOrFail($task_id);
+        $task->working_hour = $validatedData['working_hour'];
+        $task->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Working hour updated successfully',
+            'task' => $task
+        ]);
+    }
+
 
 }

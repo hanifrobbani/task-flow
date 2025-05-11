@@ -16,7 +16,7 @@ Route::group([
     Route::get('/register', [AuthController::class, 'regis']);
 });
 
-Route::group(['middleware' => 'auth'], function(){
+Route::group(['middleware' => 'auth'], function () {
 
     Route::post('/logout', [AuthController::class, 'logout']);
 
@@ -26,7 +26,7 @@ Route::group(['middleware' => 'auth'], function(){
     Route::get('/dashboard', function () {
         return view('users.statistic');
     });
-    
+
     Route::group([
         'prefix' => 'user',
     ], function () {
@@ -46,11 +46,14 @@ Route::group(['middleware' => 'auth'], function(){
         'prefix' => 'task',
     ], function () {
         Route::post('create', [TaskController::class, 'store']);
+        Route::post('/{task_id}/update-working-hour', [App\Http\Controllers\TaskController::class, 'updateWorkingHour'])->name('tasks.update-working-hour');
+        Route::post('/{task_id}/update-list-name', [App\Http\Controllers\TaskController::class, 'updateTaskStatus'])->name('tasks.update-list-name');
     });
 
     Route::resource('/project', ProjectController::class);
-    Route::put('/project/member/{id}', [ProjectController::class, 'updateTeamMember']);;
-    
+    Route::put('/project/member/{id}', [ProjectController::class, 'updateTeamMember']);
+    ;
+
     Route::group([
         'prefix' => 'my-task',
     ], function () {
@@ -58,7 +61,7 @@ Route::group(['middleware' => 'auth'], function(){
             return view('tasks.index');
         });
     });
-    
+
     Route::group([
         'prefix' => 'company',
     ], function () {
