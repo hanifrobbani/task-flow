@@ -6,11 +6,16 @@ use App\Models\Task;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-
-use function Laravel\Prompts\progress;
+use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
+
+    public function index()
+    {
+        $tasks = Auth::user()->tasks;
+        return view('tasks.index', compact('tasks'));
+    }
     public function store(Request $request)
     {
         $taskValidated = $request->validate([
@@ -78,5 +83,15 @@ class TaskController extends Controller
         ]);
     }
 
+    public function destroy(string $id){
+        $task = Task::findOrFail($id);
+        try{
+            $task->delete();
+            return redirect()->back()->with('successTask', 'Task successfully deleted!');
+        }catch(Exception $e){
+            Log::error($e->getMessage());
+            return redirect()->back()->with('errorTask', 'error, please tyr again later!');
+        }
 
+    }
 }

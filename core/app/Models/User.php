@@ -21,15 +21,23 @@ class User extends Authenticatable
     protected $guarded = ['id'];
     protected $table = 'users';
 
-    public function UserSocials(): HasMany{
+    public function UserSocials(): HasMany
+    {
         return $this->hasMany(UserSocial::class, 'users_id');
     }
-    public function UserSkills(): HasMany{
+    public function UserSkills(): HasMany
+    {
         return $this->hasMany(UserSkills::class, 'users_id');
     }
 
-    public function userPosition(){
-       return $this->belongsTo(UserPosition::class, 'user_positions_id');
+    public function userPosition()
+    {
+        return $this->belongsTo(UserPosition::class, 'user_positions_id');
+    }
+
+    public function tasks()
+    {
+        return $this->hasMany(Task::class, 'users_id');
     }
 
     /**
