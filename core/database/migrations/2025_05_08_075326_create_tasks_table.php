@@ -22,7 +22,7 @@ return new class extends Migration
             $table->timestamp('start_date')->nullable();
             $table->timestamp('end_date')->nullable();
             $table->integer('point')->default(0);
-            $table->integer('working_hour')->default(0);
+            $table->string('working_hour')->default(0);
             $table->enum('type', ['team', 'individual'])->default('individual');
             $table->string('list_name');
             $table->integer('progress')->default(0);
