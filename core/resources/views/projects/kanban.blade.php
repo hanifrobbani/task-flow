@@ -263,7 +263,7 @@ const todoItems = [
     @endforeach
 ];
 
-const inProgressItem = [
+const progressItems = [
     @foreach ($tasks->where('list_name', 'progress') as $task)
     {
         id: "{{ $task->id }}",
@@ -320,7 +320,7 @@ const inProgressItem = [
     @endforeach
 ];
 
-const doneItem = [
+const doneItems = [
    @foreach ($tasks->where('list_name', 'done') as $task)
     {
         id: "{{ $task->id }}",
@@ -382,19 +382,19 @@ const boards = [
         id: "_todo",
         title: "To Do",
         item: todoItems, 
-        class: "my-board"
+        class: "my-board-todo"
     },
     {
         id: "_working",
         title: "In Progress",
-        item: [inProgressItem],
-        class: "my-board"
+        item: progressItems,
+        class: "my-board-in-progress"
     },
     {
         id: "_done",
         title: "Done",
-        item: [doneItem],
-        class: "my-board"
+        item: doneItems,
+        class: "my-board-done"
     }
 ];
 
