@@ -87,7 +87,7 @@
             </div>
             <div class="flex flex-col p-5 bg-white shadow-md rounded-md w-full">
                 <div class="flex justify-between text-xl mb-1 font-semibold">
-                    <h1 class="text-gray-800">0/8h</h1>
+                    <h1 class="text-gray-800">0/40h</h1>
                     <h1 class="text-red-500">0%</h1>
                 </div>
                 <div class="text-sm text-gray-600">
@@ -127,9 +127,9 @@
         <div class="min-w-72 bg-white shadow-md rounded px-2 py-4">
             @php
                 $dummyData = [
-                    ['value' => 1048, 'name' => 'Done'],
-                    ['value' => 735, 'name' => 'Pending'],
-                    ['value' => 411, 'name' => 'Backlog'],
+                    ['value' => 956, 'name' => 'Done'],
+                    ['value' => 720, 'name' => 'Pending'],
+                    ['value' => 350, 'name' => 'Backlog'],
                 ];
             @endphp
             <h1 class="text-gray-600 font-medium text-lg px-4">Task Overview</h1>

@@ -79,9 +79,21 @@ class ProjectController extends Controller
      */
     public function show(string $id)
     {
-        $data = Projects::with('teamMembers.user.userPosition')->findOrFail($id);
+        $data = Projects::with(['teamMembers.user.userPosition', 'tasks'])->findOrFail($id);
         $user = User::with('userPosition')->get();
-        return view('projects.detail', compact('data', 'user'));
+
+        $totalSeconds = 0;
+
+        foreach ($data->tasks as $task) {
+            if ($task->working_hour) {
+                [$h, $m, $s] = explode(':', $task->working_hour);
+                $totalSeconds += ($h * 3600) + ($m * 60) + $s;
+            }
+        }
+
+        $totalHours = round($totalSeconds / 3600, 2);
+
+        return view('projects.detail', compact('data', 'user', 'totalHours'));
     }
 
     /**
@@ -125,7 +137,7 @@ class ProjectController extends Controller
     public function destroy(string $id)
     {
         $project = Projects::findOrFail($id);
-        
+
         try {
             $project->delete();
             return redirect('/project')->with('successProject', 'Project successfully deleted!');
@@ -163,7 +175,8 @@ class ProjectController extends Controller
         }
     }
 
-    public function kanbanProject(string $id){
+    public function kanbanProject(string $id)
+    {
         $data = Projects::findOrFail($id);
         $tasks = Task::with('user')->get();
         $user = User::all();

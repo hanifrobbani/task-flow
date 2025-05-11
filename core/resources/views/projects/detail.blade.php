@@ -35,7 +35,7 @@
                         stroke="#4b5563" stroke-width="1.5"></path>
                 </svg>
                 <div>
-                    <p class="font-semibold text-gray-600">180</p>
+                    <p class="font-semibold text-gray-600">{{ $data->tasks->count() }}</p>
                     <p class="text-gray-600 text-sm">Total Task</p>
                 </div>
             </div>
@@ -53,7 +53,7 @@
                         stroke-linejoin="round"></path>
                 </svg>
                 <div>
-                    <p class="font-semibold text-gray-600">200</p>
+                    <p class="font-semibold text-gray-600">{{ $data->tasks->filter(fn($task) => $task->list_name === 'done')->count() }}</p>
                     <p class="text-gray-600 text-sm">Total Task Completed</p>
                 </div>
             </div>
@@ -69,7 +69,7 @@
                         stroke-linecap="round" stroke-linejoin="round"></path>
                 </svg>
                 <div>
-                    <p class="font-semibold text-gray-600">200</p>
+                    <p class="font-semibold text-gray-600">{{ $totalHours }}</p>
                     <p class="text-gray-600 text-sm">Total Hour Spent</p>
                 </div>
             </div>
