@@ -2,9 +2,14 @@
 @section('main')
 @section('title', 'Task List')
     <div class="p-5 bg-white shadow-md rounded-lg">
+        @if (session()->has('errorTask'))
+            <x-toast-notification :show="true" variant="error" title="Error!" message="{{ session('errorTask') }}"
+                :duration="7000" />
+        @endif
+        @if (session()->has('successTask'))
+            <x-toast-notification :show="true" variant="success" title="Success!" message="{{ session('successTask') }}" :duration="7000" />
+        @endif
         <div class="flex items-center gap-4">
-            <!-- ada select type list task (todo, in progress, dll)-->
-            <!-- search nama task -->
             <select id="list-name"
                 class="bg-gray-50 border border-gray-300 text-gray-800 text-sm rounded-lg block p-2.5 outline-none focus:ring-4 focus:ring-blue-200 transition w-1/5">
                 <option selected>All</option>
@@ -65,7 +70,7 @@
                                         <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">{{ $item->list_name }}</td>
                                         <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">{{ $item->point }}</td>
                                         <td class="px-4 py-4 whitespace-nowrap text-end text-sm font-medium">
-                                            <button type="button" onclick="modal_delete_task.showModal()"
+                                            <button type="button" onclick="openDeleteModal({{ $item->id }})"
                                                 class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 focus:outline-hidden focus:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-400 dark:focus:text-blue-400">Delete</button>
                                         </td>
                                     </tr>
@@ -79,8 +84,7 @@
 
         <!-- modal delete task -->
         <dialog id="modal_delete_task" class="modal">
-            <form action="{{ url('/task/' . $item->id) }}" method="POST"
-                class="relative max-w-md bg-white rounded-lg shadow-md p-6 z-50 w-full">
+            <form method="POST" id="formDeleteTask" class="relative max-w-md bg-white rounded-lg shadow-md p-6 z-50 w-full">
                 @csrf
                 @method('DELETE')
                 <div class="flex gap-2 items-center">
@@ -118,4 +122,14 @@
         </dialog>
 
     </div>
+@endsection
+@section('js')
+<script>
+    function openDeleteModal(taskId) {
+        const form = document.getElementById('formDeleteTask');
+        form.action = `/task/${taskId}`;
+        modal_delete_task.showModal();
+    }
+</script>
+
 @endsection

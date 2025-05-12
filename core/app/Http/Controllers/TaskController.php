@@ -10,10 +10,9 @@ use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
-
     public function index()
     {
-        $tasks = Auth::user()->tasks;
+        $tasks = Auth::user()->tasks()->latest()->get();
         return view('tasks.index', compact('tasks'));
     }
     public function store(Request $request)

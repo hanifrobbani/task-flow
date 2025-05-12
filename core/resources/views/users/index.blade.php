@@ -178,7 +178,7 @@
                 <p class="text-gray-600 text-sm ">{{ $data->name }}</p>
             </div>
             <div>
-                <label class="text-gray-800 text-sm block font-medium">Status</label>
+                <label class="text-gray-800 text-sm block font-medium">Company</label>
                 <p class="text-gray-600 text-sm ">None</p>
             </div>
             <div>
