@@ -21,7 +21,7 @@ class TaskController extends Controller
         $taskValidated = $request->validate([
             'title' => 'required|max:255',
             'description' => 'nullable',
-            'badge' => 'required',
+            'badge_tasks_id' => 'required',
             'users_id' => 'required',
             'projects_id' => 'required',
             'start_date' => 'required|date',

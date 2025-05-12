@@ -13,7 +13,7 @@
 
         <div class="grid grid-cols-[repeat(auto-fill,minmax(19rem,1fr))] gap-5">
             @foreach ($data as $item)
-                <a href="/project/{{ $item->id }}">
+                <a href="/project/{{ $item->id }}/kanban">
                     <div class="bg-white shadow rounded px-5 py-2">
                         <div class="flex justify-between items-center border-b py-2">
                             <h1 class="font-medium">{{ $item->badge }}</h1>
@@ -63,8 +63,6 @@
                                 </div>
                                 <p class="text-sm text-gray-600">{{ $item->progress }}%</p>
                             </div>
-
-
                         </div>
 
                     </div>

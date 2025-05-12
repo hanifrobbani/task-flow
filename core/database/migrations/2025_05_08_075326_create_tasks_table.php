@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('description')->nullable();
-            $table->string('badge');
+            $table->foreignId('badge_tasks_id')->constrained('badge_tasks')->onDelete('cascade');
             $table->foreignId('users_id')->constrained('users')->onDelete('cascade');
             $table->uuid('projects_id');            
             $table->foreign('projects_id')->references('id')->on('projects')->onDelete('cascade');

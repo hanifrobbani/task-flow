@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BadgeTask;
 use App\Models\Projects;
 use App\Models\ProjectTeamMember;
 use App\Models\Task;
@@ -178,8 +179,9 @@ class ProjectController extends Controller
     public function kanbanProject(string $id)
     {
         $data = Projects::findOrFail($id);
-        $tasks = Task::with('user')->get();
+        $tasks = Task::with('user', 'badge')->get();
         $user = User::all();
-        return view('projects.kanban', compact('data', 'user', 'tasks'));
+        $badge = BadgeTask::all();
+        return view('projects.kanban', compact('data', 'user', 'tasks', 'badge'));
     }
 }

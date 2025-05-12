@@ -21,8 +21,7 @@
         .kanban-board {
             max-height: 100vh;
             overflow-y: auto;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-            0 2px 4px -2px rgba(0, 0, 0, 0.1);
+            border: 1px solid #cbd5e1;
             -ms-overflow-style: none;
             scrollbar-width: none;
         }
@@ -42,6 +41,8 @@
         .kanban-item {
             border-radius: 8px;
             transition: .1s ease-in-out;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+            0 2px 4px -2px rgba(0, 0, 0, 0.1);
         }
 
         .kanban-item:hover {
@@ -135,13 +136,13 @@
                         <label for="countries" class="block mb-1 text-sm font-medium text-gray-800">Badge</label>
                         <select id="countries"
                             class="bg-gray-50 border border-gray-300 text-gray-800 text-sm rounded-lg block w-full p-2.5 outline-none focus:ring-4 focus:ring-blue-200 transition"
-                            name="badge">
+                            name="badge_tasks_id">
                             <option selected disabled>Select Badge</option>
-                            <option value="Design">Design</option>
-                            <option value="Backend">Backend</option>
-                            <option value="Frontend">Frontend</option>
+                            @foreach ($badge as $item)
+                            <option value="{{ $item->id }}">{{ $item->name }}</option>
+                            @endforeach
                         </select>
-                        @error('badge')
+                        @error('badge_tasks_id')
                             <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                         @enderror
                     </div>
@@ -217,7 +218,7 @@ const todoItems = [
     {
         id: "{{ $task->id }}",
         title: `<div>
-            <p class="bg-blue-600 text-white py-1 px-2 inline-block rounded-md text-sm">{{ $task->badge }}</p>
+            <p class="text-white py-1 px-2 inline-block rounded-md text-sm" style="background-color: {{ $task->badge->color }}">{{ $task->badge->name }}</p>
             <h1 class="font-medium text-gray-600 mt-2">{{ $task->title }}</h1>
             <div class="flex gap-2 mt-2">
                 <div class="flex gap-1 bg-green-600 items-center p-1 rounded-md">
@@ -258,7 +259,7 @@ const todoItems = [
             </div>
             <div class="mt-4">
                 <div class="w-full bg-gray-200 rounded-xl">
-                    <div class="w-40 bg-green-600 h-4 rounded-xl">
+                    <div class="{{ $task->progress < 40 ? 'bg-red-500' : ($task->progress < 70 ? 'bg-yellow-500' : 'bg-green-500') }} h-4 rounded-xl" style="width: {{ $task->progress }}%;">
                         <p class="text-center font-medium text-white text-xs">{{ $task->progress }}%</p>
                     </div>
                 </div>
@@ -275,7 +276,7 @@ const progressItems = [
     {
         id: "{{ $task->id }}",
         title: `<div>
-            <p class="bg-blue-600 text-white py-1 px-2 inline-block rounded-md text-sm">{{ $task->badge }}</p>
+            <p class="text-white py-1 px-2 inline-block rounded-md text-sm" style="background-color: {{ $task->badge->color }}">{{ $task->badge->name }}</p>
             <h1 class="font-medium text-gray-600 mt-2">{{ $task->title }}</h1>
             <div class="flex gap-2 mt-2">
                 <div class="flex gap-1 bg-green-600 items-center p-1 rounded-md">
@@ -316,7 +317,7 @@ const progressItems = [
             </div>
             <div class="mt-4">
                 <div class="w-full bg-gray-200 rounded-xl">
-                    <div class="w-40 bg-green-600 h-4 rounded-xl">
+                    <div class="{{ $task->progress < 40 ? 'bg-red-500' : ($task->progress < 70 ? 'bg-yellow-500' : 'bg-green-500') }} h-4 rounded-xl" style="width: {{ $task->progress }}%;">
                         <p class="text-center font-medium text-white text-xs">{{ $task->progress }}%</p>
                     </div>
                 </div>
@@ -333,7 +334,7 @@ const doneItems = [
     {
         id: "{{ $task->id }}",
         title: `<div>
-            <p class="bg-blue-600 text-white py-1 px-2 inline-block rounded-md text-sm">{{ $task->badge }}</p>
+            <p class="text-white py-1 px-2 inline-block rounded-md text-sm" style="background-color: {{ $task->badge->color }}">{{ $task->badge->name }}</p>
             <h1 class="font-medium text-gray-600 mt-2">{{ $task->title }}</h1>
             <div class="flex gap-2 mt-2">
                 <div class="flex gap-1 bg-green-600 items-center p-1 rounded-md">
@@ -374,7 +375,7 @@ const doneItems = [
             </div>
             <div class="mt-4">
                 <div class="w-full bg-gray-200 rounded-xl">
-                    <div class="w-40 bg-green-600 h-4 rounded-xl">
+                    <div class="{{ $task->progress < 40 ? 'bg-red-500' : ($task->progress < 70 ? 'bg-yellow-500' : 'bg-green-500') }} h-4 rounded-xl" style="width: {{ $task->progress }}%;">
                         <p class="text-center font-medium text-white text-xs">{{ $task->progress }}%</p>
                     </div>
                 </div>

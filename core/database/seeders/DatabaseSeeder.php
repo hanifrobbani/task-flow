@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\BadgeTask;
 use App\Models\User;
 use App\Models\Skill;
 use App\Models\Socials;
@@ -22,34 +23,39 @@ class DatabaseSeeder extends Seeder
         $password = Hash::make('admin');
         // User::factory(10)->create();
 
-        User::factory()->create([
-            'name' => 'admin',
-            'email' => 'admin@gmail.com',
-            'password' => $password
-        ]);
-        Skill::create([
-            'name' => 'admin',
-            'logo' => '<i class="devicon-laravel-original colored"></i>',
-        ]);
-        Socials::create([
-            'name' => 'admin',
-            'logo' => '<i class="devicon-laravel-original colored"></i>',
-            'platform' => 'Laravel',
-        ]);
+        // User::factory()->create([
+        //     'name' => 'admin',
+        //     'email' => 'admin@gmail.com',
+        //     'password' => $password
+        // ]);
+        // Skill::create([
+        //     'name' => 'admin',
+        //     'logo' => '<i class="devicon-laravel-original colored"></i>',
+        // ]);
+        // Socials::create([
+        //     'name' => 'admin',
+        //     'logo' => '<i class="devicon-laravel-original colored"></i>',
+        //     'platform' => 'Laravel',
+        // ]);
         
-        UserSkills::create([
-            'skill' => 'Laravel',
-            'users_id' => '1',
-            'skills_id' => '1',
-        ]);
-        UserSocial::create([
-            'link' => 'Laravel',
-            'socials_id' => '1',
-            'users_id' => '1',
-        ]);
-        UserPosition::create([
-            'name' => 'Tech Lead',
-        ]);
+        // UserSkills::create([
+        //     'skill' => 'Laravel',
+        //     'users_id' => '1',
+        //     'skills_id' => '1',
+        // ]);
+        // UserSocial::create([
+        //     'link' => 'Laravel',
+        //     'socials_id' => '1',
+        //     'users_id' => '1',
+        // ]);
+        // UserPosition::create([
+        //     'name' => 'Tech Lead',
+        // ]);
+
+        // BadgeTask::create([
+        //     'name' => 'Backend',
+        //     'color' => '#2563eb',
+        // ]);
 
     }
 }
