@@ -70,7 +70,7 @@
                     stroke-linejoin="round"></path>
             </svg>
             Add New Task</button>
-        <button class="py-2 px-3 text-gray-600 font-medium text-sm flex items-center gap-1 hover:bg-gray-800 hover:text-white rounded-md transition-colors group">
+        <a href="/project/{{ $data->id }}" class="py-2 px-3 text-gray-600 font-medium text-sm flex items-center gap-1 hover:bg-gray-800 hover:text-white rounded-md transition-colors group">
             <svg class="group-hover:fill-white transition-colors" width="20" height="20" viewBox="0 0 24 24" fill="#25314C"
                 xmlns="http://www.w3.org/2000/svg">
                 <path
@@ -78,7 +78,7 @@
                 </path>
             </svg>
 
-            Detail</button>
+            Detail</a>
     </div>
     
     <div class="overflow-x-auto max-h-screen pb-2 mt-4">

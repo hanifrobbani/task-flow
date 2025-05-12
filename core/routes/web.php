@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserStatisticController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -23,8 +24,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/', function () {
         return view('users.statistic');
     });
-    Route::get('/dashboard', function () {
-        return view('users.statistic');
+    
+    Route::group([
+        'prefix' => 'dashboard',
+    ], function () {
+        Route::get('/', [UserStatisticController::class, 'taskProgress']);
     });
 
     Route::group([

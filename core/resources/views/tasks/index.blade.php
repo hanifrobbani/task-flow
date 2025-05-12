@@ -60,7 +60,7 @@
                                     <tr class="hover:bg-gray-100 dark:hover:bg-neutral-700">
                                         <td class="py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200">{{ $loop->iteration }}</td>
                                         <td class="px-4 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-neutral-200">{{ $item->title }}</td>
-                                        <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">{{ $item->badge }}</td>
+                                        <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">{{ $item->badge->name }}</td>
                                         <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">{{ $item->project->title }}</td>
                                         <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">{{ $item->list_name }}</td>
                                         <td class="px-4 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-neutral-200">{{ $item->point }}</td>
