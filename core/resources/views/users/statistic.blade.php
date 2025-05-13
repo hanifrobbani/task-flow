@@ -61,8 +61,8 @@
         <div class="flex justify-between gap-5">
             <div class="flex flex-col p-5 bg-white shadow-md rounded-md w-full">
                 <div class="flex justify-between text-xl mb-1 font-semibold">
-                    <h1 class="text-gray-800">{{ $dailyProgress }}/8h</h1>
-                    <h1 class="text-red-500">{{ round(($dailyProgress / 40) * 100, 2) }}%</h1>
+                    <h1 class="text-gray-800">{{ $dailyProgress ?? 0 }}/8h</h1>
+                    <h1 class="text-red-500">{{ round(($dailyProgress / 40) * 100, 2) ?? 0 }}%</h1>
                 </div>
                 <div class="text-sm text-gray-600">
                     <p>Progress Harian</p>
@@ -74,8 +74,8 @@
             </div>
             <div class="flex flex-col p-5 bg-white shadow-md rounded-md w-full">
                 <div class="flex justify-between text-xl mb-1 font-semibold">
-                    <h1 class="text-gray-800">{{ $weeklyPoint }}/40</h1>
-                    <h1 class="text-red-500">{{ round(($weeklyPoint / 40) * 100, 2) }}%</h1>
+                    <h1 class="text-gray-800">{{ $weeklyPoint?? 0 }}/40</h1>
+                    <h1 class="text-red-500">{{ round(($weeklyPoint / 40) * 100, 2) ?? 0 }}%</h1>
                 </div>
                 <div class="text-sm text-gray-600">
                     <p>Target Mingguan</p>
@@ -87,8 +87,8 @@
             </div>
             <div class="flex flex-col p-5 bg-white shadow-md rounded-md w-full">
                 <div class="flex justify-between text-xl mb-1 font-semibold">
-                    <h1 class="text-gray-800">{{ $dailyProgressWeek }}/40h</h1>
-                    <h1 class="text-red-500">{{ round(($dailyProgressWeek / 40) * 100, 2) }}%</h1>
+                    <h1 class="text-gray-800">{{ $dailyProgressWeek ?? 0 }}/40h</h1>
+                    <h1 class="text-red-500">{{ round(($dailyProgressWeek / 40) * 100, 2) ?? 0 }}%</h1>
                 </div>
                 <div class="text-sm text-gray-600">
                     <p>Progress Mingguan</p>

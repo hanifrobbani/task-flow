@@ -41,6 +41,31 @@ class TaskController extends Controller
         }
     }
 
+    public function updateTask(Request $request, string $id)
+    {
+        $task = Task::findOrFail($id);
+        $taskValidated = $request->validate([
+            'title' => 'required|max:255',
+            'description' => 'nullable',
+            'badge_tasks_id' => 'required',
+            'users_id' => 'required',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date',
+            'point' => 'nullable|numeric',
+            'progress' => 'nullable',
+            'type' => 'nullable',
+        ]);
+
+        try {
+            $task->update($taskValidated);
+            return redirect()->back()->with('successTask', 'Task successfully updated!');
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+            return redirect()->back()->with('errorTask', 'Error, try again later!');
+        }
+
+    }
+
     public function updateTaskStatus(Request $request, string $task_id)
     {
         try {
@@ -82,12 +107,13 @@ class TaskController extends Controller
         ]);
     }
 
-    public function destroy(string $id){
+    public function destroy(string $id)
+    {
         $task = Task::findOrFail($id);
-        try{
+        try {
             $task->delete();
             return redirect()->back()->with('successTask', 'Task successfully deleted!');
-        }catch(Exception $e){
+        } catch (Exception $e) {
             Log::error($e->getMessage());
             return redirect()->back()->with('errorTask', 'error, please tyr again later!');
         }

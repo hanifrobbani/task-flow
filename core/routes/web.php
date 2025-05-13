@@ -21,9 +21,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::post('/logout', [AuthController::class, 'logout']);
 
-    Route::get('/', function () {
-        return view('users.statistic');
-    });
+    Route::get('/', [UserStatisticController::class, 'taskProgress']);
     
     Route::group([
         'prefix' => 'dashboard',
@@ -51,6 +49,7 @@ Route::group(['middleware' => 'auth'], function () {
     ], function () {
         Route::get('/my-task', [TaskController::class, 'index']);
         Route::post('create', [TaskController::class, 'store']);
+        Route::put('/{task_id}', [TaskController::class, 'updateTask']);
         Route::delete('{task_id}', [TaskController::class, 'destroy']);
         Route::post('/{task_id}/update-working-hour', [TaskController::class, 'updateWorkingHour'])->name('tasks.update-working-hour');
         Route::post('/{task_id}/update-list-name', [TaskController::class, 'updateTaskStatus'])->name('tasks.update-list-name');
