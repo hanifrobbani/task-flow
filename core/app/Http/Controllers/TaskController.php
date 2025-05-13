@@ -48,7 +48,6 @@ class TaskController extends Controller
             'title' => 'required|max:255',
             'description' => 'nullable',
             'badge_tasks_id' => 'required',
-            'users_id' => 'required',
             'start_date' => 'required|date',
             'end_date' => 'required|date',
             'point' => 'nullable|numeric',

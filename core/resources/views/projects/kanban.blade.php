@@ -275,9 +275,9 @@
                     </div>
                     <div class="w-full">
                         <label for="countries" class="block mb-1 text-sm font-medium">Assign To</label>
-                        <input type="text" id="users_id"
-                            class="block w-full border border-gray-300 text-sm rounded-lg p-2 outline-none text-gray-600 font-medium focus:ring-4 focus:ring-blue-200 transition"
-                            name="users_id" readonly>
+                        <input type="text" value="{{ auth()->user()->name }}"
+                            class="block w-full border border-gray-300 text-sm rounded-lg p-2 outline-none text-gray-600 font-medium focus:ring-4 focus:ring-blue-200 transition hover:cursor-not-allowed"
+                            readonly disabled>
                         @error('users_id')
                             <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                         @enderror
@@ -307,7 +307,7 @@
                             <div class="relative w-full">
                                 <div class="tooltip tooltip-open absolute -top-1 left-1/2 -translate-x-1/2"
                                     id="sliderTooltip" data-tip="50"></div>
-                                <input id="rangeInput" name="progress" type="range" min="0" max="100" value="50"
+                                <input id="rangeInput" name="progress" type="range" min="0" max="100"
                                     class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700" />
                             </div>
                         </div>
@@ -338,7 +338,7 @@
             @foreach ($tasks->where('list_name', 'todo') as $task)
                         {
                     id: "{{ $task->id }}",
-                    title: `<div onclick="openUpdateModal({{ $task->id }}, '{{ $task->title }}', '{{ $task->start_date }}', '{{ $task->end_date }}', '{{ $task->users_id }}', {{ $task->badge_tasks_id }}, '{{ $task->description }}', {{ $task->point }})">
+                    title: `<div onclick="openUpdateModal({{ $task->id }}, '{{ $task->title }}', '{{ $task->start_date }}', '{{ $task->end_date }}', {{ $task->badge_tasks_id }}, '{{ $task->description }}', {{ $task->point }})">
                                 <p class="text-white py-1 px-2 inline-block rounded-md text-sm" style="background-color: {{ $task->badge->color }}">{{ $task->badge->name }}</p>
                                 <h1 class="font-medium text-gray-600 mt-2">{{ $task->title }}</h1>
                                 <div class="flex gap-2 mt-2">
@@ -683,20 +683,22 @@
             tooltip.style.transform = "translateX(-50%)";
         });
 
-        function openUpdateModal(taskId, title, start_date, end_date, users_id, badge_tasks_id, description, point, progress = 0, list_name = '') {
+        function openUpdateModal(taskId, title, start_date, end_date, badge_tasks_id, description, point, progress = 0, list_name = '') {
             const form = document.getElementById('formUpdateTask');
             form.action = `/task/${taskId}`;
 
             document.getElementById('title').value = title;
             document.getElementById('start_date').value = start_date;
             document.getElementById('end_date').value = end_date;
-            document.getElementById('users_id').value = users_id;
             document.getElementById('badge_tasks_id').value = badge_tasks_id;
             document.getElementById('description').value = description;
             document.getElementById('point').value = point;
             document.getElementById('rangeInput').value = progress;
             document.getElementById('sliderTooltip').setAttribute('data-tip', progress);
             document.getElementById('list_name').value = list_name;
+
+            range.value = progress;
+            range.dispatchEvent(new Event("input"));
 
             modal_update_task.showModal();
         }
