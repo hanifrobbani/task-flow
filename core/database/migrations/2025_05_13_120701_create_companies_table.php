@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('description');
-            $table->string('background_img');
-            $table->string('profile_img');
+            $table->string('background_img')->nullable();
+            $table->string('profile_img')->nullable();
             $table->unsignedBigInteger('owner_id')->nullable();
             $table->foreign('owner_id')->references('id')->on('users')->onDelete('set null');
             $table->timestamps();

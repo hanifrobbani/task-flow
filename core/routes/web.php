@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
@@ -58,11 +59,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('/project', ProjectController::class);
     Route::put('/project/member/{id}', [ProjectController::class, 'updateTeamMember']);
 
-    Route::group([
-        'prefix' => 'company',
-    ], function () {
-        Route::get('/', function () {
-            return view('company.index');
-        });
-    });
+    Route::resource('/company', CompanyController::class)->except(['show']);
+    Route::get('/company/my-company', [CompanyController::class, 'show']);
+
 });

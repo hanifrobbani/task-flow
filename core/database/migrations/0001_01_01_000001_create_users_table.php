@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('phone_number')->nullable();
             $table->text('bio')->nullable();
             $table->string('address')->nullable();
+            $table->unsignedBigInteger('companies_id')->nullable();
             $table->foreignId('user_positions_id')->nullable()->constrained('user_positions')->onDelete('cascade');            
             $table->rememberToken();
             $table->timestamps();

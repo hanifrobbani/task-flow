@@ -13,9 +13,9 @@
         </div>
         <div class="bg-white min-h-28 p-4 flex justify-between">
             <div class="pt-10">
-                <h1 class="font-semibold text-gray-800 text-xl">PT ABCD</h1>
+                <h1 class="font-semibold text-gray-800 text-xl">{{ $company->name }}</h1>
                 <p class="text-sm text-gray-600">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque, voluptatibus?
+                    {{ $company->description }}
                 </p>
             </div>
             <div>
@@ -51,7 +51,7 @@
                             placeholder="Search for users">
                     </div>
 
-                    <button
+                    <button type="button" onclick="modal_add_employee.showModal()"
                         class="p-2 bg-blue-600 text-white text-xs rounded-md flex gap-1 items-center hover:opacity-80"><svg
                             width="20" height="20" stroke-width="1.5" viewBox="0 0 24 24" fill="none"
                             xmlns="http://www.w3.org/2000/svg" color="#ffffff">
@@ -82,130 +82,32 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr
-                            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
-                            <th scope="row"
-                                class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
-                                <img class="w-10 h-10 rounded-full"
-                                    src="https://flowbite.com/application-ui/demo/images/users/joseph-mcfall.png"
-                                    alt="Jese image">
-                                <div class="ps-3">
-                                    <div class="text-base font-semibold">Neil Sims</div>
-                                    <div class="font-normal text-gray-500">neil.sims@flowbite.com</div>
-                                </div>
-                            </th>
-                            <td class="px-6 py-4">
-                                React Developer
-                            </td>
-                            <td class="px-6 py-4">
-                                <div class="flex items-center">
-                                    <div class="h-2.5 w-2.5 rounded-full bg-green-500 me-2"></div> Online
-                                </div>
-                            </td>
-                            <td class="px-6 py-4">
-                                <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit
-                                    user</a>
-                            </td>
-                        </tr>
-                        <tr
-                            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
-                            <th scope="row"
-                                class="flex items-center px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                <img class="w-10 h-10 rounded-full"
-                                    src="https://flowbite.com/application-ui/demo/images/users/joseph-mcfall.png"
-                                    alt="Jese image">
-                                <div class="ps-3">
-                                    <div class="text-base font-semibold">Bonnie Green</div>
-                                    <div class="font-normal text-gray-500">bonnie@flowbite.com</div>
-                                </div>
-                            </th>
-                            <td class="px-6 py-4">
-                                Designer
-                            </td>
-                            <td class="px-6 py-4">
-                                <div class="flex items-center">
-                                    <div class="h-2.5 w-2.5 rounded-full bg-green-500 me-2"></div> Online
-                                </div>
-                            </td>
-                            <td class="px-6 py-4">
-                                <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit
-                                    user</a>
-                            </td>
-                        </tr>
-                        <tr
-                            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
-                            <th scope="row"
-                                class="flex items-center px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                <img class="w-10 h-10 rounded-full"
-                                    src="https://flowbite.com/application-ui/demo/images/users/joseph-mcfall.png"
-                                    alt="Jese image">
-                                <div class="ps-3">
-                                    <div class="text-base font-semibold">Jese Leos</div>
-                                    <div class="font-normal text-gray-500">jese@flowbite.com</div>
-                                </div>
-                            </th>
-                            <td class="px-6 py-4">
-                                Vue JS Developer
-                            </td>
-                            <td class="px-6 py-4">
-                                <div class="flex items-center">
-                                    <div class="h-2.5 w-2.5 rounded-full bg-green-500 me-2"></div> Online
-                                </div>
-                            </td>
-                            <td class="px-6 py-4">
-                                <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit
-                                    user</a>
-                            </td>
-                        </tr>
-                        <tr
-                            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
-                            <th scope="row"
-                                class="flex items-center px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                <img class="w-10 h-10 rounded-full"
-                                    src="https://flowbite.com/application-ui/demo/images/users/joseph-mcfall.png"
-                                    alt="Jese image">
-                                <div class="ps-3">
-                                    <div class="text-base font-semibold">Thomas Lean</div>
-                                    <div class="font-normal text-gray-500">thomes@flowbite.com</div>
-                                </div>
-                            </th>
-                            <td class="px-6 py-4">
-                                UI/UX Engineer
-                            </td>
-                            <td class="px-6 py-4">
-                                <div class="flex items-center">
-                                    <div class="h-2.5 w-2.5 rounded-full bg-green-500 me-2"></div> Online
-                                </div>
-                            </td>
-                            <td class="px-6 py-4">
-                                <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit
-                                    user</a>
-                            </td>
-                        </tr>
-                        <tr class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
-                            <th scope="row"
-                                class="flex items-center px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                <img class="w-10 h-10 rounded-full"
-                                    src="https://flowbite.com/application-ui/demo/images/users/joseph-mcfall.png"
-                                    alt="Jese image">
-                                <div class="ps-3">
-                                    <div class="text-base font-semibold">Leslie Livingston</div>
-                                    <div class="font-normal text-gray-500">leslie@flowbite.com</div>
-                                </div>
-                            </th>
-                            <td class="px-6 py-4">
-                                SEO Specialist
-                            </td>
-                            <td class="px-6 py-4">
-                                <div class="flex items-center">
-                                    <div class="h-2.5 w-2.5 rounded-full bg-red-500 me-2"></div> Offline
-                                </div>
-                            </td>
-                            <td class="px-6 py-4">
-                                <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit
-                                    user</a>
-                            </td>
-                        </tr>
+                        @foreach ($company->employee as $employee)
+                            <tr
+                                class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                <th scope="row"
+                                    class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
+                                    <img class="w-10 h-10 rounded-full"
+                                        src="https://flowbite.com/application-ui/demo/images/users/joseph-mcfall.png"
+                                        alt="Jese image">
+                                    <div class="ps-3">
+                                        <div class="text-base font-semibold">{{ $employee->name }}</div>
+                                        <div class="font-normal text-gray-500">{{ $employee->email }}</div>
+                                    </div>
+                                </th>
+                                <td class="px-6 py-4">
+                                    {{ $employee->userPosition->name }}
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div class="flex items-center">
+                                        <div class="h-2.5 w-2.5 rounded-full bg-green-500 me-2"></div> Online
+                                    </div>
+                                </td>
+                                <td class="px-6 py-4">
+                                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                                </td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
@@ -231,14 +133,14 @@
             <div class="flex justify-between items-center mb-4">
                 <h1>Employee Position</h1>
                 <button class="p-2 bg-blue-600 text-white text-xs rounded-md flex gap-1 items-center hover:opacity-80">
-                        <svg width="20" height="20" stroke-width="1.5" viewBox="0 0 24 24" fill="none"
-                            xmlns="http://www.w3.org/2000/svg" color="#ffffff">
-                            <path d="M8 12H12M16 12H12M12 12V8M12 12V16" stroke="#ffffff" stroke-width="1.5"
-                                stroke-linecap="round" stroke-linejoin="round"></path>
-                            <path
-                                d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
-                                stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                        </svg></button>
+                    <svg width="20" height="20" stroke-width="1.5" viewBox="0 0 24 24" fill="none"
+                        xmlns="http://www.w3.org/2000/svg" color="#ffffff">
+                        <path d="M8 12H12M16 12H12M12 12V8M12 12V16" stroke="#ffffff" stroke-width="1.5"
+                            stroke-linecap="round" stroke-linejoin="round"></path>
+                        <path
+                            d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+                            stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg></button>
             </div>
             <div class="overflow-x-auto sm:rounded-lg">
                 <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -299,4 +201,36 @@
             </table>
         </div>
     </div>
+
+    <!-- Modal create task -->
+    <dialog id="modal_add_employee" class="modal">
+        <form action="{{ url('/company/employee') }}" method="POST"
+            class="relative max-w-xl bg-white rounded-lg shadow-md p-5 w-full">
+            @csrf
+            <div class="flex justify-between items-center border-b border-gray-200">
+                <h1 class="text-gray-800 font-medium">Add new employee</h1>
+                <button type="button" onclick="modal_add_employee.close()"
+                    class="hover:bg-gray-100 transition-colors rounded-lg p-2">
+                    <svg width="24" height="24" stroke-width="2" viewBox="0 0 24 24" fill="none"
+                        xmlns="http://www.w3.org/2000/svg" color="#000000">
+                        <path
+                            d="M6.75827 17.2426L12.0009 12M17.2435 6.75736L12.0009 12M12.0009 12L6.75827 6.75736M12.0009 12L17.2435 17.2426"
+                            stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="w-full mt-2">
+                <label for="" class="text-sm text-gray-600">Email</label>
+                <input type="text"
+                    class="block w-full border border-gray-300 text-sm rounded-lg p-2 outline-none text-gray-600 font-medium focus:ring-4 focus:ring-blue-200 transition bg-gray-50"
+                    name="title">
+            </div>
+
+            <button type="submit"
+                class="text-sm mt-5 font-medium bg-blue-600 text-white px-5 py-2 rounded-md hover:opacity-80 transition">
+                Send Invitation
+            </button>
+        </form>
+    </dialog>
 @endsection

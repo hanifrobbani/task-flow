@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\BadgeTask;
+use App\Models\Company;
 use App\Models\User;
 use App\Models\Skill;
 use App\Models\Socials;
@@ -56,6 +57,11 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Backend',
         //     'color' => '#2563eb',
         // ]);
+        Company::create([
+            'name' => 'PT Kebajikan',
+            'description' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque placeat a ipsa assumenda fuga sint, velit maxime odit ab. Sed, consectetur impedit? Illum a vero, assumenda deserunt non temporibus aliquam.',
+            'owner_id' => 1
+        ]);
 
     }
 }

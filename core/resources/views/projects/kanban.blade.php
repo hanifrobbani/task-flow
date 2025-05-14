@@ -107,10 +107,10 @@
                 </button>
             </div>
             <div class="flex flex-col max-h-96 overflow-y-auto scrollable px-2">
-                <div class="w-full">
-                    <label for="">Title</label>
+                <div class="w-full mt-2">
+                    <label for="" class="text-sm text-gray-600 font-medium">Title</label>
                     <input type="text"
-                        class="block w-full border border-gray-300 text-sm rounded-lg p-2 outline-none text-gray-600 font-medium focus:ring-4 focus:ring-blue-200 transition"
+                        class="block w-full border border-gray-300 text-sm rounded-lg p-2 outline-none text-gray-600 font-medium focus:ring-4 focus:ring-blue-200 transition bg-gray-50"
                         name="title">
                     @error('title')
                         <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
@@ -118,18 +118,18 @@
                 </div>
                 <div class="my-4 flex items-center gap-5">
                     <div class="w-full">
-                        <label for="countries" class="block mb-1 text-sm font-medium text-gray-800">Start Date</label>
+                        <label for="countries" class="block mb-1 text-sm font-medium text-gray-600">Start Date</label>
                         <input type="datetime-local"
-                            class="w-full p-2 border border-gray-400 rounded-lg text-gray-600 text-sm focus:ring-4 focus:ring-blue-200 transition outline-none"
+                            class="w-full p-2 border border-gray-400 rounded-lg text-gray-600 text-sm focus:ring-4 focus:ring-blue-200 transition outline-none bg-gray-50"
                             name="start_date">
                         @error('start_date')
                             <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                         @enderror
                     </div>
                     <div class="w-full">
-                        <label for="countries" class="block mb-1 text-sm font-medium">Due Date</label>
+                        <label for="countries" class="block mb-1 text-sm font-medium text-gray-600">Due Date</label>
                         <input type="datetime-local"
-                            class="w-full p-2 border border-gray-400 rounded-lg  text-gray-600 text-sm focus:ring-4 focus:ring-blue-200 transition outline-none"
+                            class="w-full p-2 border border-gray-400 rounded-lg  text-gray-600 text-sm focus:ring-4 focus:ring-blue-200 transition outline-none bg-gray-50"
                             name="end_date">
                         @error('end_date')
                             <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
@@ -138,7 +138,7 @@
                 </div>
                 <div class="my-3 flex items-center gap-5">
                     <div class="w-full">
-                        <label for="countries" class="block mb-1 text-sm font-medium text-gray-800">Badge</label>
+                        <label for="countries" class="block mb-1 text-sm font-medium text-gray-600">Badge</label>
                         <select id="countries"
                             class="bg-gray-50 border border-gray-300 text-gray-800 text-sm rounded-lg block w-full p-2.5 outline-none focus:ring-4 focus:ring-blue-200 transition"
                             name="badge_tasks_id">
@@ -152,7 +152,7 @@
                         @enderror
                     </div>
                     <div class="w-full">
-                        <label for="countries" class="block mb-1 text-sm font-medium">Assign To</label>
+                        <label for="countries" class="block mb-1 text-sm font-medium text-gray-600">Assign To</label>
                         <select id="countries"
                             class="bg-gray-50 border border-gray-300 text-gray-800 text-sm rounded-lg block w-full p-2.5 outline-none focus:ring-4 focus:ring-blue-200 transition"
                             name="users_id">
@@ -169,25 +169,25 @@
                     </div>
                 </div>
                 <div class="">
-                    <label for="countries" class="block mb-1 text-sm font-medium">Description</label>
+                    <label for="countries" class="block mb-1 text-sm font-medium text-gray-600">Description</label>
                     <textarea name="description"
-                        class="block w-full border border-gray-300 text-sm rounded-lg p-2 outline-none min-h-40 text-gray-600 font-medium focus:ring-4 focus:ring-blue-200 transition"></textarea>
+                        class="block w-full border border-gray-300 text-sm rounded-lg p-2 outline-none min-h-40 text-gray-600 font-medium focus:ring-4 focus:ring-blue-200 transition bg-gray-50"></textarea>
                     @error('description')
                         <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                     @enderror
                 </div>
                 <div class="my-3 flex items-center gap-5">
                     <div class="w-full">
-                        <label for="countries" class="block mb-1 text-sm font-medium text-gray-800">Point</label>
+                        <label for="countries" class="block mb-1 text-sm font-medium text-gray-600">Point</label>
                         <input type="number"
-                            class="block w-full border border-gray-300 text-sm rounded-lg p-2 outline-none text-gray-600 font-medium focus:ring-4 focus:ring-blue-200 transition"
+                            class="block w-full border border-gray-300 text-sm rounded-lg p-2 outline-none text-gray-600 font-medium focus:ring-4 focus:ring-blue-200 transition bg-gray-50"
                             name="point">
                         @error('point')
                             <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                         @enderror
                     </div>
                     <div class="w-full">
-                        <label for="countries" class="block mb-1 text-sm font-medium">Progress</label>
+                        <label for="countries" class="block mb-1 text-sm font-medium text-gray-600">Progress</label>
                         <div class="p-2 border border-gray-200 rounded-md shadow">
                             <div class="relative w-full">
                                 <div class="tooltip tooltip-open absolute -top-1 left-1/2 -translate-x-1/2"
@@ -231,9 +231,9 @@
             </div>
             <div class="flex flex-col max-h-96 overflow-y-auto scrollable px-2">
                 <div class="w-full">
-                    <label for="">Title</label>
+                    <label for="" class="text-sm text-gray-600 font-medium">Title</label>
                     <input type="text"
-                        class="block w-full border border-gray-300 text-sm rounded-lg p-2 outline-none text-gray-600 font-medium focus:ring-4 focus:ring-blue-200 transition"
+                        class="block w-full border border-gray-300 text-sm rounded-lg p-2 outline-none text-gray-600 font-medium focus:ring-4 focus:ring-blue-200 transition bg-gray-50"
                         name="title" id="title">
                     @error('title')
                         <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
@@ -241,18 +241,18 @@
                 </div>
                 <div class="my-4 flex items-center gap-5">
                     <div class="w-full">
-                        <label for="countries" class="block mb-1 text-sm font-medium text-gray-800">Start Date</label>
+                        <label for="countries" class="block mb-1 text-sm font-medium text-gray-600">Start Date</label>
                         <input type="datetime-local"
-                            class="w-full p-2 border border-gray-400 rounded-lg text-gray-600 text-sm focus:ring-4 focus:ring-blue-200 transition outline-none"
+                            class="w-full p-2 border border-gray-400 rounded-lg text-gray-600 text-sm focus:ring-4 focus:ring-blue-200 transition outline-none bg-gray-50"
                             name="start_date" id="start_date">
                         @error('start_date')
                             <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                         @enderror
                     </div>
                     <div class="w-full">
-                        <label for="countries" class="block mb-1 text-sm font-medium">Due Date</label>
+                        <label for="countries" class="block mb-1 text-sm text-gray-600 font-medium">Due Date</label>
                         <input type="datetime-local"
-                            class="w-full p-2 border border-gray-400 rounded-lg  text-gray-600 text-sm focus:ring-4 focus:ring-blue-200 transition outline-none"
+                            class="w-full p-2 border border-gray-400 rounded-lg  text-gray-600 text-sm focus:ring-4 focus:ring-blue-200 transition outline-none bg-gray-50"
                             name="end_date" id="end_date">
                         @error('end_date')
                             <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
@@ -261,7 +261,7 @@
                 </div>
                 <div class="my-3 flex items-center gap-5">
                     <div class="w-full">
-                        <label for="badge_tasks_id" class="block mb-1 text-sm font-medium text-gray-800">Badge</label>
+                        <label for="badge_tasks_id" class="block mb-1 text-sm font-medium text-gray-600">Badge</label>
                         <select class="bg-gray-50 border border-gray-300 text-gray-800 text-sm rounded-lg block w-full p-2.5 outline-none focus:ring-4 focus:ring-blue-200 transition"
                             name="badge_tasks_id" id="badge_tasks_id">
                             <option selected disabled>Select Badge</option>
@@ -274,9 +274,9 @@
                         @enderror
                     </div>
                     <div class="w-full">
-                        <label for="countries" class="block mb-1 text-sm font-medium">Assign To</label>
+                        <label for="countries" class="block mb-1 text-sm text-gray-600 font-medium">Assign To</label>
                         <input type="text" value="{{ auth()->user()->name }}"
-                            class="block w-full border border-gray-300 text-sm rounded-lg p-2 outline-none text-gray-600 font-medium focus:ring-4 focus:ring-blue-200 transition hover:cursor-not-allowed"
+                            class="block w-full border border-gray-300 text-sm rounded-lg p-2 outline-none text-gray-600 font-medium focus:ring-4 focus:ring-blue-200 transition hover:cursor-not-allowed bg-gray-50"
                             readonly disabled>
                         @error('users_id')
                             <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
@@ -284,25 +284,25 @@
                     </div>
                 </div>
                 <div class="">
-                    <label for="countries" class="block mb-1 text-sm font-medium">Description</label>
+                    <label for="countries" class="block mb-1 text-sm text-gray-600 font-medium">Description</label>
                     <textarea id="description" name="description"
-                        class="block w-full border border-gray-300 text-sm rounded-lg p-2 outline-none min-h-40 text-gray-600 font-medium focus:ring-4 focus:ring-blue-200 transition"></textarea>
+                        class="block w-full border border-gray-300 text-sm rounded-lg p-2 outline-none min-h-40 text-gray-600 font-medium focus:ring-4 focus:ring-blue-200 transition bg-gray-50"></textarea>
                     @error('description')
                         <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                     @enderror
                 </div>
                 <div class="my-3 flex items-center gap-5">
                     <div class="w-full">
-                        <label for="countries" class="block mb-1 text-sm font-medium text-gray-800">Point</label>
+                        <label for="countries" class="block mb-1 text-sm font-medium text-gray-600">Point</label>
                         <input type="number"
-                            class="block w-full border border-gray-300 text-sm rounded-lg p-2 outline-none text-gray-600 font-medium focus:ring-4 focus:ring-blue-200 transition"
+                            class="block w-full border border-gray-300 text-sm rounded-lg p-2 outline-none text-gray-600 font-medium focus:ring-4 focus:ring-blue-200 transition bg-gray-50"
                             name="point" id="point">
                         @error('point')
                             <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                         @enderror
                     </div>
                     <div class="w-full">
-                        <label for="countries" class="block mb-1 text-sm font-medium">Progress</label>
+                        <label for="countries" class="block mb-1 text-sm text-gray-600 font-medium">Progress</label>
                         <div class="p-2 border border-gray-200 rounded-md shadow">
                             <div class="relative w-full">
                                 <div class="tooltip tooltip-open absolute -top-1 left-1/2 -translate-x-1/2"
