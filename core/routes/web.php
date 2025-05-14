@@ -59,7 +59,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('/project', ProjectController::class);
     Route::put('/project/member/{id}', [ProjectController::class, 'updateTeamMember']);
 
-    Route::resource('/company', CompanyController::class)->except(['show']);
-    Route::get('/company/my-company', [CompanyController::class, 'show']);
+    Route::resource('/company', CompanyController::class);
+    Route::get('/company/my-company', [CompanyController::class, 'companyUser']);
 
 });

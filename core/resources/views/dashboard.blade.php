@@ -31,9 +31,6 @@
 <body class="font-family-thin overflow-y-auto">
     <div class="min-h-screen flex w-full relative bg-[#F5F5F5]">
 
-        <div class="">
-            @yield('company')
-        </div>
         <!-- Sidebar -->
         <aside class="w-1/5 min-h-screen fixed z-40">
             @include('sidebar')

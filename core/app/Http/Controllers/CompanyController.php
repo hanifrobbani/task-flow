@@ -36,14 +36,10 @@ class CompanyController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show()
+    public function show(string $id)
     {
-        $company = Company::with('employee.userPosition')->find(Auth::user()->companies_id);
-        if(!$company){
-            return redirect()->back();
-        }
-
-        return view('company.index', compact('company'));
+        $company = Company::findOrFail($id);
+        return view('company.show', compact('company'));
     }
 
     /**
@@ -68,5 +64,14 @@ class CompanyController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function companyUser(){
+        $company = Company::with('employee.userPosition')->find(Auth::user()->companies_id);
+        if(!$company){
+            return redirect()->back();
+        }
+
+        return view('company.index', compact('company'));
     }
 }
