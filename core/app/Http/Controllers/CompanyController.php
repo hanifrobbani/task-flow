@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\JoinCompanyMail;
 use App\Models\Company;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Mail;
 
 class CompanyController extends Controller
 {
@@ -73,5 +77,26 @@ class CompanyController extends Controller
         }
 
         return view('company.index', compact('company'));
+    }
+
+    public function joinCompany(Request $request){
+        $validatedData = $request->validate([
+            'email' => 'required|exist:users,email',
+            'companies_id' => 'required',
+        ]);
+
+        $user = User::where('email', $validatedData['email'])->first();
+        $company = Company::findOrFail($validatedData['companies_id']);
+        $companyToken = Str::random(12);
+
+        $user->update([
+            'join_company_token' => $companyToken
+        ]);
+
+        $urlJoinCompany = url('/user/join-company/' . $user->id . '?token=' . $companyToken . '?idCompany=' . $company->id);
+        Mail::to($user->email)->send(new JoinCompanyMail($user, $company->name, $urlJoinCompany));
+
+        return redirect()->back()->with('successCompany', 'Email invitation has been sent!');
+
     }
 }

@@ -116,6 +116,15 @@ class UserController extends Controller
         }
     }
 
+    public function updateCompanyUser(Request $request, string $id){
+        $user = User::findOrFail($id);
+
+        if($request->token == $user->join_company_token){
+            $user->companies_id = $request->idCompany;
+            $user->save();
+        }
+    }
+
 }
 
 

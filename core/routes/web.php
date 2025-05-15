@@ -21,45 +21,47 @@ Route::group([
 Route::group(['middleware' => 'auth'], function () {
 
     Route::post('/logout', [AuthController::class, 'logout']);
-
-    Route::get('/', [UserStatisticController::class, 'taskProgress']);
-    
-    Route::group([
-        'prefix' => 'dashboard',
-    ], function () {
-        Route::get('/', [UserStatisticController::class, 'taskProgress']);
-    });
-
-    Route::group([
-        'prefix' => 'user',
-    ], function () {
-        Route::get('/profile', [UserController::class, 'index']);
-        Route::put('/profile/edit', [UserController::class, 'update']);
-        Route::put('/skills/edit', [UserController::class, 'updateSkills']);
-        Route::get('/setting', function () {
-            return view('users.setting');
-        });
-    });
-    Route::group([
-        'prefix' => 'project',
-    ], function () {
-        Route::get('/{id}/kanban', [ProjectController::class, 'kanbanProject']);
-    });
-    Route::group([
-        'prefix' => 'task',
-    ], function () {
-        Route::get('/my-task', [TaskController::class, 'index']);
-        Route::post('create', [TaskController::class, 'store']);
-        Route::put('/{task_id}', [TaskController::class, 'updateTask']);
-        Route::delete('{task_id}', [TaskController::class, 'destroy']);
-        Route::post('/{task_id}/update-working-hour', [TaskController::class, 'updateWorkingHour'])->name('tasks.update-working-hour');
-        Route::post('/{task_id}/update-list-name', [TaskController::class, 'updateTaskStatus'])->name('tasks.update-list-name');
-    });
-
-    Route::resource('/project', ProjectController::class);
-    Route::put('/project/member/{id}', [ProjectController::class, 'updateTeamMember']);
-
     Route::resource('/company', CompanyController::class);
-    Route::get('/my-company', [CompanyController::class, 'companyUser']);
+    Route::get('/user/join-company/{id}', [CompanyController::class, 'joinCompany']);
+
+    Route::group(['middleware' => 'onboarding'], function () {
+        Route::get('/', [UserStatisticController::class, 'taskProgress']);
+        Route::group([
+            'prefix' => 'dashboard',
+        ], function () {
+            Route::get('/', [UserStatisticController::class, 'taskProgress']);
+        });
+
+        Route::group([
+            'prefix' => 'user',
+        ], function () {
+            Route::get('/profile', [UserController::class, 'index']);
+            Route::put('/profile/edit', [UserController::class, 'update']);
+            Route::put('/skills/edit', [UserController::class, 'updateSkills']);
+            Route::get('/setting', function () {
+                return view('users.setting');
+            });
+        });
+        Route::group([
+            'prefix' => 'project',
+        ], function () {
+            Route::get('/{id}/kanban', [ProjectController::class, 'kanbanProject']);
+        });
+        Route::group([
+            'prefix' => 'task',
+        ], function () {
+            Route::get('/my-task', [TaskController::class, 'index']);
+            Route::post('create', [TaskController::class, 'store']);
+            Route::put('/{task_id}', [TaskController::class, 'updateTask']);
+            Route::delete('{task_id}', [TaskController::class, 'destroy']);
+            Route::post('/{task_id}/update-working-hour', [TaskController::class, 'updateWorkingHour'])->name('tasks.update-working-hour');
+            Route::post('/{task_id}/update-list-name', [TaskController::class, 'updateTaskStatus'])->name('tasks.update-list-name');
+        });
+
+        Route::resource('/project', ProjectController::class);
+        Route::put('/project/member/{id}', [ProjectController::class, 'updateTeamMember']);
+
+        Route::get('/my-company', [CompanyController::class, 'companyUser']);
+    });
 
 });

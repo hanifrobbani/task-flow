@@ -20,8 +20,8 @@
 </head>
 
 <body class="font-family-thin bg-[#F5F5F5] min-h-screen">
-    <div class="bg-white w-full shadow-md">
-        <nav class="flex justify-between w-full items-center px-4 py-2 bg-white shadow-md max-w-[100rem] mx-auto fixed z-20">
+    <div class="bg-white w-full shadow-md fixed z-20">
+        <nav class="flex justify-between w-full items-center px-4 py-2 bg-white shadow-md max-w-[100rem] mx-auto">
             <div class="flex justify-center items-center">
                 <img src="{{asset('assets/img/logo.png')}}" alt="" class="w-14 h-14">
                 <div class="flex flex-col items-center justify-start">
@@ -60,7 +60,7 @@
                     </div>
                     <input type="search" name="search_company"
                         class="block outline-none w-full p-4 ps-10 text-sm text-gray-900 border border-gray-200 rounded-lg focus:ring-blue-200 focus:border-blue-200 focus:ring-4 transition-colors"
-                        placeholder="Search Company..." required />
+                        placeholder="Search Company..." value="{{ request('search_company') }}"/>
                 </div>
             </form>
         </div>

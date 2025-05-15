@@ -29,11 +29,13 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-
-            return redirect()->intended('dashboard');
+            if (Auth::user()->companies_id == null) {
+                return redirect('/company');
+            }
+            return redirect('/dashboard');
         }
 
-        return back()->with('loginError','Email or Password Incorrect');
+        return back()->with('loginError', 'Email or Password Incorrect');
     }
     public function logout(Request $request): RedirectResponse
     {
@@ -49,7 +51,7 @@ class AuthController extends Controller
     public function register(Request $request): RedirectResponse
     {
         $credentials = $request->validate([
-            'email' => 'required|email:dns',
+            'email' => 'required|email:dns|unique:users,email',
             'name' => 'required|max:199',
             'password' => 'required',
         ]);
@@ -60,7 +62,7 @@ class AuthController extends Controller
         try {
             $user = User::create($credentials);
             Auth::login($user);
-            return redirect()->intended('dashboard');
+            return redirect()->intended('company');
         } catch (Exception $e) {
             Log::error($e);
             return redirect()->with('registerError', 'Error, cannot register a new user');
