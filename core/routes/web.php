@@ -60,6 +60,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::put('/project/member/{id}', [ProjectController::class, 'updateTeamMember']);
 
     Route::resource('/company', CompanyController::class);
-    Route::get('/company/my-company', [CompanyController::class, 'companyUser']);
+    Route::get('/my-company', [CompanyController::class, 'companyUser']);
 
 });

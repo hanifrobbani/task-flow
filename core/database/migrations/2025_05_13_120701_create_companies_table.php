@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('description');
             $table->string('background_img')->nullable();
             $table->string('profile_img')->nullable();
+            $table->string('address')->nullable();
+            $table->string('field_of_work')->nullable();
             $table->unsignedBigInteger('owner_id')->nullable();
             $table->foreign('owner_id')->references('id')->on('users')->onDelete('set null');
             $table->timestamps();
