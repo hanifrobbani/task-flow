@@ -13,7 +13,7 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        $company = Company::all();
+        $company = Company::with('employee')->search()->paginate(30);
         return view('company.join', compact('company'));
     }
 

@@ -49,7 +49,7 @@
 
     <main class="max-w-[100rem] mx-auto pt-10">
         <div class=" w-full min-h-72 flex items-center justify-center">
-            <form class="w-full max-w-md shadow-md">
+            <form class="w-full max-w-md shadow-md" action="{{ url('/company') }}">
                 <div class="relative">
                     <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                         <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
@@ -58,19 +58,21 @@
                                 d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                         </svg>
                     </div>
-                    <input type="search" id="default-search"
+                    <input type="search" name="search_company"
                         class="block outline-none w-full p-4 ps-10 text-sm text-gray-900 border border-gray-200 rounded-lg focus:ring-blue-200 focus:border-blue-200 focus:ring-4 transition-colors"
                         placeholder="Search Company..." required />
                 </div>
             </form>
         </div>
+        @if ($company->count())
         <div class="grid grid-cols-3 gap-4 px-10">
+            @foreach ($company as $item)
             <div class="bg-white shadow p-5 border border-gray-200 hover:border-gray-600 cursor-pointer group transition-colors">
                 <div class="flex gap-4">
                     <img src="https://images.glints.com/unsafe/120x0/glints-dashboard.oss-ap-southeast-1.aliyuncs.com/company-logo/b29aa2419017a24d608fd04fe460e637.png" alt="" class="w-12 h-12">
                     <div class="">
-                        <h1 class="transition-colors font-medium text-lg group-hover:text-blue-600">PT Cihuy Makaruy</h1>
-                        <p class="text-gray-600 text-sm">Bandung Jawa Barat, Indonesia</p>
+                        <h1 class="transition-colors font-medium text-lg group-hover:text-blue-600">{{ $item->name }}</h1>
+                        <p class="text-gray-600 text-sm">{{ $item->address }}</p>
                     </div>
                 </div>
                 <div class="mt-4 space-y-2">
@@ -93,7 +95,7 @@
                                 d="M15 21H3.6C3.26863 21 3 20.7314 3 20.4V5.6C3 5.26863 3.26863 5 3.6 5H9V3.6C9 3.26863 9.26863 3 9.6 3H14.4C14.7314 3 15 3.26863 15 3.6V9M15 21H20.4C20.7314 21 21 20.7314 21 20.4V9.6C21 9.26863 20.7314 9 20.4 9H15M15 21V17M15 9V13M15 13H17M15 13V17M15 17H17"
                                 stroke="" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
                         </svg>
-                        <p class="text-sm font-medium">IT & Marketing</p>
+                        <p class="text-sm text-gray-800">{{ $item->field_of_work }}</p>
                     </div>
                     <div class="flex gap-1 items-center">
                         <svg width="26" height="26" class="stroke-gray-500" viewBox="0 0 24 24" stroke-width="1.5" fill="none"
@@ -114,12 +116,25 @@
                                 d="M20 14C21.1046 14 22 13.1046 22 12C22 10.8954 21.1046 10 20 10C18.8954 10 18 10.8954 18 12C18 13.1046 18.8954 14 20 14Z"
                              stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
                         </svg>
-                        <p class="text-sm text-blue-600 font-medium">120+ member</p>
+                        <p class="text-sm text-blue-600 ">{{ $item->employee->count() }}+ member</p>
                     </div>
                 </div>
             </div>
-            
+            @endforeach
         </div>
+        @else
+        <div class="w-full text-center">
+            <div class="space-y-3">
+                <div class="w-full flex justify-center">
+                    <img src="{{ asset('assets/img/no-company.svg') }}" alt="" class="w-36 h-36">
+                </div>
+                <div>
+                    <h1 class="text-lg text-gray-800 font-medium">No Company Found!</h1>
+                    <p class="text-gray-600 text-sm">Check for typos or try another keyword.</p>
+                </div>
+            </div>
+        </div>
+        @endif
     </main>
 </body>
 

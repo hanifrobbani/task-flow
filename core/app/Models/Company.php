@@ -14,4 +14,13 @@ class Company extends Model
     {
         return $this->hasMany(User::class, 'companies_id');
     }
+
+    public function scopeSearch($query){
+        if (request()->has('search_company')) {
+            return $query->where('name', 'like', '%' . request('search_company') . '%')
+                    ->orWhere('field_of_work', 'like', '%' . request('search_company') . '%');
+        } else {
+            return $query;
+        }
+    }
 }
