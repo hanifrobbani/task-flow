@@ -116,17 +116,23 @@ class UserController extends Controller
         }
     }
 
-    public function updateCompanyUser(Request $request, string $id){
+    public function updateCompanyUser(Request $request, string $id)
+    {
         $user = User::findOrFail($id);
 
-        if($request->token == $user->join_company_token){
-            $user->companies_id = $request->idCompany;
-            $user->join_company_token = null;
-            $user->save();
-        }
-        Auth::login($user);
+        try {
+            if ($request->token == $user->join_company_token) {
+                $user->companies_id = $request->idCompany;
+                $user->join_company_token = null;
+                $user->save();
+            }
+            Auth::login($user);
 
-        return redirect('/dashboard')->with('dashboardSuccess', 'successfully join the company');
+            return redirect('/dashboard')->with('dashboardSuccess', 'successfully join the company');
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+        }
+
     }
 
 }

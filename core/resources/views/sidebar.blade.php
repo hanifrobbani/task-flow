@@ -85,9 +85,9 @@
                     <p>Calender Team</p>
                 </a>
                 <a href="/my-company"
-                    class="flex gap-2 mt-2 text-gray-500 rounded-md py-2 px-3 cursor-pointer hover:bg-sky-50 hover:text-sky-500 transition-colors group {{ Request::is('company*') ? 'text-sky-500 bg-sky-50' : 'text-gray-500' }}">
+                    class="flex gap-2 mt-2 text-gray-500 rounded-md py-2 px-3 cursor-pointer hover:bg-sky-50 hover:text-sky-500 transition-colors group {{ Request::is('my-company*') ? 'text-sky-500 bg-sky-50' : 'text-gray-500' }}">
                     <svg width="20" height="20"
-                        class="stroke-gray-500 group-hover:stroke-sky-500 transition-colors {{ Request::is('company*') ? 'stroke-sky-500' : 'stroke-gray-500' }}"
+                        class="stroke-gray-500 group-hover:stroke-sky-500 transition-colors {{ Request::is('my-company*') ? 'stroke-sky-500' : 'stroke-gray-500' }}"
                         stroke-width="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="">
                         <path d="M7 9.01L7.01 8.99889" stroke="" stroke-width="2" stroke-linecap="round"
                             stroke-linejoin="round"></path>

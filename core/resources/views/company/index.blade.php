@@ -31,7 +31,7 @@
                 </p>
             </div>
             <div>
-                <button
+                <button type="button" onclick="modal_edit_company.showModal()"
                     class="border border-gray-400 rounded-full py-2 px-4 text-sm flex gap-1 items-center hover:bg-gray-100 transition">
                     <svg class="w-4 h-4 text-gray-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
                         height="24" fill="none" viewBox="0 0 24 24">
@@ -214,7 +214,7 @@
         </div>
     </div>
 
-    <!-- Modal create task -->
+    <!-- Modal add employee -->
     <dialog id="modal_add_employee" class="modal">
         <form action="{{ url('/user/join-company/' . $company->id) }}" method="POST"
             class="relative max-w-xl bg-white rounded-lg shadow-md p-5 w-full">
@@ -245,6 +245,91 @@
             <button type="submit"
                 class="text-xs mt-5 font-medium bg-blue-600 text-white px-5 py-2 rounded-md hover:opacity-80 transition">
                 Send Invitation
+            </button>
+        </form>
+    </dialog>
+
+    <!-- Modal edit company data -->
+    <dialog id="modal_edit_company" class="modal">
+        <form action="{{ url('/company/' . $company->id) }}" method="POST"
+            class="relative max-w-3xl bg-white rounded-lg shadow-md p-5 w-full max-h-screen overflow-y-auto scrollable">
+            @csrf
+            @method('PUT')
+            <div class="flex justify-between items-center border-b border-gray-200">
+                <h1 class="text-gray-800 font-medium">Update company</h1>
+                <button type="button" onclick="modal_edit_company.close()"
+                    class="hover:bg-gray-100 transition-colors rounded-lg p-2">
+                    <svg width="24" height="24" stroke-width="2" viewBox="0 0 24 24" fill="none"
+                        xmlns="http://www.w3.org/2000/svg" color="#000000">
+                        <path
+                            d="M6.75827 17.2426L12.0009 12M17.2435 6.75736L12.0009 12M12.0009 12L6.75827 6.75736M12.0009 12L17.2435 17.2426"
+                            stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="flex flex-col space-y-4 mt-4">
+                <div class="flex w-full gap-4 items-center">
+                    <img src="{{ $company->profile_img ? asset('storage/' . $company->profile_img) : asset('assets/img/no-profile.svg') }}"
+                        alt="" class="w-24 h-24 rounded-full" id="img-container">
+                    <input type="file" name="profile_img"
+                        class="block w-full border border-gray-400 rounded-md text-sm text-gray-500 file:me-4 file:p-3  file:border-0 file:text-xs file:font-medium file:bg-gray-700 file:text-white hover:file:bg-gray-600 transition-colors file:disabled:opacity-50 file:disabled:pointer-events-none bg-gray-50"
+                        onchange="previewImg()" id="img-user">
+                </div>
+
+                <div class="w-full flex gap-4">
+                    <div class="block w-full">
+                        <label for="name" class="text-sm text-gray-800 mb-1">Name</label>
+                        <input type="text"
+                            class="w-full border border-gray-300 text-sm rounded-lg p-2 outline-none text-gray-600 focus:ring-4 focus:ring-blue-200 transition bg-gray-50"
+                            value="{{ $company->name }}" name="name">
+                    </div>
+                    <div class="block w-full">
+                        <label for="email" class="text-sm text-gray-800 mb-1">Field of Work</label>
+                        <input type="text"
+                            class="w-full border border-gray-300 text-sm rounded-lg p-2 outline-none text-gray-600  focus:ring-4 focus:ring-blue-200 transition bg-gray-50"
+                            value="{{ $company->field_of_work }}" name="field_of_work">
+                    </div>
+                </div>
+                <div class="w-full">
+                    <label for="email" class="text-sm text-gray-800 mb-1">Company Address</label>
+                    <input type="text"
+                        class="w-full border border-gray-300 text-sm rounded-lg p-2 outline-none text-gray-600  focus:ring-4 focus:ring-blue-200 transition bg-gray-50"
+                        name="address" value="{{ $company->address }}">
+                </div>
+                <div class="w-full">
+                    <label for="bio" class="text-sm text-gray-800 mb-1">Company Description</label>
+                    <textarea name="description"
+                        class="w-full h-20 max-h-40 border border-gray-300 text-sm rounded-lg p-2 outline-none text-gray-600 focus:ring-4 focus:ring-blue-200 transition bg-gray-50">{{ $company->description }}</textarea>
+                </div>
+
+
+                <div class="w-full">
+                    <label for="bio" class="text-sm text-gray-800 mb-2">Background</label>
+                    <div class="flex items-center justify-center w-full">
+                        <label for="dropzone-file"
+                            class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
+                            <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
+                                </svg>
+                                <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span></p>
+                                <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)
+                                </p>
+                            </div>
+                            <input id="dropzone-file" type="file" class="hidden" name="background_img"/>
+                        </label>
+                    </div>
+                </div>
+
+            </div>
+
+            <button type="submit"
+                class="text-sm mt-5 font-medium bg-blue-600 text-white px-5 py-2 rounded-md hover:opacity-80 transition">
+                Save
             </button>
         </form>
     </dialog>

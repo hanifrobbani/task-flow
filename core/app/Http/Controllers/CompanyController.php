@@ -5,10 +5,13 @@ namespace App\Http\Controllers;
 use App\Mail\JoinCompanyMail;
 use App\Models\Company;
 use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
 
 class CompanyController extends Controller
 {
@@ -34,7 +37,36 @@ class CompanyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|max:255',
+            'description' => 'required',
+            'background_img' => 'nullable|image|file',
+            'profile_img' => 'nullable|image|file',
+            'address' => 'nullable',
+            'field_of_work' => 'required',
+        ]);
+        $owner = Auth::user()->id;
+        $validated['owner_id'] = $owner;
+
+        try {
+            if ($request->hasFile('profile_img')) {
+                $file = $request->file('profile_img');
+                $newFileName = time() . '-' . $file->getClientOriginalName();
+                $newFilePath = $file->storeAs('img-store/profile-company', $newFileName, 'public');
+                $validated['profile_img'] = $newFilePath;
+            }
+            if ($request->hasFile('background_img')) {
+                $file = $request->file('background_img');
+                $newFileName = time() . '-' . $file->getClientOriginalName();
+                $newFilePath = $file->storeAs('img-store/background-company', $newFileName, 'public');
+                $validated['background_img'] = $newFilePath;
+            }
+
+            Company::create($validated);
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+            return redirect()->back()->with('errorCompany', 'Error, please try again later!');
+        }
     }
 
     /**
@@ -59,7 +91,46 @@ class CompanyController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $company = Company::findOrFail($id);
+        $validated = $request->validate([
+            'name' => 'required|max:255',
+            'description' => 'required',
+            'background_img' => 'nullable|image|file',
+            'profile_img' => 'nullable|image|file',
+            'address' => 'nullable',
+            'field_of_work' => 'nullable',
+        ]);
+
+        try {
+            if ($request->hasFile('profile_img')) {
+                $oldProfileImg = Company::find($company)->profile_img;
+                if ($oldProfileImg && Storage::disk('public')->exists($oldProfileImg)) {
+                    Storage::disk('public')->delete($oldProfileImg);
+                }
+
+                $file = $request->file('profile_img');
+                $newFileName = time() . '-' . $file->getClientOriginalName();
+                $newFilePath = $file->storeAs('img-store/profile-company', $newFileName, 'public');
+                $validated['profile_img'] = $newFilePath;
+            }
+            if ($request->hasFile('background_img')) {
+                $oldBackgroundImg = Company::find($company)->background_img;
+                if ($oldBackgroundImg && Storage::disk('public')->exists($oldBackgroundImg)) {
+                    Storage::disk('public')->delete($oldBackgroundImg);
+                }
+
+                $file = $request->file('background_img');
+                $newFileName = time() . '-' . $file->getClientOriginalName();
+                $newFilePath = $file->storeAs('img-store/background-company', $newFileName, 'public');
+                $validated['background_img'] = $newFilePath;
+            }
+
+            $company->update($validated);
+            return redirect()->back()->with('successCompany', 'Company successfuly updated!');
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+            return redirect()->back()->with('errorCompany', 'Error, please try again later!');
+        }
     }
 
     /**
@@ -70,16 +141,18 @@ class CompanyController extends Controller
         //
     }
 
-    public function companyUser(){
+    public function companyUser()
+    {
         $company = Company::with('employee.userPosition')->find(Auth::user()->companies_id);
-        if(!$company){
+        if (!$company) {
             return redirect()->back();
         }
 
         return view('company.index', compact('company'));
     }
 
-    public function joinCompany(Request $request, string $id){
+    public function joinCompany(Request $request, string $id)
+    {
         $validatedData = $request->validate([
             'email' => 'required|exists:users,email',
         ]);
@@ -88,13 +161,18 @@ class CompanyController extends Controller
         $company = Company::findOrFail($id);
         $companyToken = Str::random(12);
 
-        $user->update([
-            'join_company_token' => $companyToken
-        ]);
+        try {
+            $user->update([
+                'join_company_token' => $companyToken
+            ]);
 
-        $urlJoinCompany = url('/user/join-company/' . $user->id . '?token=' . $companyToken . '&idCompany=' . $company->id);
-        Mail::to($user->email)->send(new JoinCompanyMail($user, $company->name, $urlJoinCompany));
+            $urlJoinCompany = url('/user/join-company/' . $user->id . '?token=' . $companyToken . '&idCompany=' . $company->id);
+            Mail::to($user->email)->send(new JoinCompanyMail($user, $company->name, $urlJoinCompany));
 
-        return redirect()->back()->with('successCompany', 'Email invitation has been sent!');
+            return redirect()->back()->with('successCompany', 'Email invitation has been sent!');
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+            return redirect()->back()->with('errorCompany', 'Error while send email invitation!');
+        }
     }
 }
