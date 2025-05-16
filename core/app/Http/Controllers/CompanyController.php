@@ -103,7 +103,7 @@ class CompanyController extends Controller
 
         try {
             if ($request->hasFile('profile_img')) {
-                $oldProfileImg = Company::find($company)->profile_img;
+                $oldProfileImg = $company->profile_img;;
                 if ($oldProfileImg && Storage::disk('public')->exists($oldProfileImg)) {
                     Storage::disk('public')->delete($oldProfileImg);
                 }
@@ -114,7 +114,7 @@ class CompanyController extends Controller
                 $validated['profile_img'] = $newFilePath;
             }
             if ($request->hasFile('background_img')) {
-                $oldBackgroundImg = Company::find($company)->background_img;
+                $oldBackgroundImg = $company->background_img;
                 if ($oldBackgroundImg && Storage::disk('public')->exists($oldBackgroundImg)) {
                     Storage::disk('public')->delete($oldBackgroundImg);
                 }

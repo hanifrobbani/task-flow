@@ -11,12 +11,17 @@
             <x-toast-notification :show="true" variant="success" title="Success!" message="{{ session('successCompany') }}"
                 :duration="7000" />
         @endif
-        <div class="w-full min-h-28 bg-blue-100"></div>
+        @if ($company->background_img)
+            <img class="w-full min-h-28 max-h-44 object-cover object-center"
+                src="{{ $company->background_img ? asset('storage/' . $company->background_img) : '' }}" alt="Background Company">
+        @else
+            <div class="w-full min-h-28 bg-blue-100"></div>
+        @endif
 
         <div class="w-full relative max-h-1">
             <div class="absolute z-10 top-1/2 -translate-y-1/2 left-5">
-                <img src="https://flowbite.com/application-ui/demo/images/users/avatar-4.png" alt="Company Logo"
-                    class="w-24 h-24">
+                <img src="{{ $company->profile_img ? asset('storage/' . $company->profile_img) : asset('assets/img/no-profile.svg') }}"
+                    alt="Company Logo" class="w-24 h-24">
             </div>
         </div>
         <div class="bg-white min-h-28 p-4 flex justify-between">
@@ -252,7 +257,8 @@
     <!-- Modal edit company data -->
     <dialog id="modal_edit_company" class="modal">
         <form action="{{ url('/company/' . $company->id) }}" method="POST"
-            class="relative max-w-3xl bg-white rounded-lg shadow-md p-5 w-full max-h-screen overflow-y-auto scrollable">
+            class="relative max-w-3xl bg-white rounded-lg shadow-md p-5 w-full max-h-screen overflow-y-auto scrollable"
+            enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="flex justify-between items-center border-b border-gray-200">
@@ -271,10 +277,10 @@
             <div class="flex flex-col space-y-4 mt-4">
                 <div class="flex w-full gap-4 items-center">
                     <img src="{{ $company->profile_img ? asset('storage/' . $company->profile_img) : asset('assets/img/no-profile.svg') }}"
-                        alt="" class="w-24 h-24 rounded-full" id="img-container">
+                        alt="" class="w-24 h-24 rounded-full" id="profile-img-container">
                     <input type="file" name="profile_img"
                         class="block w-full border border-gray-400 rounded-md text-sm text-gray-500 file:me-4 file:p-3  file:border-0 file:text-xs file:font-medium file:bg-gray-700 file:text-white hover:file:bg-gray-600 transition-colors file:disabled:opacity-50 file:disabled:pointer-events-none bg-gray-50"
-                        onchange="previewImg()" id="img-user">
+                        onchange="previewProfileImg()" id="profile-img">
                 </div>
 
                 <div class="w-full flex gap-4">
@@ -306,23 +312,30 @@
 
                 <div class="w-full">
                     <label for="bio" class="text-sm text-gray-800 mb-2">Background</label>
-                    <div class="flex items-center justify-center w-full">
+                    <div class="flex items-center justify-center">
                         <label for="dropzone-file"
-                            class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
-                            <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                                <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
+                            class="flex flex-col items-center justify-center w-full h-60 border-2 {{ $errors->has('thumbnail') ? 'border-red-500' : 'border-gray-300' }} border-dashed rounded-lg cursor-pointer hover:bg-gray-100 relative">
+
+                            <img id="image-preview"
+                                src="{{ $company->background_img ? asset('storage/' . $company->background_img) : '' }}"
+                                class="absolute w-full h-full object-contain rounded-lg {{ $company->background_img ? '' : 'hidden' }}" />
+
+                            <div id="upload-placeholder"
+                                class="flex flex-col items-center justify-center pt-5 pb-6 {{ $company->background_img ? 'hidden' : '' }}">
+                                <svg class="w-8 h-8 mb-4 text-gray-500" aria-hidden="true"
                                     xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                         stroke-width="2"
                                         d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
                                 </svg>
-                                <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span></p>
-                                <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)
-                                </p>
+                                <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Click to upload</span></p>
+                                <p class="text-xs text-gray-500">JPG, JPEG or PNG</p>
                             </div>
-                            <input id="dropzone-file" type="file" class="hidden" name="background_img"/>
+                            <input id="dropzone-file" type="file" class="hidden" name="background_img" />
+                            <input type="hidden" name="current_background_img" value="{{ $company->background_img }}" />
                         </label>
                     </div>
+
                 </div>
 
             </div>
@@ -333,4 +346,107 @@
             </button>
         </form>
     </dialog>
+
+    @foreach ($errors->all() as $error)
+        <div class="text-red-500 text-sm">{{ $error }}</div>
+    @endforeach
+
+    <script>
+        function previewProfileImg() {
+            const img = document.getElementById('profile-img')
+            const imgContainer = document.getElementById('profile-img-container')
+
+            const oFReader = new FileReader()
+            oFReader.readAsDataURL(img.files[0])
+
+            oFReader.onload = function (e) {
+                imgContainer.src = e.target.result
+            }
+        }
+
+        const fileInput = document.getElementById("dropzone-file");
+        const previewImage = document.getElementById("image-preview");
+        const uploadPlaceholder = document.getElementById("upload-placeholder");
+
+        function showPreview(src) {
+            previewImage.src = src;
+            previewImage.classList.remove("hidden");
+            uploadPlaceholder.classList.add("hidden");
+        }
+
+        function handleFileInputChange(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    showPreview(e.target.result);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        fileInput.addEventListener("change", handleFileInputChange);
+
+        if (previewImage.src) {
+            showPreview(previewImage.src);
+        }
+
+        function addRemoveButton() {
+            const existingButton = document.querySelector(".remove-image-btn");
+            if (existingButton) {
+                existingButton.remove();
+            }
+
+            const removeButton = document.createElement("button");
+            removeButton.type = "button";
+            removeButton.className = "remove-image-btn absolute top-0 right-0 bg-red-500 text-white rounded-full p-1 hover:bg-red-600";
+            removeButton.innerHTML = `
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>`;
+
+            removeButton.onclick = function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                previewImage.src = "";
+                previewImage.classList.add("hidden");
+                uploadPlaceholder.classList.remove("hidden");
+                fileInput.value = "";
+                this.remove();
+            };
+
+            const container = fileInput.parentElement;
+            container.appendChild(removeButton);
+        }
+
+        fileInput.addEventListener("change", function (e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    previewImage.src = e.target.result;
+                    previewImage.classList.remove("hidden");
+                    uploadPlaceholder.classList.add("hidden");
+                    addRemoveButton();
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            if (previewImage.src && previewImage.src !== window.location.href) {
+                previewImage.classList.remove("hidden");
+                uploadPlaceholder.classList.add("hidden");
+                addRemoveButton();
+            } else {
+                previewImage.classList.add("hidden");
+                uploadPlaceholder.classList.remove("hidden");
+                const existingButton = document.querySelector(".remove-image-btn");
+                if (existingButton) {
+                    existingButton.remove();
+                }
+            }
+        });
+
+    </script>
 @endsection
