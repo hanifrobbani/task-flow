@@ -40,6 +40,10 @@ class User extends Authenticatable
         return $this->hasMany(Task::class, 'users_id');
     }
 
+    public function company(){
+        return $this->belongsTo(Company::class, 'companies_id');
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

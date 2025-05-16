@@ -18,7 +18,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        $data = User::with(['UserSocials.social', 'UserSkills.skills', 'userPosition'])->find(Auth::id());
+        $data = User::with(['UserSocials.social', 'UserSkills.skills', 'userPosition', 'company'])->find(Auth::id());
         $userPosition = UserPosition::latest()->get();
         $userSocial = Socials::latest()->get();
         $skills = Skill::latest()->get();
@@ -121,8 +121,12 @@ class UserController extends Controller
 
         if($request->token == $user->join_company_token){
             $user->companies_id = $request->idCompany;
+            $user->join_company_token = null;
             $user->save();
         }
+        Auth::login($user);
+
+        return redirect('/dashboard')->with('dashboardSuccess', 'successfully join the company');
     }
 
 }

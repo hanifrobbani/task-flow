@@ -79,24 +79,22 @@ class CompanyController extends Controller
         return view('company.index', compact('company'));
     }
 
-    public function joinCompany(Request $request){
+    public function joinCompany(Request $request, string $id){
         $validatedData = $request->validate([
-            'email' => 'required|exist:users,email',
-            'companies_id' => 'required',
+            'email' => 'required|exists:users,email',
         ]);
 
         $user = User::where('email', $validatedData['email'])->first();
-        $company = Company::findOrFail($validatedData['companies_id']);
+        $company = Company::findOrFail($id);
         $companyToken = Str::random(12);
 
         $user->update([
             'join_company_token' => $companyToken
         ]);
 
-        $urlJoinCompany = url('/user/join-company/' . $user->id . '?token=' . $companyToken . '?idCompany=' . $company->id);
+        $urlJoinCompany = url('/user/join-company/' . $user->id . '?token=' . $companyToken . '&idCompany=' . $company->id);
         Mail::to($user->email)->send(new JoinCompanyMail($user, $company->name, $urlJoinCompany));
 
         return redirect()->back()->with('successCompany', 'Email invitation has been sent!');
-
     }
 }

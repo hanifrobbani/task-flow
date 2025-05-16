@@ -3,6 +3,14 @@
 @section('main')
 @section('title', 'Company Management')
     <div class="rounded-lg shadow-md w-full">
+        @if (session()->has('errorCompany'))
+            <x-toast-notification :show="true" variant="error" title="Error!" message="{{ session('errorCompany') }}"
+                :duration="7000" />
+        @endif
+        @if (session()->has('successCompany'))
+            <x-toast-notification :show="true" variant="success" title="Success!" message="{{ session('successCompany') }}"
+                :duration="7000" />
+        @endif
         <div class="w-full min-h-28 bg-blue-100"></div>
 
         <div class="w-full relative max-h-1">
@@ -14,6 +22,10 @@
         <div class="bg-white min-h-28 p-4 flex justify-between">
             <div class="pt-10">
                 <h1 class="font-semibold text-gray-800 text-xl">{{ $company->name }}</h1>
+                <div class="flex items-center text-sm text-gray-800 mb-2">
+                    <p class="pr-2 border-r border-gray-300">{{ $company->address }}</p>
+                    <p class="pl-2 border-l border-gray-300">{{ $company->field_of_work }}</p>
+                </div>
                 <p class="text-sm text-gray-600">
                     {{ $company->description }}
                 </p>
@@ -62,7 +74,7 @@
                             <path
                                 d="M8 12C10.2091 12 12 10.2091 12 8C12 5.79086 10.2091 4 8 4C5.79086 4 4 5.79086 4 8C4 10.2091 5.79086 12 8 12Z"
                                 stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                        </svg> Add New User</button>
+                        </svg> Add Employee</button>
                 </div>
                 <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -204,11 +216,11 @@
 
     <!-- Modal create task -->
     <dialog id="modal_add_employee" class="modal">
-        <form action="{{ url('/company/employee') }}" method="POST"
+        <form action="{{ url('/user/join-company/' . $company->id) }}" method="POST"
             class="relative max-w-xl bg-white rounded-lg shadow-md p-5 w-full">
             @csrf
             <div class="flex justify-between items-center border-b border-gray-200">
-                <h1 class="text-gray-800 font-medium">Add new employee</h1>
+                <h1 class="text-gray-800 font-medium">Add new Employee</h1>
                 <button type="button" onclick="modal_add_employee.close()"
                     class="hover:bg-gray-100 transition-colors rounded-lg p-2">
                     <svg width="24" height="24" stroke-width="2" viewBox="0 0 24 24" fill="none"
@@ -222,13 +234,16 @@
 
             <div class="w-full mt-2">
                 <label for="" class="text-sm text-gray-600">Email</label>
-                <input type="text"
+                <input type="email"
                     class="block w-full border border-gray-300 text-sm rounded-lg p-2 outline-none text-gray-600 font-medium focus:ring-4 focus:ring-blue-200 transition bg-gray-50"
-                    name="title">
+                    name="email">
+                @error('email')
+                    <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                @enderror
             </div>
 
             <button type="submit"
-                class="text-sm mt-5 font-medium bg-blue-600 text-white px-5 py-2 rounded-md hover:opacity-80 transition">
+                class="text-xs mt-5 font-medium bg-blue-600 text-white px-5 py-2 rounded-md hover:opacity-80 transition">
                 Send Invitation
             </button>
         </form>

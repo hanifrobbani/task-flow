@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\CompanyPositionController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
@@ -17,13 +18,12 @@ Route::group([
     Route::post('/register', [AuthController::class, 'register']);
     Route::get('/register', [AuthController::class, 'regis']);
 });
+Route::get('/user/join-company/{id}', [UserController::class, 'updateCompanyUser']);
 
 Route::group(['middleware' => 'auth'], function () {
 
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::resource('/company', CompanyController::class);
-    Route::get('/user/join-company/{id}', [CompanyController::class, 'joinCompany']);
-
     Route::group(['middleware' => 'onboarding'], function () {
         Route::get('/', [UserStatisticController::class, 'taskProgress']);
         Route::group([
@@ -53,7 +53,7 @@ Route::group(['middleware' => 'auth'], function () {
             Route::get('/my-task', [TaskController::class, 'index']);
             Route::post('create', [TaskController::class, 'store']);
             Route::put('/{task_id}', [TaskController::class, 'updateTask']);
-            Route::delete('{task_id}', [TaskController::class, 'destroy']);
+            Route::delete('/{task_id}', [TaskController::class, 'destroy']);
             Route::post('/{task_id}/update-working-hour', [TaskController::class, 'updateWorkingHour'])->name('tasks.update-working-hour');
             Route::post('/{task_id}/update-list-name', [TaskController::class, 'updateTaskStatus'])->name('tasks.update-list-name');
         });
@@ -62,6 +62,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::put('/project/member/{id}', [ProjectController::class, 'updateTeamMember']);
 
         Route::get('/my-company', [CompanyController::class, 'companyUser']);
+        Route::post('/user/join-company/{id}', [CompanyController::class, 'joinCompany']);
+        Route::resource('/company-position', CompanyPositionController::class)->except(['show', 'edit']);
     });
 
 });
