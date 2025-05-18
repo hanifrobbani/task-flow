@@ -21,6 +21,7 @@ return new class extends Migration
             $table->timestamp('end_date')->nullable();        
             $table->string('status');
             $table->boolean('is_private');
+            $table->foreignId('companies_id')->nullable()->constrained('companies')->onDelete('cascade');
             $table->integer('progress')->default(0);
             $table->timestamps();
         });

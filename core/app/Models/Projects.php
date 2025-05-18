@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
+use App\Models\Scopes\CompanyScope;
 
 class Projects extends Model
 {
@@ -17,6 +18,10 @@ class Projects extends Model
         'end_date' => 'datetime',
     ];
 
+    protected static function booted(): void
+    {
+        static::addGlobalScope(new CompanyScope);
+    }
 
     protected static function boot()
     {
