@@ -143,7 +143,7 @@ class CompanyController extends Controller
 
     public function companyUser()
     {
-        $company = Company::with('employee.userPosition')->find(Auth::user()->companies_id);
+        $company = Company::with(['employee.userPosition', 'companyPosition'])->find(Auth::user()->companies_id);
         if (!$company) {
             return redirect()->back();
         }

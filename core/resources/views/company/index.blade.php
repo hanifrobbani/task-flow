@@ -113,7 +113,7 @@
                                     </div>
                                 </th>
                                 <td class="px-6 py-4">
-                                    {{ $employee->userPosition->name }}
+                                    {{ $employee->userPosition->name ?? 'No Position' }}
                                 </td>
                                 <td class="px-6 py-4">
                                     <div class="flex items-center">
@@ -149,7 +149,7 @@
         <div class="p-5 bg-white rounded-lg shadow-md w-full">
             <div class="flex justify-between items-center mb-4">
                 <h1>Employee Position</h1>
-                <button class="p-2 bg-blue-600 text-white text-xs rounded-md flex gap-1 items-center hover:opacity-80">
+                <button type="button" onclick="modal_add_company_position.showModal()" class="p-2 bg-blue-600 text-white text-xs rounded-md flex gap-1 items-center hover:opacity-80">
                     <svg width="20" height="20" stroke-width="1.5" viewBox="0 0 24 24" fill="none"
                         xmlns="http://www.w3.org/2000/svg" color="#ffffff">
                         <path d="M8 12H12M16 12H12M12 12V8M12 12V16" stroke="#ffffff" stroke-width="1.5"
@@ -163,7 +163,7 @@
                 <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
-                            <th scope="col" class="px-6 py-3">
+                            <th scope="col" class="w-full px-6">
                                 Position
                             </th>
                             <th scope="col" class="px-6 py-3">
@@ -172,16 +172,16 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr
-                            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
-                            <td class="px-6 py-4">
-                                Tech Lead
+                        @foreach ($company->companyPosition as $position)
+                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
+                            <td class="w-full px-6">
+                                {{ $position->name }}
                             </td>
-                            <td class="px-6 py-4">
-                                <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit
-                                    position</a>
+                            <td class="py-4 text-center px-6">
+                                <button type="button" onclick="modalEditCompanyPosition({{ $position->id }}, '{{ $position->name }}')" class="font-medium text-blue-600 hover:underline">Edit</button>
                             </td>
                         </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
@@ -250,6 +250,76 @@
             <button type="submit"
                 class="text-xs mt-5 font-medium bg-blue-600 text-white px-5 py-2 rounded-md hover:opacity-80 transition">
                 Send Invitation
+            </button>
+        </form>
+    </dialog>
+
+    <!-- Modal add company position -->
+    <dialog id="modal_add_company_position" class="modal">
+        <form action="{{ url('/company-position') }}" method="POST" class="relative max-w-xl bg-white rounded-lg shadow-md p-5 w-full">
+            @csrf
+            <div class="flex justify-between items-center border-b border-gray-200">
+                <h1 class="text-gray-800 font-medium">Add new Position</h1>
+                <button type="button" onclick="modal_add_company_position.close()"
+                    class="hover:bg-gray-100 transition-colors rounded-lg p-2">
+                    <svg width="24" height="24" stroke-width="2" viewBox="0 0 24 24" fill="none"
+                        xmlns="http://www.w3.org/2000/svg" color="#000000">
+                        <path
+                            d="M6.75827 17.2426L12.0009 12M17.2435 6.75736L12.0009 12M12.0009 12L6.75827 6.75736M12.0009 12L17.2435 17.2426"
+                            stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="w-full mt-2">
+                <label for="" class="text-sm text-gray-600">Position</label>
+                <input type="text"
+                    class="block w-full border border-gray-300 text-sm rounded-lg p-2 outline-none text-gray-600 font-medium focus:ring-4 focus:ring-blue-200 transition bg-gray-50"
+                    name="name">
+                <input type="hidden" name="companies_id" value="{{ $company->id }}">
+                @error('name')
+                    <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <button type="submit"
+                class="text-xs mt-5 font-medium bg-blue-600 text-white px-5 py-2 rounded-md hover:opacity-80 transition">
+                Save
+            </button>
+        </form>
+    </dialog>
+
+    <!-- Modal update company position -->
+    <dialog id="modal_update_company_position" class="modal">
+        <form id="formUpdateCompanyPosition" method="POST" class="relative max-w-xl bg-white rounded-lg shadow-md p-5 w-full">
+            @csrf
+            @method('PUT')
+            <div class="flex justify-between items-center border-b border-gray-200">
+                <h1 class="text-gray-800 font-medium">Edit company position</h1>
+                <button type="button" onclick="modal_update_company_position.close()"
+                    class="hover:bg-gray-100 transition-colors rounded-lg p-2">
+                    <svg width="24" height="24" stroke-width="2" viewBox="0 0 24 24" fill="none"
+                        xmlns="http://www.w3.org/2000/svg" color="#000000">
+                        <path
+                            d="M6.75827 17.2426L12.0009 12M17.2435 6.75736L12.0009 12M12.0009 12L6.75827 6.75736M12.0009 12L17.2435 17.2426"
+                            stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="w-full mt-2">
+                <label for="" class="text-sm text-gray-600">Position</label>
+                <input type="text" id="position-name"
+                    class="block w-full border border-gray-300 text-sm rounded-lg p-2 outline-none text-gray-600 font-medium focus:ring-4 focus:ring-blue-200 transition bg-gray-50"
+                    name="name">
+                @error('name')
+                    <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <button type="submit"
+                class="text-xs mt-5 font-medium bg-blue-600 text-white px-5 py-2 rounded-md hover:opacity-80 transition">
+                Save
             </button>
         </form>
     </dialog>
@@ -347,10 +417,6 @@
         </form>
     </dialog>
 
-    @foreach ($errors->all() as $error)
-        <div class="text-red-500 text-sm">{{ $error }}</div>
-    @endforeach
-
     <script>
         function previewProfileImg() {
             const img = document.getElementById('profile-img')
@@ -447,6 +513,13 @@
                 }
             }
         });
+
+        function modalEditCompanyPosition(id, name){
+            const form = document.getElementById('formUpdateCompanyPosition')
+            const inputPositionName = document.getElementById('position-name').value = name
+            form.action = `/company-position/${id}`;
+            modal_update_company_position.showModal()
+        }
 
     </script>
 @endsection

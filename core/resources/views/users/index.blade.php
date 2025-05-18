@@ -14,7 +14,8 @@
                 :duration="7000" />
         @endif
         @if (session()->has('successUser'))
-            <x-toast-notification :show="true" variant="success" title="Success!" message="{{ session('successUser') }}" :duration="7000" />
+            <x-toast-notification :show="true" variant="success" title="Success!" message="{{ session('successUser') }}"
+                :duration="7000" />
         @endif
 
         <div class="flex justify-between items-center">
@@ -25,7 +26,7 @@
                     <h1 class="font-semibold">{{ $data->name }}</h1>
                     <div class="flex mt-1 items-center">
                         <div class="border-r border-gray-300 pr-2">
-                            <p class="text-sm text-gray-600">{{ $data->userPosition->name }}</p>
+                            <p class="text-sm text-gray-600">{{ $data->userPosition->name ?? 'No Position' }}</p>
                         </div>
                         <div class="border-l border-gray-300 pl-2">
                             <p class="text-sm text-gray-600">{{ $data->address ?? 'No Address' }}</p>
@@ -76,14 +77,15 @@
                 <div class="flex w-full gap-2 items-center">
                     <img src="{{ auth()->user()->img_user ? asset('storage/' . auth()->user()->img_user) : asset('assets/img/no-profile.svg') }}"
                         alt="" class="w-20 h-20 rounded-full" id="img-container">
-                    <input type="file" name="img_user" class="block w-full border border-gray-400 rounded-md text-sm text-gray-500
-                                                                file:me-4 file:p-3
-                                                                file:rounded-md file:border-0
-                                                                file:text-xs file:font-medium
-                                                                file:bg-gray-600 file:text-white
-                                                                hover:file:bg-gray-700
-                                                                transition-colors
-                                                                file:disabled:opacity-50 file:disabled:pointer-events-none"
+                    <input type="file" name="img_user"
+                        class="block w-full border border-gray-400 rounded-md text-sm text-gray-500
+                                                                        file:me-4 file:p-3
+                                                                        file:rounded-md file:border-0
+                                                                        file:text-xs file:font-medium
+                                                                        file:bg-gray-600 file:text-white
+                                                                        hover:file:bg-gray-700
+                                                                        transition-colors
+                                                                        file:disabled:opacity-50 file:disabled:pointer-events-none"
                         onchange="previewImg()" id="img-user">
                 </div>
                 <div class="w-full flex gap-2">
@@ -107,10 +109,11 @@
                             class="bg-gray-50 border border-gray-300 text-gray-800 text-sm rounded-lg block w-full p-2.5 outline-none focus:ring-4 focus:ring-blue-200 transition"
                             name="user_positions_id">
                             @foreach ($userPosition as $item)
-                                <option value="{{ $item->id }}" {{ $item->id == $data->userPosition->id ? 'selected' : '' }}>
+                                <option value="{{ $item->id }}" {{ $item->id == optional($data->userPosition)->id ? 'selected' : '' }}>
                                     {{ $item->name }}
                                 </option>
                             @endforeach
+
                         </select>
                     </div>
                     <div class="block w-full">
@@ -211,14 +214,14 @@
         </div>
         <div class="flex flex-wrap gap-4 items-center mt-2">
             @if (count($data->UserSkills))
-            @foreach ($data->UserSkills as $skillUser)
-                <div class="p-2 bg-gray-100 rounded-xl cursor-pointer flex gap-1 items-center">
-                    {!! $skillUser->skills->logo !!}
-                    <p class="text-gray-600 text-sm">{{ $skillUser->skills->name }}</p>
-                </div>
-            @endforeach
+                @foreach ($data->UserSkills as $skillUser)
+                    <div class="p-2 bg-gray-100 rounded-xl cursor-pointer flex gap-1 items-center">
+                        {!! $skillUser->skills->logo !!}
+                        <p class="text-gray-600 text-sm">{{ $skillUser->skills->name }}</p>
+                    </div>
+                @endforeach
             @else
-            <p class="text-gray-600 text-sm">No Skills Added Yet!</p>
+                <p class="text-gray-600 text-sm">No Skills Added Yet!</p>
             @endif
         </div>
 

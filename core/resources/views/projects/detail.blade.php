@@ -138,7 +138,7 @@
                 </div>
             </div>
         </div>
-        <div class="w-1/2 bg-white rounded-lg shadow-md min-h-32 max-h-screen hover:bg-gray-50 transition-colors group">
+        <div class="w-full max-w-sm bg-white rounded-lg shadow-md min-h-32 max-h-screen hover:bg-gray-50 transition-colors group">
             <div class="border-b">
                 <div class="p-4 flex justify-between">
                     <h1 class="font-medium text-gray-600">Team Member</h1>
@@ -174,11 +174,11 @@
                         <div class="text-sm w-full flex justify-between items-center">
                             <div>
                                 <h1 class="font-medium text-gray-700">{{ $member->user->name }}</h1>
-                                <p class="text-gray-600">{{ $member->user->email }}</p>
+                                <p class="text-gray-600">{{ Str::limit($member->user->email, 24) }}</p>
                             </div>
                             <div class="border">
                                 <p class="inline-block py-1 px-2 text-xs font-medium rounded-md {{ $randomColor }}">
-                                    {{ $member->user->userPosition->name }}
+                                    {{ $member->user->userPosition->name ?? 'No Position'}}
                                 </p>
                             </div>
                         </div>
@@ -376,7 +376,7 @@
                                     class="w-8 h-8 rounded-full object-cover object-center" />
                                 <div>
                                     <p class="text-sm font-medium text-gray-800">{{ $item->name }}</p>
-                                    <p class="text-xs text-gray-500">{{ $item->userPosition->name }}</p>
+                                    <p class="text-xs text-gray-500">{{ $item->userPosition->name ?? 'No Position' }}</p>
                                 </div>
                             </label>
                         </li>

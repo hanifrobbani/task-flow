@@ -54,7 +54,7 @@
                                                     <p class="member-name">{{ $item->name }}</p>
                                                     <p id="helper-checkbox-text-3"
                                                         class="text-xs font-normal text-gray-500 dark:text-gray-300">
-                                                        {{ $item->userPosition->name }}
+                                                        {{ $item->userPosition->name ?? 'No Position'}}
                                                     </p>
                                                 </label>
                                             </div>

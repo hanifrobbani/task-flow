@@ -38,7 +38,7 @@ class CompanyPositionController extends Controller
 
         try{
             CompanyPosition::create($validated);
-            return redirect()->back();
+            return redirect()->back()->with('successCompany', 'Position successfully added!');
         }catch(Exception $e){
             Log::error($e->getMessage());
             return redirect()->back();
@@ -69,15 +69,14 @@ class CompanyPositionController extends Controller
         $company_position = CompanyPosition::findOrFail($id);
         $validated = $request->validate([
             'name' => 'required|max:255',
-            'companies_id' => 'required',
         ]);
 
         try{
             $company_position->update($validated);
-            return redirect()->back();
+            return redirect()->back()->with('successCompany', 'Position successfully updated!');
         }catch(Exception $e){
             Log::error($e->getMessage());
-            return redirect()->back();
+            return redirect()->back()->with('errorCompany', 'Error, try again later!');
         }
     }
 
@@ -86,6 +85,8 @@ class CompanyPositionController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $company = CompanyPosition::findOrFail($id);
+        $company->delete();
+        return redirect()->back()->with('successCompany', 'Company successfuly updated!');
     }
 }

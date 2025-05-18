@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Skill;
 use App\Models\Socials;
 use App\Models\User;
-use App\Models\UserPosition;
+use App\Models\CompanyPosition;
 use App\Models\UserSkills;
 use App\Models\UserSocial;
 use Exception;
@@ -19,7 +19,7 @@ class UserController extends Controller
     public function index()
     {
         $data = User::with(['UserSocials.social', 'UserSkills.skills', 'userPosition', 'company'])->find(Auth::id());
-        $userPosition = UserPosition::latest()->get();
+        $userPosition = CompanyPosition::latest()->get();
         $userSocial = Socials::latest()->get();
         $skills = Skill::latest()->get();
 

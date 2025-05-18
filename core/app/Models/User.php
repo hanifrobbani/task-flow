@@ -32,7 +32,7 @@ class User extends Authenticatable
 
     public function userPosition()
     {
-        return $this->belongsTo(UserPosition::class, 'user_positions_id');
+        return $this->belongsTo(CompanyPosition::class, 'company_positions_id');
     }
 
     public function tasks()

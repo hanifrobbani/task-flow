@@ -15,6 +15,10 @@ class Company extends Model
         return $this->hasMany(User::class, 'companies_id');
     }
 
+    public function companyPosition(){
+        return $this->hasMany(CompanyPosition::class, 'companies_id');
+    }
+
     public function scopeSearch($query){
         if (request()->has('search_company')) {
             return $query->where('name', 'like', '%' . request('search_company') . '%')

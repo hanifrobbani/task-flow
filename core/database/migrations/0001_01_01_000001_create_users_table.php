@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('address')->nullable();
             $table->string('join_company_token')->nullable();
             $table->unsignedBigInteger('companies_id')->nullable();
-            $table->foreignId('user_positions_id')->nullable()->constrained('user_positions')->onDelete('cascade');            
+            $table->foreignId('company_positions_id')->nullable()->constrained('company_positions')->onDelete('set null');
             $table->rememberToken();
             $table->timestamps();
         });
