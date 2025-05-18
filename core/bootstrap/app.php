@@ -13,6 +13,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
             'onboarding' => \App\Http\Middleware\isOnboarding::class,
+            'isHaveCompany' => \App\Http\Middleware\IsHaveCompany::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

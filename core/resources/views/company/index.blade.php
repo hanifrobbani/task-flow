@@ -221,7 +221,7 @@
 
     <!-- Modal add employee -->
     <dialog id="modal_add_employee" class="modal">
-        <form action="{{ url('/user/join-company/' . $company->id) }}" method="POST"
+        <form action="{{ url('/user/invite-company/' . $company->id) }}" method="POST"
             class="relative max-w-xl bg-white rounded-lg shadow-md p-5 w-full">
             @csrf
             <div class="flex justify-between items-center border-b border-gray-200">
@@ -242,6 +242,19 @@
                 <input type="email"
                     class="block w-full border border-gray-300 text-sm rounded-lg p-2 outline-none text-gray-600 font-medium focus:ring-4 focus:ring-blue-200 transition bg-gray-50"
                     name="email">
+                @error('email')
+                    <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+            <div class="w-full mt-2">
+                <label for="" class="text-sm text-gray-600">Position</label>
+                <select class="bg-gray-50 border border-gray-300 text-gray-800 text-sm rounded-lg block w-full p-2.5 outline-none focus:ring-4 focus:ring-blue-200 transition"
+                        name="user_position">
+                        <option selected disabled>Select Position</option>
+                        @foreach ($company->companyPosition as $position)
+                        <option value="{{ $position->id }}">{{ $position->name }}</option>
+                        @endforeach
+                    </select>
                 @error('email')
                     <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                 @enderror

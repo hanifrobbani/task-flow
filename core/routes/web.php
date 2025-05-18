@@ -23,7 +23,8 @@ Route::get('/user/join-company/{id}', [UserController::class, 'updateCompanyUser
 Route::group(['middleware' => 'auth'], function () {
 
     Route::post('/logout', [AuthController::class, 'logout']);
-    Route::resource('/company', CompanyController::class);
+    Route::resource('/company', CompanyController::class)->except(['update', 'destroy'])->middleware('isHaveCompany');
+    
     Route::group(['middleware' => 'onboarding'], function () {
         Route::get('/', [UserStatisticController::class, 'taskProgress']);
         Route::group([
@@ -60,9 +61,10 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::resource('/project', ProjectController::class);
         Route::put('/project/member/{id}', [ProjectController::class, 'updateTeamMember']);
-
+        
         Route::get('/my-company', [CompanyController::class, 'companyUser']);
-        Route::post('/user/join-company/{id}', [CompanyController::class, 'joinCompany']);
+        Route::put('/company/{id}', [CompanyController::class, 'update']);
+        Route::post('/user/invite-company/{id}', [CompanyController::class, 'joinCompany']);
         Route::resource('/company-position', CompanyPositionController::class)->except(['show', 'edit']);
     });
 

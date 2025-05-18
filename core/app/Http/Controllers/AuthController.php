@@ -62,7 +62,7 @@ class AuthController extends Controller
         try {
             $user = User::create($credentials);
             Auth::login($user);
-            return redirect()->intended('company');
+            return redirect('/company');
         } catch (Exception $e) {
             Log::error($e);
             return redirect()->with('registerError', 'Error, cannot register a new user');

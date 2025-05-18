@@ -123,6 +123,7 @@ class UserController extends Controller
         try {
             if ($request->token == $user->join_company_token) {
                 $user->companies_id = $request->idCompany;
+                $user->company_positions_id = $request->idPosition;
                 $user->join_company_token = null;
                 $user->save();
             }
