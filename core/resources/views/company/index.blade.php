@@ -29,7 +29,7 @@
             <div class="pt-10">
                 <h1 class="font-semibold text-gray-800 text-xl">{{ $company->name }}</h1>
                 <div class="flex items-center text-sm text-gray-800 mb-2">
-                    <p class="pr-2 border-r border-gray-300">{{ $company->address }}</p>
+                    <p class="pr-2 border-r border-gray-300">{{ $company->address ?? 'No Address'}}</p>
                     <p class="pl-2 border-l border-gray-300">{{ $company->field_of_work }}</p>
                 </div>
                 <p class="text-sm text-gray-600">
@@ -187,14 +187,15 @@
                                     {{ $position->name }}
                                 </td>
                                 <td class="py-4 text-center px-6">
-                                    <button type="button" onclick="modalEditCompanyPosition({{ $position->id }}, '{{ $position->name }}')"
+                                    <button type="button"
+                                        onclick="modalEditCompanyPosition({{ $position->id }}, '{{ $position->name }}')"
                                         class="font-medium text-blue-600 hover:underline">Edit</button>
                                 </td>
                             </tr>
                         @empty
-                        <tr class="w-full text-center">
-                            <td colspan="2" class="w-full py-4">No Position in your company, start add one!</td>
-                        </tr>
+                            <tr class="w-full text-center">
+                                <td colspan="2" class="w-full py-4">No Position in your company, start add one!</td>
+                            </tr>
                         @endforelse
                     </tbody>
                 </table>
@@ -250,11 +251,48 @@
                                 stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
                         </svg></button>
                 </div>
+
+                <div class="overflow-x-auto sm:rounded-lg">
+                    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            <tr>
+                                <th scope="col" class="w-full px-6">
+                                    Position
+                                </th>
+                                <th scope="col" class="w-full px-6">
+                                    Color
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Action
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse ($badgeTask as $item)
+                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                    <td class="w-full px-6">
+                                        {{ $item->name }}
+                                    </td>
+                                    <td class="w-full px-6">
+                                        <div class="w-10 h-4" style="background-color: {{ $item->color }};"></div>
+                                    </td>
+                                    <td class="py-4 text-center px-6">
+                                        <button type="button" class="font-medium text-blue-600 hover:underline">Edit</button>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr class="w-full text-center">
+                                    <td colspan="3" class="w-full py-4">No Badge for your task in your company, start add one!</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <div class="p-5 bg-white rounded-lg shadow-md w-full">
                 <div class="flex justify-between mb-4">
                     <h1>Badge Project</h1>
-                    <button type="button" onclick="modal_add_badge_task.showModal()"
+                    <button type="button" onclick="modal_add_badge_project.showModal()"
                         class="p-2 bg-blue-600 text-white text-xs rounded-md flex gap-1 items-center hover:opacity-80">
                         <svg width="20" height="20" stroke-width="1.5" viewBox="0 0 24 24" fill="none"
                             xmlns="http://www.w3.org/2000/svg" color="#ffffff">
@@ -264,6 +302,39 @@
                                 d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
                                 stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
                         </svg></button>
+                </div>
+
+                <div class="overflow-x-auto sm:rounded-lg">
+                    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                            <tr>
+                                <th scope="col" class="w-full px-6">
+                                    Position
+                                </th>
+                                <th scope="col" class="px-6 py-3">
+                                    Action
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse ($badgeProject as $item)
+                                <tr
+                                    class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                    <td class="w-full px-6">
+                                        {{ $item->name }}
+                                    </td>
+                                    <td class="py-4 text-center px-6">
+                                        <button type="button" class="font-medium text-blue-600 hover:underline">Edit</button>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr class="w-full text-center">
+                                    <td colspan="2" class="w-full py-4">No Badge for your project in your company, start add
+                                        one!</td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
@@ -483,6 +554,86 @@
         </form>
     </dialog>
 
+    <!-- Modal add badge project -->
+    <dialog id="modal_add_badge_project" class="modal">
+        <form action="{{ url('/badge-project') }}" method="POST"
+            class="relative max-w-xl bg-white rounded-lg shadow-md p-5 w-full">
+            @csrf
+            <div class="flex justify-between items-center border-b border-gray-200">
+                <h1 class="text-gray-800 font-medium">Add new Project Badge</h1>
+                <button type="button" onclick="modal_add_badge_project.close()"
+                    class="hover:bg-gray-100 transition-colors rounded-lg p-2">
+                    <svg width="24" height="24" stroke-width="2" viewBox="0 0 24 24" fill="none"
+                        xmlns="http://www.w3.org/2000/svg" color="#000000">
+                        <path
+                            d="M6.75827 17.2426L12.0009 12M17.2435 6.75736L12.0009 12M12.0009 12L6.75827 6.75736M12.0009 12L17.2435 17.2426"
+                            stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="w-full mt-2">
+                <label for="" class="text-sm text-gray-600">Badge Name</label>
+                <input type="text"
+                    class="block w-full border border-gray-300 text-sm rounded-lg p-2 outline-none text-gray-600 font-medium focus:ring-4 focus:ring-blue-200 transition bg-gray-50"
+                    name="name">
+                <input type="hidden" name="companies_id" value="{{ $company->id }}">
+                @error('name')
+                    <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <button type="submit"
+                class="text-xs mt-5 font-medium bg-blue-600 text-white px-5 py-2 rounded-md hover:opacity-80 transition">
+                Save
+            </button>
+        </form>
+    </dialog>
+    <!-- Modal add badge project -->
+    <dialog id="modal_add_badge_task" class="modal">
+        <form action="{{ url('/badge-task') }}" method="POST"
+            class="relative max-w-xl bg-white rounded-lg shadow-md p-5 w-full">
+            @csrf
+            <div class="flex justify-between items-center border-b border-gray-200">
+                <h1 class="text-gray-800 font-medium">Add new Task Badge</h1>
+                <button type="button" onclick="modal_add_badge_task.close()"
+                    class="hover:bg-gray-100 transition-colors rounded-lg p-2">
+                    <svg width="24" height="24" stroke-width="2" viewBox="0 0 24 24" fill="none"
+                        xmlns="http://www.w3.org/2000/svg" color="#000000">
+                        <path
+                            d="M6.75827 17.2426L12.0009 12M17.2435 6.75736L12.0009 12M12.0009 12L6.75827 6.75736M12.0009 12L17.2435 17.2426"
+                            stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="w-full mt-2">
+                <label for="" class="text-sm text-gray-600">Badge Name</label>
+                <input type="text"
+                    class="block w-full border border-gray-300 text-sm rounded-lg p-2 outline-none text-gray-600 font-medium focus:ring-4 focus:ring-blue-200 transition bg-gray-50"
+                    name="name">
+                @error('name')
+                    <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+            <div class="w-full mt-2">
+                <label for="" class="text-sm text-gray-600">Badge Color</label>
+                <input type="color"
+                    class="p-1 h-10 w-14 block bg-white border border-gray-200 cursor-pointer rounded-lg disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700"
+                    value="#2563eb" name="color">
+                @error('name')
+                    <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+            <input type="hidden" name="companies_id" value="{{ $company->id }}">
+
+            <button type="submit"
+                class="text-xs mt-5 font-medium bg-blue-600 text-white px-5 py-2 rounded-md hover:opacity-80 transition">
+                Save
+            </button>
+        </form>
+    </dialog>
+
     <script>
         function previewProfileImg() {
             const img = document.getElementById('profile-img')
@@ -533,9 +684,9 @@
             removeButton.type = "button";
             removeButton.className = "remove-image-btn absolute top-0 right-0 bg-red-500 text-white rounded-full p-1 hover:bg-red-600";
             removeButton.innerHTML = `
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                    </svg>`;
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                </svg>`;
 
             removeButton.onclick = function (e) {
                 e.preventDefault();

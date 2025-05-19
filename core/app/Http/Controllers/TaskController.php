@@ -30,6 +30,7 @@ class TaskController extends Controller
             'progress' => 'nullable',
             'type' => 'nullable',
             'list_name' => 'required',
+            'companies_id' => 'required',
         ]);
 
         try {

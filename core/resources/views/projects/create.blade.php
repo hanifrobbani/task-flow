@@ -162,6 +162,7 @@
                     @enderror
                 </div>
             </div>
+            <input type="hidden" name="companies_id" value="{{ auth()->user()->companies_id }}">
 
             <div class="mt-5 flex flex-row-reverse gap-2">
                 <button type="submit"

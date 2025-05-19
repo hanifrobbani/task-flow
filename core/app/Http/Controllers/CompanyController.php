@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Mail\JoinCompanyMail;
+use App\Models\BadgeProject;
+use App\Models\BadgeTask;
 use App\Models\Company;
 use App\Models\User;
 use Exception;
@@ -147,11 +149,14 @@ class CompanyController extends Controller
     public function companyUser()
     {
         $company = Company::with(['employee.userPosition', 'companyPosition'])->find(Auth::user()->companies_id);
+        $badgeProject = BadgeProject::latest()->get();
+        $badgeTask = BadgeTask::latest()->get();
+        
         if (!$company) {
             return redirect()->back();
         }
 
-        return view('company.index', compact('company'));
+        return view('company.index', compact('company', 'badgeProject', 'badgeTask'));
     }
 
     public function joinCompany(Request $request, string $id)

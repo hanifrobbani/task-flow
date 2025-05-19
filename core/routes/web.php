@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BadgeProjectController;
+use App\Http\Controllers\BadgeTaskController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\CompanyPositionController;
 use App\Http\Controllers\ProjectController;
@@ -66,6 +68,9 @@ Route::group(['middleware' => 'auth'], function () {
         Route::put('/company/{id}', [CompanyController::class, 'update']);
         Route::post('/user/invite-company/{id}', [CompanyController::class, 'joinCompany']);
         Route::resource('/company-position', CompanyPositionController::class)->except(['show', 'edit']);
+
+        Route::resource('/badge-project', BadgeProjectController::class)->except(['index','create','edit', 'show']);
+        Route::resource('/badge-task', BadgeTaskController::class)->except(['index','create','edit', 'show']);
     });
 
 });

@@ -205,6 +205,7 @@
             </div>
             <input type="hidden" name="list_name" value="todo">
             <input type="hidden" name="projects_id" value="{{ $data->id }}">
+            <input type="hidden" name="companies_id" value="{{ auth()->user()->companies_id }}">
 
             <button type="submit"
                 class="text-sm mt-5 font-medium bg-blue-600 text-white px-5 py-2 rounded-md hover:opacity-80 transition">

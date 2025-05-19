@@ -49,6 +49,7 @@ class ProjectController extends Controller
             'end_date' => 'required|date',
             'status' => 'nullable',
             'is_private' => 'required|boolean',
+            'companies_id' => 'required',
         ]);
 
         $selectedMember = array_keys($request->input('memberId', []));
