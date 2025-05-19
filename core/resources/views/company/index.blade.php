@@ -105,7 +105,7 @@
                                 <th scope="row"
                                     class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
                                     <img class="w-10 h-10 rounded-full"
-                                        src="https://flowbite.com/application-ui/demo/images/users/joseph-mcfall.png"
+                                        src="{{ $employee->img_user ? asset('storage/' . $employee->img_user) : asset('assets/img/no-profile.svg') }}"
                                         alt="Jese image">
                                     <div class="ps-3">
                                         <div class="text-base font-semibold">{{ $employee->name }}</div>
@@ -216,6 +216,40 @@
                     </tr>
                 </tbody>
             </table>
+        </div>
+    </div>
+
+    <div class="mt-5">
+        <h1 class="font-medium text-gray-600">Manage Project</h1>
+        <div class="flex gap-5">
+            <div class="p-5 bg-white rounded-lg shadow-md w-full">
+                <div class="flex justify-between mb-4">
+                    <h1>Badge Task</h1>
+                    <button type="button" onclick="modal_add_badge_task.showModal()" class="p-2 bg-blue-600 text-white text-xs rounded-md flex gap-1 items-center hover:opacity-80">
+                    <svg width="20" height="20" stroke-width="1.5" viewBox="0 0 24 24" fill="none"
+                        xmlns="http://www.w3.org/2000/svg" color="#ffffff">
+                        <path d="M8 12H12M16 12H12M12 12V8M12 12V16" stroke="#ffffff" stroke-width="1.5"
+                            stroke-linecap="round" stroke-linejoin="round"></path>
+                        <path
+                            d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+                            stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg></button>
+                </div>
+            </div>
+            <div class="p-5 bg-white rounded-lg shadow-md w-full">
+                <div class="flex justify-between mb-4">
+                    <h1>Badge Project</h1>
+                    <button type="button" onclick="modal_add_badge_task.showModal()" class="p-2 bg-blue-600 text-white text-xs rounded-md flex gap-1 items-center hover:opacity-80">
+                    <svg width="20" height="20" stroke-width="1.5" viewBox="0 0 24 24" fill="none"
+                        xmlns="http://www.w3.org/2000/svg" color="#ffffff">
+                        <path d="M8 12H12M16 12H12M12 12V8M12 12V16" stroke="#ffffff" stroke-width="1.5"
+                            stroke-linecap="round" stroke-linejoin="round"></path>
+                        <path
+                            d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+                            stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg></button>
+                </div>
+            </div>
         </div>
     </div>
 

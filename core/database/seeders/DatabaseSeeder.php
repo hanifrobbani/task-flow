@@ -24,11 +24,11 @@ class DatabaseSeeder extends Seeder
         $password = Hash::make('admin');
         // User::factory(10)->create();
 
-        // User::factory()->create([
-        //     'name' => 'admin',
-        //     'email' => 'admin@gmail.com',
-        //     'password' => $password
-        // ]);
+        User::factory()->create([
+            'name' => 'admin',
+            'email' => 'admin@gmail.com',
+            'password' => $password
+        ]);
         // Skill::create([
         //     'name' => 'admin',
         //     'logo' => '<i class="devicon-laravel-original colored"></i>',
@@ -57,11 +57,11 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Backend',
         //     'color' => '#2563eb',
         // ]);
-        Company::create([
-            'name' => 'PT Kebajikan',
-            'description' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque placeat a ipsa assumenda fuga sint, velit maxime odit ab. Sed, consectetur impedit? Illum a vero, assumenda deserunt non temporibus aliquam.',
-            'owner_id' => 1
-        ]);
+        // Company::create([
+        //     'name' => 'PT Kebajikan',
+        //     'description' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque placeat a ipsa assumenda fuga sint, velit maxime odit ab. Sed, consectetur impedit? Illum a vero, assumenda deserunt non temporibus aliquam.',
+        //     'owner_id' => 1
+        // ]);
 
     }
 }
