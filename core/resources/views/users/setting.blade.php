@@ -1,4 +1,4 @@
-@extends('dashboard')
+@extends('layouts.main')
 @section('title', 'Setting Account')
 @section('main')
 

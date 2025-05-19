@@ -1,4 +1,4 @@
-@extends('dashboard')
+@extends('layouts.main')
 
 @section('main')
 @section('title', 'Company Management')
@@ -13,7 +13,8 @@
         @endif
         @if ($company->background_img)
             <img class="w-full min-h-28 max-h-44 object-cover object-center"
-                src="{{ $company->background_img ? asset('storage/' . $company->background_img) : '' }}" alt="Background Company">
+                src="{{ $company->background_img ? asset('storage/' . $company->background_img) : '' }}"
+                alt="Background Company">
         @else
             <div class="w-full min-h-28 bg-blue-100"></div>
         @endif
@@ -112,9 +113,15 @@
                                         <div class="font-normal text-gray-500">{{ $employee->email }}</div>
                                     </div>
                                 </th>
-                                <td class="px-6 py-4">
-                                    {{ $employee->userPosition->name ?? 'No Position' }}
-                                </td>
+                                @if ($employee->id == $company->owner_id)
+                                    <td class="px-6 py-4">
+                                        <p class="font-medium text-blue-600">Owner</p>
+                                    </td>
+                                @else
+                                    <td class="px-6 py-4">
+                                        {{ $employee->userPosition->name ?? 'No Position' }}
+                                    </td>
+                                @endif
                                 <td class="px-6 py-4">
                                     <div class="flex items-center">
                                         <div class="h-2.5 w-2.5 rounded-full bg-green-500 me-2"></div> Online
@@ -149,7 +156,8 @@
         <div class="p-5 bg-white rounded-lg shadow-md w-full">
             <div class="flex justify-between items-center mb-4">
                 <h1>Employee Position</h1>
-                <button type="button" onclick="modal_add_company_position.showModal()" class="p-2 bg-blue-600 text-white text-xs rounded-md flex gap-1 items-center hover:opacity-80">
+                <button type="button" onclick="modal_add_company_position.showModal()"
+                    class="p-2 bg-blue-600 text-white text-xs rounded-md flex gap-1 items-center hover:opacity-80">
                     <svg width="20" height="20" stroke-width="1.5" viewBox="0 0 24 24" fill="none"
                         xmlns="http://www.w3.org/2000/svg" color="#ffffff">
                         <path d="M8 12H12M16 12H12M12 12V8M12 12V16" stroke="#ffffff" stroke-width="1.5"
@@ -172,16 +180,22 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($company->companyPosition as $position)
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
-                            <td class="w-full px-6">
-                                {{ $position->name }}
-                            </td>
-                            <td class="py-4 text-center px-6">
-                                <button type="button" onclick="modalEditCompanyPosition({{ $position->id }}, '{{ $position->name }}')" class="font-medium text-blue-600 hover:underline">Edit</button>
-                            </td>
+                        @forelse ($company->companyPosition as $position)
+                            <tr
+                                class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                <td class="w-full px-6">
+                                    {{ $position->name }}
+                                </td>
+                                <td class="py-4 text-center px-6">
+                                    <button type="button" onclick="modalEditCompanyPosition({{ $position->id }}, '{{ $position->name }}')"
+                                        class="font-medium text-blue-600 hover:underline">Edit</button>
+                                </td>
+                            </tr>
+                        @empty
+                        <tr class="w-full text-center">
+                            <td colspan="2" class="w-full py-4">No Position in your company, start add one!</td>
                         </tr>
-                        @endforeach
+                        @endforelse
                     </tbody>
                 </table>
             </div>
@@ -225,29 +239,31 @@
             <div class="p-5 bg-white rounded-lg shadow-md w-full">
                 <div class="flex justify-between mb-4">
                     <h1>Badge Task</h1>
-                    <button type="button" onclick="modal_add_badge_task.showModal()" class="p-2 bg-blue-600 text-white text-xs rounded-md flex gap-1 items-center hover:opacity-80">
-                    <svg width="20" height="20" stroke-width="1.5" viewBox="0 0 24 24" fill="none"
-                        xmlns="http://www.w3.org/2000/svg" color="#ffffff">
-                        <path d="M8 12H12M16 12H12M12 12V8M12 12V16" stroke="#ffffff" stroke-width="1.5"
-                            stroke-linecap="round" stroke-linejoin="round"></path>
-                        <path
-                            d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
-                            stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                    </svg></button>
+                    <button type="button" onclick="modal_add_badge_task.showModal()"
+                        class="p-2 bg-blue-600 text-white text-xs rounded-md flex gap-1 items-center hover:opacity-80">
+                        <svg width="20" height="20" stroke-width="1.5" viewBox="0 0 24 24" fill="none"
+                            xmlns="http://www.w3.org/2000/svg" color="#ffffff">
+                            <path d="M8 12H12M16 12H12M12 12V8M12 12V16" stroke="#ffffff" stroke-width="1.5"
+                                stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path
+                                d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+                                stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg></button>
                 </div>
             </div>
             <div class="p-5 bg-white rounded-lg shadow-md w-full">
                 <div class="flex justify-between mb-4">
                     <h1>Badge Project</h1>
-                    <button type="button" onclick="modal_add_badge_task.showModal()" class="p-2 bg-blue-600 text-white text-xs rounded-md flex gap-1 items-center hover:opacity-80">
-                    <svg width="20" height="20" stroke-width="1.5" viewBox="0 0 24 24" fill="none"
-                        xmlns="http://www.w3.org/2000/svg" color="#ffffff">
-                        <path d="M8 12H12M16 12H12M12 12V8M12 12V16" stroke="#ffffff" stroke-width="1.5"
-                            stroke-linecap="round" stroke-linejoin="round"></path>
-                        <path
-                            d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
-                            stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                    </svg></button>
+                    <button type="button" onclick="modal_add_badge_task.showModal()"
+                        class="p-2 bg-blue-600 text-white text-xs rounded-md flex gap-1 items-center hover:opacity-80">
+                        <svg width="20" height="20" stroke-width="1.5" viewBox="0 0 24 24" fill="none"
+                            xmlns="http://www.w3.org/2000/svg" color="#ffffff">
+                            <path d="M8 12H12M16 12H12M12 12V8M12 12V16" stroke="#ffffff" stroke-width="1.5"
+                                stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path
+                                d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+                                stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                        </svg></button>
                 </div>
             </div>
         </div>
@@ -282,13 +298,14 @@
             </div>
             <div class="w-full mt-2">
                 <label for="" class="text-sm text-gray-600">Position</label>
-                <select class="bg-gray-50 border border-gray-300 text-gray-800 text-sm rounded-lg block w-full p-2.5 outline-none focus:ring-4 focus:ring-blue-200 transition"
-                        name="user_position">
-                        <option selected disabled>Select Position</option>
-                        @foreach ($company->companyPosition as $position)
+                <select
+                    class="bg-gray-50 border border-gray-300 text-gray-800 text-sm rounded-lg block w-full p-2.5 outline-none focus:ring-4 focus:ring-blue-200 transition"
+                    name="user_position">
+                    <option selected disabled>Select Position</option>
+                    @foreach ($company->companyPosition as $position)
                         <option value="{{ $position->id }}">{{ $position->name }}</option>
-                        @endforeach
-                    </select>
+                    @endforeach
+                </select>
                 @error('email')
                     <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
                 @enderror
@@ -303,7 +320,8 @@
 
     <!-- Modal add company position -->
     <dialog id="modal_add_company_position" class="modal">
-        <form action="{{ url('/company-position') }}" method="POST" class="relative max-w-xl bg-white rounded-lg shadow-md p-5 w-full">
+        <form action="{{ url('/company-position') }}" method="POST"
+            class="relative max-w-xl bg-white rounded-lg shadow-md p-5 w-full">
             @csrf
             <div class="flex justify-between items-center border-b border-gray-200">
                 <h1 class="text-gray-800 font-medium">Add new Position</h1>
@@ -338,7 +356,8 @@
 
     <!-- Modal update company position -->
     <dialog id="modal_update_company_position" class="modal">
-        <form id="formUpdateCompanyPosition" method="POST" class="relative max-w-xl bg-white rounded-lg shadow-md p-5 w-full">
+        <form id="formUpdateCompanyPosition" method="POST"
+            class="relative max-w-xl bg-white rounded-lg shadow-md p-5 w-full">
             @csrf
             @method('PUT')
             <div class="flex justify-between items-center border-b border-gray-200">
@@ -514,9 +533,9 @@
             removeButton.type = "button";
             removeButton.className = "remove-image-btn absolute top-0 right-0 bg-red-500 text-white rounded-full p-1 hover:bg-red-600";
             removeButton.innerHTML = `
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                </svg>`;
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </svg>`;
 
             removeButton.onclick = function (e) {
                 e.preventDefault();
@@ -561,7 +580,7 @@
             }
         });
 
-        function modalEditCompanyPosition(id, name){
+        function modalEditCompanyPosition(id, name) {
             const form = document.getElementById('formUpdateCompanyPosition')
             const inputPositionName = document.getElementById('position-name').value = name
             form.action = `/company-position/${id}`;

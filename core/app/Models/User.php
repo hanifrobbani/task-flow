@@ -40,8 +40,14 @@ class User extends Authenticatable
         return $this->hasMany(Task::class, 'users_id');
     }
 
-    public function company(){
+    public function company()
+    {
         return $this->belongsTo(Company::class, 'companies_id');
+    }
+
+    public function scopeCompany($query, $companyId)
+    {
+        return $query->where('companies_id', $companyId);
     }
 
     /**

@@ -1,4 +1,4 @@
-@extends('dashboard')
+@extends('layouts.main')
 @section('title', $data->title)
 
 @section('main')

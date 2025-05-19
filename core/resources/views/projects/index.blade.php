@@ -1,4 +1,4 @@
-@extends('dashboard')
+@extends('layouts.main')
 @section('main')
 @section('title', 'Project List')
     <div class="w-full">

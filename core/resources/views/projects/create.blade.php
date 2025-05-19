@@ -1,4 +1,4 @@
-@extends('dashboard')
+@extends('layouts.main')
 @section('main')
 @section('title', 'Create Project')
     <form class="flex justify-between gap-4" action="{{ url('/project') }}" method="POST">

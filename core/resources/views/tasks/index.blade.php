@@ -1,4 +1,4 @@
-@extends('dashboard')
+@extends('layouts.main')
 @section('main')
 @section('title', 'Task List')
     <div class="p-5 bg-white shadow-md rounded-lg">

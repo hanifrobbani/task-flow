@@ -45,24 +45,26 @@ class CompanyController extends Controller
             'address' => 'nullable',
             'field_of_work' => 'required',
         ]);
-        $owner = Auth::user()->id;
-        $validated['owner_id'] = $owner;
+        
+        $validated['owner_id'] = Auth::user()->id;
 
         try {
-            if ($request->hasFile('profile_img')) {
-                $file = $request->file('profile_img');
-                $newFileName = time() . '-' . $file->getClientOriginalName();
-                $newFilePath = $file->storeAs('img-store/profile-company', $newFileName, 'public');
-                $validated['profile_img'] = $newFilePath;
-            }
-            if ($request->hasFile('background_img')) {
-                $file = $request->file('background_img');
-                $newFileName = time() . '-' . $file->getClientOriginalName();
-                $newFilePath = $file->storeAs('img-store/background-company', $newFileName, 'public');
-                $validated['background_img'] = $newFilePath;
-            }
+        if ($request->hasFile('profile_img')) {
+            $file = $request->file('profile_img');
+            $newFileName = time() . '-' . $file->getClientOriginalName();
+            $newFilePath = $file->storeAs('img-store/profile-company', $newFileName, 'public');
+            $validated['profile_img'] = $newFilePath;
+        }
+        if ($request->hasFile('background_img')) {
+            $file = $request->file('background_img');
+            $newFileName = time() . '-' . $file->getClientOriginalName();
+            $newFilePath = $file->storeAs('img-store/background-company', $newFileName, 'public');
+            $validated['background_img'] = $newFilePath;
+        }
 
-            Company::create($validated);
+        $company = Company::create($validated);
+        Auth::user()->update(['companies_id' => $company->id]);
+        return redirect('/my-company')->with('successCompany', 'Company successfully created!');
         } catch (Exception $e) {
             Log::error($e->getMessage());
             return redirect()->back()->with('errorCompany', 'Error, please try again later!');
@@ -103,7 +105,8 @@ class CompanyController extends Controller
 
         try {
             if ($request->hasFile('profile_img')) {
-                $oldProfileImg = $company->profile_img;;
+                $oldProfileImg = $company->profile_img;
+                ;
                 if ($oldProfileImg && Storage::disk('public')->exists($oldProfileImg)) {
                     Storage::disk('public')->delete($oldProfileImg);
                 }

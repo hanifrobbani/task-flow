@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Scopes\CompanyScope;
 
 class Task extends Model
 {
@@ -27,4 +28,9 @@ class Task extends Model
   {
     return $this->belongsTo(BadgeTask::class, 'badge_tasks_id');
   }
+
+   protected static function booted(): void
+    {
+        static::addGlobalScope(new CompanyScope);
+    }
 }

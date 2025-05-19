@@ -1,4 +1,4 @@
-@extends('dashboard')
+@extends('layouts.main')
 @section('main')
     <div class="w-full bg-white shadow rounded-md flex justify-start gap-5 p-5">
         <div class="border-r-2 border-gray-300 w-full">
