@@ -4,10 +4,14 @@
             <button id="profileButton" class="flex items-center gap-3 justify-center focus:outline-none">
                 <div class="text-right">
                     <h1 class="text-black text-sm font-medium">{{ auth()->user()->name }}</h1>
-                    <p class="text-gray-500 text-sm">{{ auth()->user()->userPosition->name ?? 'No Position' }}</p>
+                    @if (auth()->user()->id == auth()->user()->company->owner_id)
+                        <p class="text-gray-500 text-sm">Owner</p>
+                    @else
+                        <p class="text-gray-500 text-sm">{{ auth()->user()->userPosition->name ?? 'No Position' }}</p>
+                    @endif
                 </div>
-                <img src="{{ auth()->user()->img_user ? asset('storage/' . auth()->user()->img_user) : asset('assets/img/no-profile.svg') }}" alt=""
-                    class="w-12 h-12 rounded-full object-cover object-center">
+                <img src="{{ auth()->user()->img_user ? asset('storage/' . auth()->user()->img_user) : asset('assets/img/no-profile.svg') }}"
+                    alt="" class="w-12 h-12 rounded-full object-cover object-center">
             </button>
 
             <!-- Dropdown Menu -->

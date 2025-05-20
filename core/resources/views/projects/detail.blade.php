@@ -116,10 +116,6 @@
                         <h1 class="text-gray-600">Due Date</h1>
                         <p class="text-gray-700 font-medium">{{ $data->end_date->format('d M, Y') }}</p>
                     </div>
-                    <div class="">
-                        <h1 class="text-gray-600">Owner</h1>
-                        <p class="text-gray-700 font-medium">Hanif Ridwan</p>
-                    </div>
                 </div>
                 <div class="mt-5">
                     <h1 class="text-gray-700 font-medium text-sm">Attached Files</h1>

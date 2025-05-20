@@ -277,7 +277,7 @@
                                         <div class="w-10 h-4" style="background-color: {{ $item->color }};"></div>
                                     </td>
                                     <td class="py-4 text-center px-6">
-                                        <button type="button" class="font-medium text-blue-600 hover:underline">Edit</button>
+                                        <button type="button" onclick="modalEditBadgeTask({{ $item->id }}, '{{ $item->name }}', '{{ $item->color }}')" class="font-medium text-blue-600 hover:underline">Edit</button>
                                     </td>
                                 </tr>
                             @empty
@@ -324,7 +324,7 @@
                                         {{ $item->name }}
                                     </td>
                                     <td class="py-4 text-center px-6">
-                                        <button type="button" class="font-medium text-blue-600 hover:underline">Edit</button>
+                                        <button type="button" onclick="modalEditBadgeProject({{ $item->id }}, '{{ $item->name }}')" class="font-medium text-blue-600 hover:underline">Edit</button>
                                     </td>
                                 </tr>
                             @empty
@@ -589,7 +589,44 @@
             </button>
         </form>
     </dialog>
-    <!-- Modal add badge project -->
+
+        <!-- Modal update badge project -->
+    <dialog id="modal_update_badge_project" class="modal">
+        <form id="formUpdateBadgeProject" method="POST"
+            class="relative max-w-xl bg-white rounded-lg shadow-md p-5 w-full">
+            @csrf
+            @method('PUT')
+            <div class="flex justify-between items-center border-b border-gray-200">
+                <h1 class="text-gray-800 font-medium">Edit badge project</h1>
+                <button type="button" onclick="modal_update_badge_project.close()"
+                    class="hover:bg-gray-100 transition-colors rounded-lg p-2">
+                    <svg width="24" height="24" stroke-width="2" viewBox="0 0 24 24" fill="none"
+                        xmlns="http://www.w3.org/2000/svg" color="#000000">
+                        <path
+                            d="M6.75827 17.2426L12.0009 12M17.2435 6.75736L12.0009 12M12.0009 12L6.75827 6.75736M12.0009 12L17.2435 17.2426"
+                            stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="w-full mt-2">
+                <label for="" class="text-sm text-gray-600">Badge Name</label>
+                <input type="text" id="project-badge-name"
+                    class="block w-full border border-gray-300 text-sm rounded-lg p-2 outline-none text-gray-600 font-medium focus:ring-4 focus:ring-blue-200 transition bg-gray-50"
+                    name="name">
+                @error('name')
+                    <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <button type="submit"
+                class="text-xs mt-5 font-medium bg-blue-600 text-white px-5 py-2 rounded-md hover:opacity-80 transition">
+                Save
+            </button>
+        </form>
+    </dialog>
+
+    <!-- Modal add badge task -->
     <dialog id="modal_add_badge_task" class="modal">
         <form action="{{ url('/badge-task') }}" method="POST"
             class="relative max-w-xl bg-white rounded-lg shadow-md p-5 w-full">
@@ -619,6 +656,51 @@
             <div class="w-full mt-2">
                 <label for="" class="text-sm text-gray-600">Badge Color</label>
                 <input type="color"
+                    class="p-1 h-10 w-14 block bg-white border border-gray-200 cursor-pointer rounded-lg disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700"
+                    value="#2563eb" name="color">
+                @error('name')
+                    <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+            <input type="hidden" name="companies_id" value="{{ $company->id }}">
+
+            <button type="submit"
+                class="text-xs mt-5 font-medium bg-blue-600 text-white px-5 py-2 rounded-md hover:opacity-80 transition">
+                Save
+            </button>
+        </form>
+    </dialog>
+    <!-- Modal update badge task -->
+    <dialog id="modal_update_badge_task" class="modal">
+        <form id="formUpdateBadgeTask" method="POST"
+            class="relative max-w-xl bg-white rounded-lg shadow-md p-5 w-full">
+            @csrf
+            @method('PUT')
+            <div class="flex justify-between items-center border-b border-gray-200">
+                <h1 class="text-gray-800 font-medium">Update Task Badge</h1>
+                <button type="button" onclick="modal_update_badge_task.close()"
+                    class="hover:bg-gray-100 transition-colors rounded-lg p-2">
+                    <svg width="24" height="24" stroke-width="2" viewBox="0 0 24 24" fill="none"
+                        xmlns="http://www.w3.org/2000/svg" color="#000000">
+                        <path
+                            d="M6.75827 17.2426L12.0009 12M17.2435 6.75736L12.0009 12M12.0009 12L6.75827 6.75736M12.0009 12L17.2435 17.2426"
+                            stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="w-full mt-2">
+                <label for="" class="text-sm text-gray-600">Badge Name</label>
+                <input type="text" id="task-badge-name"
+                    class="block w-full border border-gray-300 text-sm rounded-lg p-2 outline-none text-gray-600 font-medium focus:ring-4 focus:ring-blue-200 transition bg-gray-50"
+                    name="name">
+                @error('name')
+                    <p class="text-red-600 text-sm mt-1">{{ $message }}</p>
+                @enderror
+            </div>
+            <div class="w-full mt-2">
+                <label for="" class="text-sm text-gray-600">Badge Color</label>
+                <input type="color" id="badge-color"
                     class="p-1 h-10 w-14 block bg-white border border-gray-200 cursor-pointer rounded-lg disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700"
                     value="#2563eb" name="color">
                 @error('name')
@@ -736,6 +818,20 @@
             const inputPositionName = document.getElementById('position-name').value = name
             form.action = `/company-position/${id}`;
             modal_update_company_position.showModal()
+        }
+
+        function modalEditBadgeProject(id, name) {
+            const form = document.getElementById('formUpdateBadgeProject')
+            const inputBadgeName = document.getElementById('project-badge-name').value = name
+            form.action = `/badge-project/${id}`;
+            modal_update_badge_project.showModal()
+        }
+        function modalEditBadgeTask(id, name, color) {
+            const form = document.getElementById('formUpdateBadgeTask')
+            const inputBadgeName = document.getElementById('task-badge-name').value = name
+            const inputColor = document.getElementById('badge-color').value = color
+            form.action = `/badge-task/${id}`;
+            modal_update_badge_task.showModal()
         }
 
     </script>

@@ -93,7 +93,9 @@ class ProjectController extends Controller
             }
         }
 
+        
         $totalHours = round($totalSeconds / 3600, 2);
+        // dd($totalSeconds, $totalHours);
 
         return view('projects.detail', compact('data', 'user', 'totalHours'));
     }
@@ -180,7 +182,7 @@ class ProjectController extends Controller
     public function kanbanProject(string $id)
     {
         $data = Projects::findOrFail($id);
-        $tasks = Task::with('user', 'badge')->get();
+        $tasks = Task::where('projects_id', $id)->with('user', 'badge')->get();
         $user = User::all();
         $badge = BadgeTask::all();
         return view('projects.kanban', compact('data', 'user', 'tasks', 'badge'));
