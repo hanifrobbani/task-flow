@@ -92,10 +92,8 @@ class ProjectController extends Controller
                 $totalSeconds += ($h * 3600) + ($m * 60) + $s;
             }
         }
-
         
         $totalHours = round($totalSeconds / 3600, 2);
-        // dd($totalSeconds, $totalHours);
 
         return view('projects.detail', compact('data', 'user', 'totalHours'));
     }

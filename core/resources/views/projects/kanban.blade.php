@@ -139,8 +139,7 @@
                 <div class="my-3 flex items-center gap-5">
                     <div class="w-full">
                         <label for="countries" class="block mb-1 text-sm font-medium text-gray-600">Badge</label>
-                        <select id="countries"
-                            class="bg-gray-50 border border-gray-300 text-gray-800 text-sm rounded-lg block w-full p-2.5 outline-none focus:ring-4 focus:ring-blue-200 transition"
+                        <select id="countries" class="bg-gray-50 border border-gray-300 text-gray-800 text-sm rounded-lg block w-full p-2.5 outline-none focus:ring-4 focus:ring-blue-200 transition"
                             name="badge_tasks_id">
                             <option selected disabled>Select Badge</option>
                             @foreach ($badge as $item)
@@ -329,6 +328,37 @@
         </form>
     </dialog>
 
+    <dialog id="modal_alert_user_task" class="modal">
+            <div class="relative max-w-md bg-white rounded-lg shadow-md p-6 z-50 w-full">
+                <div class="flex gap-2 items-center">
+                    <div>
+                        <div class="p-2 rounded-full bg-red-200" x-show="variant === 'danger'" id="danger">
+                            <svg width="24" height="24" stroke-width="1.5" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg" color="#b91c1c">
+                                <path
+                                    d="M20.0429 21H3.95705C2.41902 21 1.45658 19.3364 2.22324 18.0031L10.2662 4.01533C11.0352 2.67792 12.9648 2.67791 13.7338 4.01532L21.7768 18.0031C22.5434 19.3364 21.581 21 20.0429 21Z"
+                                    stroke="#b91c1c" stroke-width="1.5" stroke-linecap="round"></path>
+                                <path d="M12 9V13" stroke="#b91c1c" stroke-width="1.5" stroke-linecap="round">
+                                </path>
+                                <path d="M12 17.01L12.01 16.9989" stroke="#b91c1c" stroke-width="1.5"
+                                    stroke-linecap="round" stroke-linejoin="round"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="my-2">
+                        <h1 class="text-lg font-semibold text-gray-800 mb-2">Alert</h1>
+                    </div>
+                </div>
+                <p class="text-sm text-gray-600">You can't move another user task!</p>
+                <div class="flex justify-end gap-2 mt-5">
+                    <button type="button" onclick="modal_alert_user_task.close()"
+                        class="text-sm text-white px-3 py-1 rounded-md bg-red-600 hover:bg-red-500 transition-colors outline-none">
+                        OK!
+                    </button>
+                </div>
+            </div>
+
+        </dialog>
 @endsection
 
 @section('js')
@@ -337,177 +367,181 @@
 
         const todoItems = [
             @foreach ($tasks->where('list_name', 'todo') as $task)
-                        {
+                                {
                     id: "{{ $task->id }}",
-                    title: `<div onclick="openUpdateModal({{ $task->id }}, '{{ $task->title }}', '{{ $task->start_date }}', '{{ $task->end_date }}', {{ $task->badge_tasks_id }}, '{{ $task->description }}', {{ $task->point }})">
-                                <p class="text-white py-1 px-2 inline-block rounded-md text-sm" style="background-color: {{ $task->badge->color }}">{{ $task->badge->name }}</p>
-                                <h1 class="font-medium text-gray-600 mt-2">{{ $task->title }}</h1>
-                                <div class="flex gap-2 mt-2">
-                                    <div class="flex gap-1 bg-green-600 items-center p-1 rounded-md">
-                                        <svg width="16" height="16" stroke-width="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="#ffffff">
-                                            <path d="M12 6L12 12L18 12" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                            <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                        </svg>
-                                        <p class="text-white text-xs">{{ $task->start_date->format('D M') }}</p>
-                                    </div>
-                                    <div class="flex gap-1 bg-green-600 items-center p-1 rounded-md">
-                                        <svg width="16" height="16" stroke-width="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="#ffffff">
-                                            <path d="M12 6L12 12L18 12" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                            <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                        </svg>
-                                        <p class="text-white text-xs">{{ $task->end_date->format('D M') }}</p>
-                                    </div>
-                                </div>
-                                <div class="flex mt-4 items-center gap-4">
-                                    <div class="">
-                                        <img src="{{ $task->user->img_user ? asset('storage/' . $task->user->img_user) : asset('assets/img/no-profile.svg') }}" alt="" class="w-10 h-10 rounded-full object-cover object-center">
-                                    </div>
-                                    <div class="flex gap-4">
-                                        <div class="flex gap-1 items-center">
-                                            <svg width="20" height="20" viewBox="0 0 24 24" class="fill-gray-600" xmlns="http://www.w3.org/2000/svg" stroke-width="2.5">
-                                                <path stroke-width="2.5" d="M20 4.25h-2.025A1.5 1.5 0 0 0 16.5 3h-9a1.5 1.5 0 0 0-1.475 1.25H4A1.752 1.752 0 0 0 2.25 6v1.65a4.072 4.072 0 0 0 4.1 4.1h.321a6 6 0 0 0 4.579 3.2v3.11Q9 18.408 9 21h6q0-2.6-2.25-2.942v-3.11a6 6 0 0 0 4.579-3.2h.321a4.072 4.072 0 0 0 4.1-4.1V6A1.752 1.752 0 0 0 20 4.25ZM3.75 7.65V6A.25.25 0 0 1 4 5.75h2V9a6.09 6.09 0 0 0 .127 1.231A2.562 2.562 0 0 1 3.75 7.65Zm16.5 0a2.562 2.562 0 0 1-2.377 2.581A6.09 6.09 0 0 0 18 9V5.75h2a.25.25 0 0 1 .25.25Z"></path>
-                                            </svg>
-                                            <p class="text-gray-500 font-medium text-sm">{{ $task->point }}</p>
+                    title: `<div onclick="openUpdateModal({{ $task->id }}, '{{ $task->title }}', '{{ $task->start_date }}', '{{ $task->end_date }}', {{ $task->badge_tasks_id }}, '{{ $task->description }}', {{ $task->point }})" data-task='{{ json_encode(["id" => $task->id, "users_id" => $task->users_id]) }}'>
+                                        <p class="text-white py-1 px-2 inline-block rounded-md text-sm" style="background-color: {{ $task->badge->color }}">{{ $task->badge->name }}</p>
+                                        <h1 class="font-medium text-gray-600 mt-2">{{ $task->title }}</h1>
+                                        <div class="flex gap-2 mt-2">
+                                            <div class="flex gap-1 bg-green-600 items-center p-1 rounded-md">
+                                                <svg width="16" height="16" stroke-width="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="#ffffff">
+                                                    <path d="M12 6L12 12L18 12" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                    <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                </svg>
+                                                <p class="text-white text-xs">{{ $task->start_date->format('D M') }}</p>
+                                            </div>
+                                            <div class="flex gap-1 bg-green-600 items-center p-1 rounded-md">
+                                                <svg width="16" height="16" stroke-width="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="#ffffff">
+                                                    <path d="M12 6L12 12L18 12" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                    <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                </svg>
+                                                <p class="text-white text-xs">{{ $task->end_date->format('D M') }}</p>
+                                            </div>
                                         </div>
-                                        <div class="flex gap-1 items-center task-time" data-task-id="{{ $task->id }}" data-working-hours="{{ $task->working_hour }}">
-                                            <svg width="16" height="16" viewBox="0 0 24 24" class="fill-gay-600 stroke-gray-600" stroke-width="2.5" fill="none" xmlns="http://www.w3.org/2000/svg" color="">
-                                                <path d="M12 6L12 12L18 12" stroke="" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                                <path d="M21.8883 10.5C21.1645 5.68874 17.013 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C16.1006 22 19.6248 19.5318 21.1679 16" stroke="" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                                <path d="M17 16H21.4C21.7314 16 22 16.2686 22 16.6V21" stroke="" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                            </svg>
-                                            <p class="text-gray-500 font-medium text-sm task-time-display">{{ $task->working_hour }}</p>
+                                        <div class="flex mt-4 items-center gap-4">
+                                            <div class="">
+                                                <img src="{{ $task->user->img_user ? asset('storage/' . $task->user->img_user) : asset('assets/img/no-profile.svg') }}" alt="" class="w-10 h-10 rounded-full object-cover object-center">
+                                            </div>
+                                            <div class="flex gap-4">
+                                                <div class="flex gap-1 items-center">
+                                                    <svg width="20" height="20" viewBox="0 0 24 24" class="fill-gray-600" xmlns="http://www.w3.org/2000/svg" stroke-width="2.5">
+                                                        <path stroke-width="2.5" d="M20 4.25h-2.025A1.5 1.5 0 0 0 16.5 3h-9a1.5 1.5 0 0 0-1.475 1.25H4A1.752 1.752 0 0 0 2.25 6v1.65a4.072 4.072 0 0 0 4.1 4.1h.321a6 6 0 0 0 4.579 3.2v3.11Q9 18.408 9 21h6q0-2.6-2.25-2.942v-3.11a6 6 0 0 0 4.579-3.2h.321a4.072 4.072 0 0 0 4.1-4.1V6A1.752 1.752 0 0 0 20 4.25ZM3.75 7.65V6A.25.25 0 0 1 4 5.75h2V9a6.09 6.09 0 0 0 .127 1.231A2.562 2.562 0 0 1 3.75 7.65Zm16.5 0a2.562 2.562 0 0 1-2.377 2.581A6.09 6.09 0 0 0 18 9V5.75h2a.25.25 0 0 1 .25.25Z"></path>
+                                                    </svg>
+                                                    <p class="text-gray-500 font-medium text-sm">{{ $task->point }}</p>
+                                                </div>
+                                                <div class="flex gap-1 items-center task-time" data-task-id="{{ $task->id }}" data-working-hours="{{ $task->working_hour }}">
+                                                    <svg width="16" height="16" viewBox="0 0 24 24" class="fill-gay-600 stroke-gray-600" stroke-width="2.5" fill="none" xmlns="http://www.w3.org/2000/svg" color="">
+                                                        <path d="M12 6L12 12L18 12" stroke="" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                        <path d="M21.8883 10.5C21.1645 5.68874 17.013 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C16.1006 22 19.6248 19.5318 21.1679 16" stroke="" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                        <path d="M17 16H21.4C21.7314 16 22 16.2686 22 16.6V21" stroke="" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                    </svg>
+                                                    <p class="text-gray-500 font-medium text-sm task-time-display">{{ $task->working_hour }}</p>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="mt-4">
-                                    <div class="w-full bg-gray-200 rounded-xl">
-                                        <div class="{{ $task->progress < 40 ? 'bg-red-500' : ($task->progress < 70 ? 'bg-yellow-500' : 'bg-green-500') }} h-4 rounded-xl" style="width: {{ $task->progress }}%;">
-                                            <p class="text-center font-medium text-white text-xs">{{ $task->progress }}%</p>
+                                        <div class="mt-4">
+                                            <div class="w-full bg-gray-200 rounded-xl">
+                                                <div class="{{ $task->progress < 40 ? 'bg-red-500' : ($task->progress < 70 ? 'bg-yellow-500' : 'bg-green-500') }} h-4 rounded-xl" style="width: {{ $task->progress }}%;">
+                                                    <p class="text-center font-medium text-white text-xs">{{ $task->progress }}%</p>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>`,
+                                    </div>`,
                     listName: "todo",
-                    originalWorkingHour: "{{ $task->working_hour }}"
+                    originalWorkingHour: "{{ $task->working_hour }}",
+                    'data-task':{
+                        'id': "{{ $task->id }}",
+                        'users_id': "{{ $task->users_id }}"
+                    },
                 },
             @endforeach
-        ];
+            ];
 
         const progressItems = [
             @foreach ($tasks->where('list_name', 'progress') as $task)
-                        {
+                                {
                     id: "{{ $task->id }}",
-                    title: `<div>
-                                <p class="text-white py-1 px-2 inline-block rounded-md text-sm" style="background-color: {{ $task->badge->color }}">{{ $task->badge->name }}</p>
-                                <h1 class="font-medium text-gray-600 mt-2">{{ $task->title }}</h1>
-                                <div class="flex gap-2 mt-2">
-                                    <div class="flex gap-1 bg-green-600 items-center p-1 rounded-md">
-                                        <svg width="16" height="16" stroke-width="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="#ffffff">
-                                            <path d="M12 6L12 12L18 12" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                            <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                        </svg>
-                                        <p class="text-white text-xs">{{ $task->start_date->format('D M') }}</p>
-                                    </div>
-                                    <div class="flex gap-1 bg-green-600 items-center p-1 rounded-md">
-                                        <svg width="16" height="16" stroke-width="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="#ffffff">
-                                            <path d="M12 6L12 12L18 12" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                            <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                        </svg>
-                                        <p class="text-white text-xs">{{ $task->end_date->format('D M') }}</p>
-                                    </div>
-                                </div>
-                                <div class="flex mt-4 items-center gap-4">
-                                    <div class="">
-                                        <img src="{{ $task->user->img_user ? asset('storage/' . $task->user->img_user) : asset('assets/img/no-profile.svg') }}" alt="" class="w-10 h-10 rounded-full object-cover object-center">
-                                    </div>
-                                    <div class="flex gap-4">
-                                        <div class="flex gap-1 items-center">
-                                            <svg width="20" height="20" viewBox="0 0 24 24" class="fill-gray-600" xmlns="http://www.w3.org/2000/svg" stroke-width="2.5">
-                                                <path stroke-width="2.5" d="M20 4.25h-2.025A1.5 1.5 0 0 0 16.5 3h-9a1.5 1.5 0 0 0-1.475 1.25H4A1.752 1.752 0 0 0 2.25 6v1.65a4.072 4.072 0 0 0 4.1 4.1h.321a6 6 0 0 0 4.579 3.2v3.11Q9 18.408 9 21h6q0-2.6-2.25-2.942v-3.11a6 6 0 0 0 4.579-3.2h.321a4.072 4.072 0 0 0 4.1-4.1V6A1.752 1.752 0 0 0 20 4.25ZM3.75 7.65V6A.25.25 0 0 1 4 5.75h2V9a6.09 6.09 0 0 0 .127 1.231A2.562 2.562 0 0 1 3.75 7.65Zm16.5 0a2.562 2.562 0 0 1-2.377 2.581A6.09 6.09 0 0 0 18 9V5.75h2a.25.25 0 0 1 .25.25Z"></path>
-                                            </svg>
-                                            <p class="text-gray-500 font-medium text-sm">{{ $task->point }}</p>
+                    title: `<div data-task='{{ json_encode(["id" => $task->id, "users_id" => $task->users_id]) }}'>
+                                        <p class="text-white py-1 px-2 inline-block rounded-md text-sm" style="background-color: {{ $task->badge->color }}">{{ $task->badge->name }}</p>
+                                        <h1 class="font-medium text-gray-600 mt-2">{{ $task->title }}</h1>
+                                        <div class="flex gap-2 mt-2">
+                                            <div class="flex gap-1 bg-green-600 items-center p-1 rounded-md">
+                                                <svg width="16" height="16" stroke-width="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="#ffffff">
+                                                    <path d="M12 6L12 12L18 12" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                    <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                </svg>
+                                                <p class="text-white text-xs">{{ $task->start_date->format('D M') }}</p>
+                                            </div>
+                                            <div class="flex gap-1 bg-green-600 items-center p-1 rounded-md">
+                                                <svg width="16" height="16" stroke-width="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="#ffffff">
+                                                    <path d="M12 6L12 12L18 12" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                    <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                </svg>
+                                                <p class="text-white text-xs">{{ $task->end_date->format('D M') }}</p>
+                                            </div>
                                         </div>
-                                        <div class="flex gap-1 items-center task-time" data-task-id="{{ $task->id }}" data-working-hours="{{ $task->working_hour }}">
-                                            <svg width="16" height="16" viewBox="0 0 24 24" class="fill-gay-600 stroke-gray-600" stroke-width="2.5" fill="none" xmlns="http://www.w3.org/2000/svg" color="">
-                                                <path d="M12 6L12 12L18 12" stroke="" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                                <path d="M21.8883 10.5C21.1645 5.68874 17.013 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C16.1006 22 19.6248 19.5318 21.1679 16" stroke="" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                                <path d="M17 16H21.4C21.7314 16 22 16.2686 22 16.6V21" stroke="" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                            </svg>
-                                            <p class="text-gray-500 font-medium text-sm task-time-display">{{ $task->working_hour }}</p>
+                                        <div class="flex mt-4 items-center gap-4">
+                                            <div class="">
+                                                <img src="{{ $task->user->img_user ? asset('storage/' . $task->user->img_user) : asset('assets/img/no-profile.svg') }}" alt="" class="w-10 h-10 rounded-full object-cover object-center">
+                                            </div>
+                                            <div class="flex gap-4">
+                                                <div class="flex gap-1 items-center">
+                                                    <svg width="20" height="20" viewBox="0 0 24 24" class="fill-gray-600" xmlns="http://www.w3.org/2000/svg" stroke-width="2.5">
+                                                        <path stroke-width="2.5" d="M20 4.25h-2.025A1.5 1.5 0 0 0 16.5 3h-9a1.5 1.5 0 0 0-1.475 1.25H4A1.752 1.752 0 0 0 2.25 6v1.65a4.072 4.072 0 0 0 4.1 4.1h.321a6 6 0 0 0 4.579 3.2v3.11Q9 18.408 9 21h6q0-2.6-2.25-2.942v-3.11a6 6 0 0 0 4.579-3.2h.321a4.072 4.072 0 0 0 4.1-4.1V6A1.752 1.752 0 0 0 20 4.25ZM3.75 7.65V6A.25.25 0 0 1 4 5.75h2V9a6.09 6.09 0 0 0 .127 1.231A2.562 2.562 0 0 1 3.75 7.65Zm16.5 0a2.562 2.562 0 0 1-2.377 2.581A6.09 6.09 0 0 0 18 9V5.75h2a.25.25 0 0 1 .25.25Z"></path>
+                                                    </svg>
+                                                    <p class="text-gray-500 font-medium text-sm">{{ $task->point }}</p>
+                                                </div>
+                                                <div class="flex gap-1 items-center task-time" data-task-id="{{ $task->id }}" data-working-hours="{{ $task->working_hour }}">
+                                                    <svg width="16" height="16" viewBox="0 0 24 24" class="fill-gay-600 stroke-gray-600" stroke-width="2.5" fill="none" xmlns="http://www.w3.org/2000/svg" color="">
+                                                        <path d="M12 6L12 12L18 12" stroke="" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                        <path d="M21.8883 10.5C21.1645 5.68874 17.013 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C16.1006 22 19.6248 19.5318 21.1679 16" stroke="" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                        <path d="M17 16H21.4C21.7314 16 22 16.2686 22 16.6V21" stroke="" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                    </svg>
+                                                    <p class="text-gray-500 font-medium text-sm task-time-display">{{ $task->working_hour }}</p>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="mt-4">
-                                    <div class="w-full bg-gray-200 rounded-xl">
-                                        <div class="{{ $task->progress < 40 ? 'bg-red-500' : ($task->progress < 70 ? 'bg-yellow-500' : 'bg-green-500') }} h-4 rounded-xl" style="width: {{ $task->progress }}%;">
-                                            <p class="text-center font-medium text-white text-xs">{{ $task->progress }}%</p>
+                                        <div class="mt-4">
+                                            <div class="w-full bg-gray-200 rounded-xl">
+                                                <div class="{{ $task->progress < 40 ? 'bg-red-500' : ($task->progress < 70 ? 'bg-yellow-500' : 'bg-green-500') }} h-4 rounded-xl" style="width: {{ $task->progress }}%;">
+                                                    <p class="text-center font-medium text-white text-xs">{{ $task->progress }}%</p>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>`,
+                                    </div>`,
                     listName: "progress",
-                    originalWorkingHour: "{{ $task->working_hour }}"
+                    originalWorkingHour: "{{ $task->working_hour }}",
                 },
             @endforeach
-        ];
+            ];
 
         const doneItems = [
             @foreach ($tasks->where('list_name', 'done') as $task)
-                        {
+                                {
                     id: "{{ $task->id }}",
-                    title: `<div>
-                                <p class="text-white py-1 px-2 inline-block rounded-md text-sm" style="background-color: {{ $task->badge->color }}">{{ $task->badge->name }}</p>
-                                <h1 class="font-medium text-gray-600 mt-2">{{ $task->title }}</h1>
-                                <div class="flex gap-2 mt-2">
-                                    <div class="flex gap-1 bg-green-600 items-center p-1 rounded-md">
-                                        <svg width="16" height="16" stroke-width="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="#ffffff">
-                                            <path d="M12 6L12 12L18 12" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                            <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                        </svg>
-                                        <p class="text-white text-xs">{{ $task->start_date->format('D M') }}</p>
-                                    </div>
-                                    <div class="flex gap-1 bg-green-600 items-center p-1 rounded-md">
-                                        <svg width="16" height="16" stroke-width="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="#ffffff">
-                                            <path d="M12 6L12 12L18 12" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                            <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                        </svg>
-                                        <p class="text-white text-xs">{{ $task->end_date->format('D M') }}</p>
-                                    </div>
-                                </div>
-                                <div class="flex mt-4 items-center gap-4">
-                                    <div class="">
-                                        <img src="{{ $task->user->img_user ? asset('storage/' . $task->user->img_user) : asset('assets/img/no-profile.svg') }}" alt="" class="w-10 h-10 rounded-full object-cover object-center">
-                                    </div>
-                                    <div class="flex gap-4">
-                                        <div class="flex gap-1 items-center">
-                                            <svg width="20" height="20" viewBox="0 0 24 24" class="fill-gray-600" xmlns="http://www.w3.org/2000/svg" stroke-width="2.5">
-                                                <path stroke-width="2.5" d="M20 4.25h-2.025A1.5 1.5 0 0 0 16.5 3h-9a1.5 1.5 0 0 0-1.475 1.25H4A1.752 1.752 0 0 0 2.25 6v1.65a4.072 4.072 0 0 0 4.1 4.1h.321a6 6 0 0 0 4.579 3.2v3.11Q9 18.408 9 21h6q0-2.6-2.25-2.942v-3.11a6 6 0 0 0 4.579-3.2h.321a4.072 4.072 0 0 0 4.1-4.1V6A1.752 1.752 0 0 0 20 4.25ZM3.75 7.65V6A.25.25 0 0 1 4 5.75h2V9a6.09 6.09 0 0 0 .127 1.231A2.562 2.562 0 0 1 3.75 7.65Zm16.5 0a2.562 2.562 0 0 1-2.377 2.581A6.09 6.09 0 0 0 18 9V5.75h2a.25.25 0 0 1 .25.25Z"></path>
-                                            </svg>
-                                            <p class="text-gray-500 font-medium text-sm">{{ $task->point }}</p>
+                    title: `<div data-task='{{ json_encode(["id" => $task->id, "users_id" => $task->users_id]) }}'>
+                                        <p class="text-white py-1 px-2 inline-block rounded-md text-sm" style="background-color: {{ $task->badge->color }}">{{ $task->badge->name }}</p>
+                                        <h1 class="font-medium text-gray-600 mt-2">{{ $task->title }}</h1>
+                                        <div class="flex gap-2 mt-2">
+                                            <div class="flex gap-1 bg-green-600 items-center p-1 rounded-md">
+                                                <svg width="16" height="16" stroke-width="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="#ffffff">
+                                                    <path d="M12 6L12 12L18 12" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                    <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                </svg>
+                                                <p class="text-white text-xs">{{ $task->start_date->format('D M') }}</p>
+                                            </div>
+                                            <div class="flex gap-1 bg-green-600 items-center p-1 rounded-md">
+                                                <svg width="16" height="16" stroke-width="2" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" color="#ffffff">
+                                                    <path d="M12 6L12 12L18 12" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                    <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                </svg>
+                                                <p class="text-white text-xs">{{ $task->end_date->format('D M') }}</p>
+                                            </div>
                                         </div>
-                                        <div class="flex gap-1 items-center task-time" data-task-id="{{ $task->id }}" data-working-hours="{{ $task->working_hour }}">
-                                            <svg width="16" height="16" viewBox="0 0 24 24" class="fill-gay-600 stroke-gray-600" stroke-width="2.5" fill="none" xmlns="http://www.w3.org/2000/svg" color="">
-                                                <path d="M12 6L12 12L18 12" stroke="" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                                <path d="M21.8883 10.5C21.1645 5.68874 17.013 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C16.1006 22 19.6248 19.5318 21.1679 16" stroke="" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                                <path d="M17 16H21.4C21.7314 16 22 16.2686 22 16.6V21" stroke="" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                                            </svg>
-                                            <p class="text-gray-500 font-medium text-sm task-time-display">{{ $task->working_hour }}</p>
+                                        <div class="flex mt-4 items-center gap-4">
+                                            <div class="">
+                                                <img src="{{ $task->user->img_user ? asset('storage/' . $task->user->img_user) : asset('assets/img/no-profile.svg') }}" alt="" class="w-10 h-10 rounded-full object-cover object-center">
+                                            </div>
+                                            <div class="flex gap-4">
+                                                <div class="flex gap-1 items-center">
+                                                    <svg width="20" height="20" viewBox="0 0 24 24" class="fill-gray-600" xmlns="http://www.w3.org/2000/svg" stroke-width="2.5">
+                                                        <path stroke-width="2.5" d="M20 4.25h-2.025A1.5 1.5 0 0 0 16.5 3h-9a1.5 1.5 0 0 0-1.475 1.25H4A1.752 1.752 0 0 0 2.25 6v1.65a4.072 4.072 0 0 0 4.1 4.1h.321a6 6 0 0 0 4.579 3.2v3.11Q9 18.408 9 21h6q0-2.6-2.25-2.942v-3.11a6 6 0 0 0 4.579-3.2h.321a4.072 4.072 0 0 0 4.1-4.1V6A1.752 1.752 0 0 0 20 4.25ZM3.75 7.65V6A.25.25 0 0 1 4 5.75h2V9a6.09 6.09 0 0 0 .127 1.231A2.562 2.562 0 0 1 3.75 7.65Zm16.5 0a2.562 2.562 0 0 1-2.377 2.581A6.09 6.09 0 0 0 18 9V5.75h2a.25.25 0 0 1 .25.25Z"></path>
+                                                    </svg>
+                                                    <p class="text-gray-500 font-medium text-sm">{{ $task->point }}</p>
+                                                </div>
+                                                <div class="flex gap-1 items-center task-time" data-task-id="{{ $task->id }}" data-working-hours="{{ $task->working_hour }}">
+                                                    <svg width="16" height="16" viewBox="0 0 24 24" class="fill-gay-600 stroke-gray-600" stroke-width="2.5" fill="none" xmlns="http://www.w3.org/2000/svg" color="">
+                                                        <path d="M12 6L12 12L18 12" stroke="" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                        <path d="M21.8883 10.5C21.1645 5.68874 17.013 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22C16.1006 22 19.6248 19.5318 21.1679 16" stroke="" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                        <path d="M17 16H21.4C21.7314 16 22 16.2686 22 16.6V21" stroke="" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                                    </svg>
+                                                    <p class="text-gray-500 font-medium text-sm task-time-display">{{ $task->working_hour }}</p>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="mt-4">
-                                    <div class="w-full bg-gray-200 rounded-xl">
-                                        <div class="{{ $task->progress < 40 ? 'bg-red-500' : ($task->progress < 70 ? 'bg-yellow-500' : 'bg-green-500') }} h-4 rounded-xl" style="width: {{ $task->progress }}%;">
-                                            <p class="text-center font-medium text-white text-xs">{{ $task->progress }}%</p>
+                                        <div class="mt-4">
+                                            <div class="w-full bg-gray-200 rounded-xl">
+                                                <div class="{{ $task->progress < 40 ? 'bg-red-500' : ($task->progress < 70 ? 'bg-yellow-500' : 'bg-green-500') }} h-4 rounded-xl" style="width: {{ $task->progress }}%;">
+                                                    <p class="text-center font-medium text-white text-xs">{{ $task->progress }}%</p>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>`,
+                                    </div>`,
                     listName: "done",
-                    originalWorkingHour: "{{ $task->working_hour }}"
+                    originalWorkingHour: "{{ $task->working_hour }}",
                 },
             @endforeach
-        ];
+            ];
 
         const boards = [
             {
@@ -529,6 +563,7 @@
                 class: "my-board-done"
             }
         ];
+        const currentUserId = `{{ auth()->user()->id }}`;
 
         const taskTimers = {};
 
@@ -633,8 +668,16 @@
                 },
                 dropEl: function (el, target, source, sibling) {
                     const taskId = el.dataset.eid;
+                    const dataDiv = el.querySelector('[data-task]');
                     const sourceId = source.parentElement.getAttribute('data-id');
                     const targetId = target.parentElement.getAttribute('data-id');
+
+                    const taskData = JSON.parse(dataDiv.dataset.task);
+                    if (taskData.users_id != currentUserId) {
+                        modal_alert_user_task.showModal()
+                        return false;
+                    }
+                    
 
                     if (sourceId === targetId) {
                         return;
