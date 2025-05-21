@@ -5,6 +5,7 @@ use App\Http\Controllers\BadgeProjectController;
 use App\Http\Controllers\BadgeTaskController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\CompanyPositionController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\UserController;
@@ -71,6 +72,8 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::resource('/badge-project', BadgeProjectController::class)->except(['index','create','edit', 'show']);
         Route::resource('/badge-task', BadgeTaskController::class)->except(['index','create','edit', 'show']);
+
+        Route::resource('/message', MessageController::class);
     });
 
 });

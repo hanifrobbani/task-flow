@@ -101,7 +101,7 @@
                                     </svg>
                                     <p class="text-sm text-blue-600 ">{{ $item->employee->count() }}+ member</p>
                                 </div>
-                                <button
+                                <button type="button" onclick="openModalJoinCompany({{ $item->id }})"
                                     class="px-3 py-2 rounded-md text-white bg-blue-600 text-sm font-medium hover:opacity-80">Join
                                     Company</button>
                             </div>
@@ -126,7 +126,7 @@
 
     <!-- modal logout -->
     <dialog id="modal_logout" class="modal">
-        <form action="/logout" method="POST" class="relative max-w-md bg-white rounded-lg shadow-md p-6 z-50 w-full">
+        <form action="/message" method="POST" class="relative max-w-md bg-white rounded-lg shadow-md p-6 z-50 w-full">
             @csrf
             <div class="flex gap-2 items-center">
                 <div>
@@ -161,4 +161,49 @@
         </form>
 
     </dialog>
+    <!-- modal logout -->
+    <dialog id="modal_join_company" class="modal">
+        <form action="/logout" method="POST" class="relative max-w-md bg-white rounded-lg shadow-md p-6 z-50 w-full">
+            @csrf
+            <div class="flex gap-2 items-center">
+                <div>
+                    <div class="p-2 rounded-full bg-blue-200">
+                        <svg width="24" height="24" class="stroke-blue-600" stroke-width="2.5" viewBox="0 0 24 24"
+                            fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M7.90039 8.07954C7.90039 3.30678 15.4004 3.30682 15.4004 8.07955C15.4004 11.4886 11.9913 10.8067 11.9913 14.8976"
+                                stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                            <path d="M12 19.01L12.01 18.9989" stroke-width="2.5" stroke-linecap="round"
+                                stroke-linejoin="round"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="my-2">
+                    <h1 class="text-lg font-semibold text-gray-800 mb-2">Join this Company?</h1>
+                </div>
+            </div>
+            <p class="text-sm text-gray-600">After you send a request to join this company you have to wait for approval, an
+                approval email will be sent to your address.</p>
+            <input type="hidden" name="users_id" value="{{ auth()->user()->id }}">
+            <input type="hidden" name="companies_id" id="companies-id">
+            <input type="hidden" name="send_to" value="company">
+            <div class="flex justify-end gap-2 mt-4">
+                <button type="button" onclick="modal_join_company.close()"
+                    class="text-sm font-medium border border-gray-300 px-3 py-1 rounded-md hover:bg-gray-50 transition-colors">
+                    Cancel
+                </button>
+                <button type="submit"
+                    class="text-sm font-medium bg-blue-600 text-white px-3 py-1 rounded-md hover:opacity-80 transition">
+                    Request Join!
+                </button>
+            </div>
+        </form>
+
+    </dialog>
+    <script>
+        function openModalJoinCompany(companyId) {
+            const inputBadgeName = document.getElementById('companies-id').value = companyId
+            modal_join_company.showModal()
+        }
+    </script>
 @endsection

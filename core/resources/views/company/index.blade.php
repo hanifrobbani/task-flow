@@ -235,7 +235,7 @@
     </div>
 
     <div class="mt-5">
-        <h1 class="font-medium text-gray-600">Manage Project</h1>
+        <h1 class="font-medium text-gray-600 mb-1">Manage Project</h1>
         <div class="flex gap-5">
             <div class="p-5 bg-white rounded-lg shadow-md w-full">
                 <div class="flex justify-between mb-4">
