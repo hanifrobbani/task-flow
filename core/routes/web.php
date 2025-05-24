@@ -21,12 +21,14 @@ Route::group([
     Route::post('/register', [AuthController::class, 'register']);
     Route::get('/register', [AuthController::class, 'regis']);
 });
+
 Route::get('/user/join-company/{id}', [UserController::class, 'updateCompanyUser']);
 
 Route::group(['middleware' => 'auth'], function () {
 
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::resource('/company', CompanyController::class)->except(['update', 'destroy'])->middleware('isHaveCompany');
+    Route::resource('/message', MessageController::class)->except(['edit', 'update', 'index']);
     
     Route::group(['middleware' => 'onboarding'], function () {
         Route::get('/', [UserStatisticController::class, 'taskProgress']);
@@ -72,8 +74,7 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::resource('/badge-project', BadgeProjectController::class)->except(['index','create','edit', 'show']);
         Route::resource('/badge-task', BadgeTaskController::class)->except(['index','create','edit', 'show']);
-
-        Route::resource('/message', MessageController::class);
+        Route::get('/message', [MessageController::class, 'index']);
     });
 
 });

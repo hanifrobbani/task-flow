@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Message;
+use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -14,7 +15,7 @@ class MessageController extends Controller
      */
     public function index()
     {
-        $message = Message::latest()->get();
+        $message = Message::latest()->paginate(10);
         return view('message.index', compact('message'));
     }
 
@@ -32,12 +33,20 @@ class MessageController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'title' => 'required',
+            'title' => 'nullable',
             'message' => 'nullable',
             'send_to' => 'required',
             'users_id' => 'required',
             'companies_id' => 'required',
+            'type' => 'nullable',
         ]);
+        $user = User::where('id', $validated['users_id'])->firstOrFail();
+        // dd($validated);
+
+        if($validated['type'] == 'join-message'){
+            $validated['title'] = "Request Join Company";
+            $validated['message'] =  $user->name . " has request to join your company!";
+        }
 
         try{
             Message::create($validated);

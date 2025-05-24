@@ -1,6 +1,11 @@
 @extends('layouts.blank')
 
 @section('blank')
+
+    @if (session()->has('successMessage'))
+        <x-toast-notification :show="true" variant="success" title="Success!" message="{{ session('successMessage') }}"
+            :duration="7000" />
+    @endif
     <div class="bg-white w-full shadow-md fixed z-20">
         <nav class="flex justify-between w-full items-center px-4 py-2 bg-white shadow-md max-w-[100rem] mx-auto">
             <div class="flex justify-center items-center">
@@ -126,7 +131,7 @@
 
     <!-- modal logout -->
     <dialog id="modal_logout" class="modal">
-        <form action="/message" method="POST" class="relative max-w-md bg-white rounded-lg shadow-md p-6 z-50 w-full">
+        <form action="/logout" method="POST" class="relative max-w-md bg-white rounded-lg shadow-md p-6 z-50 w-full">
             @csrf
             <div class="flex gap-2 items-center">
                 <div>
@@ -161,9 +166,9 @@
         </form>
 
     </dialog>
-    <!-- modal logout -->
+    <!-- modal join company -->
     <dialog id="modal_join_company" class="modal">
-        <form action="/logout" method="POST" class="relative max-w-md bg-white rounded-lg shadow-md p-6 z-50 w-full">
+        <form action="/message" method="POST" class="relative max-w-md bg-white rounded-lg shadow-md p-6 z-50 w-full">
             @csrf
             <div class="flex gap-2 items-center">
                 <div>
@@ -182,20 +187,14 @@
                     <h1 class="text-lg font-semibold text-gray-800 mb-2">Join this Company?</h1>
                 </div>
             </div>
-            <p class="text-sm text-gray-600">After you send a request to join this company you have to wait for approval, an
-                approval email will be sent to your address.</p>
+            <p class="text-sm text-gray-600">After you send a request to join this company you have to wait for approval, an approval email will be sent to your address.</p>
             <input type="hidden" name="users_id" value="{{ auth()->user()->id }}">
             <input type="hidden" name="companies_id" id="companies-id">
             <input type="hidden" name="send_to" value="company">
+            <input type="hidden" name="type" value="join-message">
             <div class="flex justify-end gap-2 mt-4">
-                <button type="button" onclick="modal_join_company.close()"
-                    class="text-sm font-medium border border-gray-300 px-3 py-1 rounded-md hover:bg-gray-50 transition-colors">
-                    Cancel
-                </button>
-                <button type="submit"
-                    class="text-sm font-medium bg-blue-600 text-white px-3 py-1 rounded-md hover:opacity-80 transition">
-                    Request Join!
-                </button>
+                <button type="button" onclick="modal_join_company.close()" class="text-sm font-medium border border-gray-300 px-3 py-1 rounded-md hover:bg-gray-50 transition-colors">Cancel</button>
+                <button type="submit" class="text-sm font-medium bg-blue-600 text-white px-3 py-1 rounded-md hover:opacity-80 transition">Request Join!</button>
             </div>
         </form>
 

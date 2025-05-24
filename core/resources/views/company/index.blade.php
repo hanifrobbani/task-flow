@@ -137,17 +137,35 @@
             </div>
 
         </div>
-        <div class="p-5 bg-white rounded-lg shadow-md max-w-lg min-w-64">
+        <div class="p-5 bg-white rounded-lg shadow-md max-w-xs w-full">
             <h1 class="text-gray-800 font-medium">Message</h1>
+            @if ($todayMessage == 0 && $unreadMessage == 0)
             <div class="w-full h-full flex items-center pt-10 flex-col">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
-                    color="#4b5563" stroke-width="1">
-                    <path fill-rule="evenodd" clip-rule="evenodd"
-                        d="M4 4.25C2.48122 4.25 1.25 5.48122 1.25 7V17C1.25 18.5188 2.48122 19.75 4 19.75H20C21.5188 19.75 22.75 18.5188 22.75 17V7C22.75 5.48122 21.5188 4.25 20 4.25H4ZM7.4301 8.38558C7.09076 8.14804 6.62311 8.23057 6.38558 8.5699C6.14804 8.90924 6.23057 9.37689 6.5699 9.61442L11.5699 13.1144C11.8281 13.2952 12.1719 13.2952 12.4301 13.1144L17.4301 9.61442C17.7694 9.37689 17.852 8.90924 17.6144 8.5699C17.3769 8.23057 16.9092 8.14804 16.5699 8.38558L12 11.5845L7.4301 8.38558Z"
-                        fill="#4b5563"></path>
-                </svg>
-                <p class="text-sm text-gray-600 mt-2">Your Mail Currently Empty</p>
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                        color="#4b5563" stroke-width="1">
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M4 4.25C2.48122 4.25 1.25 5.48122 1.25 7V17C1.25 18.5188 2.48122 19.75 4 19.75H20C21.5188 19.75 22.75 18.5188 22.75 17V7C22.75 5.48122 21.5188 4.25 20 4.25H4ZM7.4301 8.38558C7.09076 8.14804 6.62311 8.23057 6.38558 8.5699C6.14804 8.90924 6.23057 9.37689 6.5699 9.61442L11.5699 13.1144C11.8281 13.2952 12.1719 13.2952 12.4301 13.1144L17.4301 9.61442C17.7694 9.37689 17.852 8.90924 17.6144 8.5699C17.3769 8.23057 16.9092 8.14804 16.5699 8.38558L12 11.5845L7.4301 8.38558Z"
+                            fill="#4b5563"></path>
+                    </svg>
+                    <p class="text-sm text-gray-600 mt-2">Your Message Currently Empty</p>
             </div>
+            @else
+            <div class="pb-4 flex flex-col justify-between h-full">
+                <div class="w-full flex justify-center items-center h-full">
+                    <div class="flex flex-col items-center border-r border-gray-300 pr-2">
+                        <h1 class="font-semibold text-gray-800">{{ $todayMessage }}</h1>
+                        <p class="text-xs text-gray-600">Today Message</p>
+                    </div>
+                    <div class="flex flex-col items-center border-l border-gray-300 pl-2">
+                        <h1 class="font-semibold text-gray-800">{{ $unreadMessage }}</h1>
+                        <p class="text-xs text-gray-600">Unread Message</p>
+                    </div>
+                </div>
+                <div class="w-full text-center">
+                    <a href="" class="text-sm text-gray-600 hover:text-blue-600 hover:underline">See all message</a>
+                </div>
+            </div>
+            @endif
 
         </div>
     </div>
@@ -269,7 +287,8 @@
                         </thead>
                         <tbody>
                             @forelse ($badgeTask as $item)
-                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                <tr
+                                    class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
                                     <td class="w-full px-6">
                                         {{ $item->name }}
                                     </td>
@@ -277,12 +296,15 @@
                                         <div class="w-10 h-4" style="background-color: {{ $item->color }};"></div>
                                     </td>
                                     <td class="py-4 text-center px-6">
-                                        <button type="button" onclick="modalEditBadgeTask({{ $item->id }}, '{{ $item->name }}', '{{ $item->color }}')" class="font-medium text-blue-600 hover:underline">Edit</button>
+                                        <button type="button"
+                                            onclick="modalEditBadgeTask({{ $item->id }}, '{{ $item->name }}', '{{ $item->color }}')"
+                                            class="font-medium text-blue-600 hover:underline">Edit</button>
                                     </td>
                                 </tr>
                             @empty
                                 <tr class="w-full text-center">
-                                    <td colspan="3" class="w-full py-4">No Badge for your task in your company, start add one!</td>
+                                    <td colspan="3" class="w-full py-4">No Badge for your task in your company, start add one!
+                                    </td>
                                 </tr>
                             @endforelse
                         </tbody>
@@ -324,7 +346,9 @@
                                         {{ $item->name }}
                                     </td>
                                     <td class="py-4 text-center px-6">
-                                        <button type="button" onclick="modalEditBadgeProject({{ $item->id }}, '{{ $item->name }}')" class="font-medium text-blue-600 hover:underline">Edit</button>
+                                        <button type="button"
+                                            onclick="modalEditBadgeProject({{ $item->id }}, '{{ $item->name }}')"
+                                            class="font-medium text-blue-600 hover:underline">Edit</button>
                                     </td>
                                 </tr>
                             @empty
@@ -590,10 +614,9 @@
         </form>
     </dialog>
 
-        <!-- Modal update badge project -->
+    <!-- Modal update badge project -->
     <dialog id="modal_update_badge_project" class="modal">
-        <form id="formUpdateBadgeProject" method="POST"
-            class="relative max-w-xl bg-white rounded-lg shadow-md p-5 w-full">
+        <form id="formUpdateBadgeProject" method="POST" class="relative max-w-xl bg-white rounded-lg shadow-md p-5 w-full">
             @csrf
             @method('PUT')
             <div class="flex justify-between items-center border-b border-gray-200">
@@ -672,8 +695,7 @@
     </dialog>
     <!-- Modal update badge task -->
     <dialog id="modal_update_badge_task" class="modal">
-        <form id="formUpdateBadgeTask" method="POST"
-            class="relative max-w-xl bg-white rounded-lg shadow-md p-5 w-full">
+        <form id="formUpdateBadgeTask" method="POST" class="relative max-w-xl bg-white rounded-lg shadow-md p-5 w-full">
             @csrf
             @method('PUT')
             <div class="flex justify-between items-center border-b border-gray-200">
@@ -766,9 +788,9 @@
             removeButton.type = "button";
             removeButton.className = "remove-image-btn absolute top-0 right-0 bg-red-500 text-white rounded-full p-1 hover:bg-red-600";
             removeButton.innerHTML = `
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                                </svg>`;
+                                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                                </svg>`;
 
             removeButton.onclick = function (e) {
                 e.preventDefault();
