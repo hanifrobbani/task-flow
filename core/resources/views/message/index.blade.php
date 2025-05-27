@@ -86,29 +86,36 @@
                 </div>
 
                 <div class="w-full flex flex-col overflow-y-auto scrollable max-h-screen">
-                    @forelse($message->where('users_id', null) as $item)
-                    <a href="" class="border-t border-b p-5 border-gray-300 hover:bg-gray-100">
-                        <div class="flex gap-5 w-full items-center justify-between">
-                            <div class="flex gap-2 items-center">
-                                <input type="checkbox">
-                                <div class="flex gap-2">
-                                    <h1 class="font-medium text-gray-700 text-sm  text-nowrap">{{ $item->title }}</h1>
-                                    <p class="text-gray-600 text-sm text-nowrap">{{ Str::limit($item->message, 50) }}</p>
+                    @forelse($message as $item)
+                        <a href="" class="border-t border-b p-5 border-gray-300 hover:bg-gray-100">
+                            <div class="flex gap-5 w-full items-center justify-between">
+                                <div class="flex gap-2 items-center">
+                                    <input type="checkbox">
+                                    <div class="flex gap-2">
+                                        <h1 class="font-medium text-gray-700 text-sm  text-nowrap">{{ $item->title }}</h1>
+                                        <p class="text-gray-600 text-sm text-nowrap">{{ Str::limit($item->message, 50) }}</p>
+                                    </div>
+                                    @if ($item->is_read)
+                                    @else
+                                    <span class="relative flex h-2 w-2">
+                                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                                        <span class="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+                                    </span>
+                                    @endif
                                 </div>
+                                <p class="text-gray-500 text-nowrap text-xs">{{ $item->created_at->diffForHumans() }}</p>
                             </div>
-                            <p class="text-gray-500 text-nowrap text-xs">{{ $item->created_at->diffForHumans() }}</p>
-                        </div>
-                    </a>
+                        </a>
                     @empty
-                    <div class="w-full h-full flex items-center pt-10 flex-col">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
-                            color="#4b5563" stroke-width="1">
-                            <path fill-rule="evenodd" clip-rule="evenodd"
-                                d="M4 4.25C2.48122 4.25 1.25 5.48122 1.25 7V17C1.25 18.5188 2.48122 19.75 4 19.75H20C21.5188 19.75 22.75 18.5188 22.75 17V7C22.75 5.48122 21.5188 4.25 20 4.25H4ZM7.4301 8.38558C7.09076 8.14804 6.62311 8.23057 6.38558 8.5699C6.14804 8.90924 6.23057 9.37689 6.5699 9.61442L11.5699 13.1144C11.8281 13.2952 12.1719 13.2952 12.4301 13.1144L17.4301 9.61442C17.7694 9.37689 17.852 8.90924 17.6144 8.5699C17.3769 8.23057 16.9092 8.14804 16.5699 8.38558L12 11.5845L7.4301 8.38558Z"
-                                fill="#4b5563"></path>
-                        </svg>
-                        <p class="text-sm text-gray-600 mt-2">Your Message Currently Empty</p>
-                    </div>
+                        <div class="w-full h-full flex items-center pt-10 flex-col">
+                            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                                color="#4b5563" stroke-width="1">
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                    d="M4 4.25C2.48122 4.25 1.25 5.48122 1.25 7V17C1.25 18.5188 2.48122 19.75 4 19.75H20C21.5188 19.75 22.75 18.5188 22.75 17V7C22.75 5.48122 21.5188 4.25 20 4.25H4ZM7.4301 8.38558C7.09076 8.14804 6.62311 8.23057 6.38558 8.5699C6.14804 8.90924 6.23057 9.37689 6.5699 9.61442L11.5699 13.1144C11.8281 13.2952 12.1719 13.2952 12.4301 13.1144L17.4301 9.61442C17.7694 9.37689 17.852 8.90924 17.6144 8.5699C17.3769 8.23057 16.9092 8.14804 16.5699 8.38558L12 11.5845L7.4301 8.38558Z"
+                                    fill="#4b5563"></path>
+                            </svg>
+                            <p class="text-sm text-gray-600 mt-2">Your Message Currently Empty</p>
+                        </div>
                     @endforelse
 
                 </div>

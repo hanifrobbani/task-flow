@@ -14,35 +14,37 @@
         <div class="grid grid-cols-[repeat(auto-fill,minmax(19rem,1fr))] gap-5">
             @foreach ($data as $item)
                 <a href="/project/{{ $item->id }}/kanban">
-                    <div class="bg-white shadow rounded px-5 py-2">
-                        <div class="flex justify-between items-center border-b py-2">
-                            <h1 class="font-medium">{{ $item->badge }}</h1>
-                            <p class="text-sm bg-green-600 py-1 px-3 text-white rounded-lg">{{ $item->status }}</p>
-                        </div>
-                        <div class="flex flex-col border-b border-gray-400 py-2">
-                            <div>
-                                <h1 class="font-semibold">{{ $item->title }}</h1>
-                                <p class="text-sm text-gray-600 mt-1">
-                                    {{ \Illuminate\Support\Str::limit($item->description, 80, '...') }}
-                                </p>
+                    <div class="bg-white shadow rounded px-5 py-2 min-h-72 flex flex-col justify-between">
+                        <div class="">
+                            <div class="flex justify-between items-center border-b py-2">
+                                <h1 class="font-medium">{{ $item->badge }}</h1>
+                                <p class="text-sm bg-green-600 py-1 px-3 text-white rounded-lg">{{ $item->status }}</p>
                             </div>
-
-                            <div class="flex -space-x-3 mt-5">
-                                @foreach ($item->teamMembers->take(4) as $member)
-                                    <img class="w-12 h-12 border-2 border-white rounded-full dark:border-gray-800"
-                                        src="{{ $member->user->img_user ? asset('storage/' . $member->user->img_user) : asset('assets/img/no-profile.svg') }}"
-                                        alt="">
-                                @endforeach
-
-                                @if ($item->teamMembers->count() > 4)
-                                    <a class="flex items-center justify-center w-12 h-12 text-xs font-medium text-gray-800 bg-gray-300 border-2 border-white rounded-full"
-                                        href="#">{{ $item->teamMembers->count() - 4 }}+</a>
-                                @else
-
-                                @endif
+                            <div class="flex flex-col py-2">
+                                <div>
+                                    <h1 class="font-semibold">{{ $item->title }}</h1>
+                                    <p class="text-sm text-gray-600 mt-1">
+                                        {{ \Illuminate\Support\Str::limit($item->description, 80, '...') }}
+                                    </p>
+                                </div>
+    
+                                <div class="flex -space-x-3 mt-5">
+                                    @foreach ($item->teamMembers->take(4) as $member)
+                                        <img class="w-12 h-12 border-2 border-white rounded-full dark:border-gray-800"
+                                            src="{{ $member->user->img_user ? asset('storage/' . $member->user->img_user) : asset('assets/img/no-profile.svg') }}"
+                                            alt="">
+                                    @endforeach
+    
+                                    @if ($item->teamMembers->count() > 4)
+                                        <a class="flex items-center justify-center w-12 h-12 text-xs font-medium text-gray-800 bg-gray-300 border-2 border-white rounded-full"
+                                            href="#">{{ $item->teamMembers->count() - 4 }}+</a>
+                                    @else
+    
+                                    @endif
+                                </div>
                             </div>
                         </div>
-                        <div class="w-full flex justify-between items-center mt-4">
+                        <div class="w-full flex justify-between items-center pt-4 border-t border-gray-400">
                             <div class="flex gap-4 items-start w-full">
                                 <div class="flex items-center text-left gap-1">
                                     <svg viewBox="0 0 24 24" class="fill-gray-500 stroke-gray-500 font-semibold" width="24"

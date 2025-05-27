@@ -6,6 +6,7 @@ use App\Models\Message;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class MessageController extends Controller
@@ -15,7 +16,7 @@ class MessageController extends Controller
      */
     public function index()
     {
-        $message = Message::latest()->paginate(10);
+        $message = Message::where('send_to', 'users')->orWhere('users_id', Auth::id())->latest()->paginate(10);
         return view('message.index', compact('message'));
     }
 
@@ -46,6 +47,7 @@ class MessageController extends Controller
         if($validated['type'] == 'join-message'){
             $validated['title'] = "Request Join Company";
             $validated['message'] =  $user->name . " has request to join your company!";
+            $validated['is_read'] =  true;
         }
 
         try{
