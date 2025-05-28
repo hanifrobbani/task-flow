@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
-import { IconBrandGithub } from '@tabler/icons-react';
 
 export function Navbar() {
   return(
@@ -13,12 +12,11 @@ export function Navbar() {
         </div>
       </div>
       <div className="flex gap-2 items-center">
-        <Link href={'/about'} className="p-2 hover:bg-blue-50 rounded-md transition-colors text-lg">Home</Link>
-        <Link href={'/about'} className="p-2 hover:bg-blue-50 rounded-md transition-colors text-lg">About</Link>
-        <Link href={'/about'} className="p-2 hover:bg-blue-50 rounded-md transition-colors text-lg">Contact Us</Link>
+        <Link href={'/about'} className="p-2 hover:bg-blue-50 rounded-md transition-colors text-base">Home</Link>
+        <Link href={'/about'} className="p-2 hover:bg-blue-50 rounded-md transition-colors text-base">About</Link>
+        <Link href={'/about'} className="p-2 hover:bg-blue-50 rounded-md transition-colors text-base">Contact Us</Link>
       </div>
       <div className="flex gap-3 items-center">
-        <IconBrandGithub stroke={2} className="hover:cursor-pointer"/>
         <Button variant={"default"} size={"default"}>Try for Free</Button>
       </div>
   </nav>
