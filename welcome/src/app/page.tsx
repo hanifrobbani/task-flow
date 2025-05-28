@@ -1,7 +1,7 @@
-import HomePage from "@/components/section/home"
+import Homelayout from "@/components/section/home/layout"
 
 export default function Home() {
   return (
-    <HomePage></HomePage>
+    <Homelayout></Homelayout>
   );
 }
