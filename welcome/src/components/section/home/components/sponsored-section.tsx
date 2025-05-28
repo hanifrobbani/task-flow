@@ -9,7 +9,7 @@ import {
 
 export default function SponsoredSection() {
   return (
-    <div className="pt-10">
+    <div className="px-20 pt-10">
       <h1 className="font-semibold text-gray-700 text-center text-lg">
         Sponsored by
       </h1>

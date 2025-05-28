@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export function Navbar() {
   return(
-    <nav className="flex justify-between w-full py-3 px-4 shadow ">
+    <nav className="flex justify-between w-full py-3 px-7">
       <div className="flex gap-1 items-center">
         <Image src={"/assets/img/logo.png"} alt="TaskFlow Logo" width={48} height={48}></Image>
         <div className="">
