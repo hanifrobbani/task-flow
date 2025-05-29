@@ -1,9 +1,7 @@
-import Homelayout from "@/components/section/home/layout"
+import Mainlayout from "@/components/section/main"
 
 export default function Home() {
   return (
-    <div className="max-w-7xl mx-auto">
-      <Homelayout />
-    </div>
+      <Mainlayout />
   );
 }

@@ -3,6 +3,7 @@ import Image from "next/image";
 
 export default function HeroSection() {
   return (
+    <div className="max-w-7xl mx-auto">
     <div className="w-full flex justify-between p-20">
       <div className="w-full">
         <div className="">
@@ -26,6 +27,7 @@ export default function HeroSection() {
           height={350}
         />
       </div>
+    </div>
     </div>
   );
 }
