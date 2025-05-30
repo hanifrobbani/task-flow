@@ -8,7 +8,7 @@ export default function NewsLatterSection() {
     <div className="space-y-20 px-20 pb-20">
       <Card className="w-full p-10 flex justify-center items-center bg-gradient-to-l from-blue-500 to-fuchsia-600">
         <CardContent className="text-center">
-          <h1 className="text-2xl font-semibold text-white">Transform the way your team works</h1>
+          <h1 className="text-2xl font-bold text-white">Transform the way your team works</h1>
           <p className="font-semibold mb-4 text-white">
             Start managing your team & get your work done more easily with
             TaskFlow!
@@ -22,7 +22,7 @@ export default function NewsLatterSection() {
         <div className="w-full">
           <h1 className="text-2xl font-bold">Stay Ahead with Our Newsletter</h1>
           <p className="text-gray-600">
-            Get the latest updates, tips, and features about Next.js Boilerplate
+            Get the latest updates, tips, and features about TaskFlow
             straight to your inbox. No spam, just valuable content. Unsubscribe
             anytime.
           </p>

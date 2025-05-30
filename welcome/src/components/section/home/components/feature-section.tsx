@@ -27,7 +27,7 @@ export default function FeatureSection() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <h1 className="text-lg font-semibold">{item.name}</h1>
+                <h1 className="text-lg font-bold">{item.name}</h1>
                 <p className="text-gray-600 text-sm">{item.description}</p>
               </CardContent>
             </Card>

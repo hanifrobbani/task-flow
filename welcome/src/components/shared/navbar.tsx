@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
 
-export function Navbar() {
+export default function Navbar() {
   return (
     <div className="max-w-7xl mx-auto">
       <nav className="flex justify-between w-full py-3 px-7">
@@ -30,7 +30,7 @@ export function Navbar() {
             href={"/about"}
             className="p-2 hover:bg-blue-50 rounded-md transition-colors text-base"
           >
-            About
+            Our Plan
           </Link>
           <Link
             href={"/about"}
