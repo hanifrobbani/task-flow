@@ -16,7 +16,7 @@ class MessageController extends Controller
      */
     public function index()
     {
-        $message = Message::where('send_to', 'users')->orWhere('users_id', Auth::id())->latest()->paginate(10);
+        $message = Message::where('send_to', 'user')->orWhere('users_id', Auth::id())->latest()->paginate(10);
         return view('message.index', compact('message'));
     }
 
@@ -102,5 +102,10 @@ class MessageController extends Controller
 
         }
 
+    }
+
+    public function messageCompany(){
+        $message = Message::where('send_to', 'company')->get();
+        return view('message.company', compact('message'));
     }
 }

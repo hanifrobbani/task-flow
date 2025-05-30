@@ -75,6 +75,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::resource('/badge-project', BadgeProjectController::class)->except(['index','create','edit', 'show']);
         Route::resource('/badge-task', BadgeTaskController::class)->except(['index','create','edit', 'show']);
         Route::get('/message', [MessageController::class, 'index']);
+        Route::get('/my-company/message', [MessageController::class, 'messageCompany']);
     });
 
 });

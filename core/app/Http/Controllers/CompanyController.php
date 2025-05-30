@@ -158,9 +158,6 @@ class CompanyController extends Controller
             return $message->created_at->isSameDay(Carbon::today());
         })->count();
         $unreadMessage = $messages->where('is_read', false)->count();
-        if (!$company) {
-            return redirect()->back();
-        }
 
         return view('company.index', compact('company', 'badgeProject', 'badgeTask', 'todayMessage', 'unreadMessage'));
     }

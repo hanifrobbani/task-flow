@@ -1,6 +1,7 @@
 @extends('layouts.main')
 @section('main')
-@section('title', 'Message')
+@section('title', 'Company Message')
+
     <div class="flex justify-between gap-4">
         <div class="bg-white shadow-md rounded-md w-60">
             <div class="p-4">

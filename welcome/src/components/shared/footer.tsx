@@ -11,7 +11,7 @@ export default function Footer() {
   }, []);
 
   return (
-    <footer className="flex justify-between p-10">
+    <footer className="flex justify-between py-10 px-20">
       <div className="w-full text-gray-600 text-sm">
         <p>&copy; {currentDate} TaskFlow, All right reserved</p>
       </div>
