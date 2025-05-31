@@ -13,7 +13,7 @@
                 </div>
                 <div class="flex flex-col gap-2">
                     <h1 class="text-base text-gray-600 font-medium">Progress Harian</h1>
-                    <p class="text-xl text-gray-600">120.21</p>
+                    <p class="text-xl text-gray-600">{{ $efficiencyToday }}</p>
                 </div>
             </div>
         </div>
@@ -34,7 +34,7 @@
                 </div>
                 <div class="flex flex-col gap-2">
                     <h1 class="text-base text-gray-600 font-medium">Progress Bulanan</h1>
-                    <p class="text-xl text-gray-600">120.21</p>
+                    <p class="text-xl text-gray-600">{{ $efficiencyMonth }}</p>
                 </div>
             </div>
         </div>
@@ -69,12 +69,17 @@
                     <p>{{ Carbon\Carbon::today()->format('d/m/Y') }}</p>
                 </div>
                 <div class="mt-4">
-                    <div class="w-full h-4 bg-gray-300 rounded-md"></div>
+                    <div class="w-full h-4 bg-gray-300 rounded-md">
+                        <div class="{{ $dailyProgress < 40 ? 'bg-red-500' : ($dailyProgress < 70 ? 'bg-yellow-500' : 'bg-green-500') }} h-4 rounded-xl"
+                            style="width: {{ round(($dailyProgress / 40) * 100, 2) }}%;">
+                            <p class="text-center font-medium text-white text-xs">{{ round(($dailyProgress / 40) * 100, 2) }}%</p>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="flex flex-col p-5 bg-white shadow-md rounded-md w-full">
                 <div class="flex justify-between text-xl mb-1 font-semibold">
-                    <h1 class="text-gray-800">{{ $weeklyPoint?? 0 }}/40</h1>
+                    <h1 class="text-gray-800">{{ $weeklyPoint ?? 0 }}/40</h1>
                     <h1 class="text-red-500">{{ round(($weeklyPoint / 40) * 100, 2) ?? 0 }}%</h1>
                 </div>
                 <div class="text-sm text-gray-600">
@@ -82,7 +87,12 @@
                     <p>{{ Carbon\Carbon::today()->format('d/m/Y') }}</p>
                 </div>
                 <div class="mt-4">
-                    <div class="w-full h-4 bg-gray-300 rounded-md"></div>
+                    <div class="w-full h-4 bg-gray-300 rounded-md">
+                        <div class="{{ $weeklyPoint < 12 ? 'bg-red-500' : ($weeklyPoint < 24 ? 'bg-yellow-500' : 'bg-green-500') }} h-4 rounded-xl"
+                            style="width: {{ round(($weeklyPoint / 40) * 100, 2) }}%;">
+                            <p class="text-center font-medium text-white text-xs">{{ round(($weeklyPoint / 40) * 100, 2) }}%</p>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="flex flex-col p-5 bg-white shadow-md rounded-md w-full">
@@ -95,7 +105,12 @@
                     <p>{{ Carbon\Carbon::today()->format('d/m/Y') }}</p>
                 </div>
                 <div class="mt-4">
-                    <div class="w-full h-4 bg-gray-300 rounded-md"></div>
+                    <div class="w-full h-4 bg-gray-300 rounded-md">
+                        <div class="{{ $dailyProgressWeek < 12 ? 'bg-red-500' : ($dailyProgressWeek < 24 ? 'bg-yellow-500' : 'bg-green-500') }} h-4 rounded-xl"
+                            style="width: {{ round(($dailyProgressWeek / 40) * 100, 2) }}%;">
+                            <p class="text-center font-medium text-white text-xs">{{ round(($dailyProgressWeek / 40) * 100, 2) }}%</p>
+                        </div>
+                    </div>
                 </div>
             </div>
 

@@ -37,6 +37,7 @@
                 </p>
             </div>
             <div>
+                @if ($company->owner_id == auth()->user()->id)
                 <button type="button" onclick="modal_edit_company.showModal()"
                     class="border border-gray-400 rounded-full py-2 px-4 text-sm flex gap-1 items-center hover:bg-gray-100 transition">
                     <svg class="w-4 h-4 text-gray-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
@@ -46,6 +47,7 @@
                     </svg>
                     Edit
                 </button>
+                @endif
             </div>
         </div>
     </div>
@@ -69,18 +71,20 @@
                             placeholder="Search for users">
                     </div>
 
-                    <button type="button" onclick="modal_add_employee.showModal()"
-                        class="p-2 bg-blue-600 text-white text-xs rounded-md flex gap-1 items-center hover:opacity-80"><svg
-                            width="20" height="20" stroke-width="1.5" viewBox="0 0 24 24" fill="none"
-                            xmlns="http://www.w3.org/2000/svg" color="#ffffff">
-                            <path d="M17 10H20M23 10H20M20 10V7M20 10V13" stroke="#ffffff" stroke-width="1.5"
-                                stroke-linecap="round" stroke-linejoin="round"></path>
-                            <path d="M1 20V19C1 15.134 4.13401 12 8 12V12C11.866 12 15 15.134 15 19V20" stroke="#ffffff"
-                                stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                            <path
-                                d="M8 12C10.2091 12 12 10.2091 12 8C12 5.79086 10.2091 4 8 4C5.79086 4 4 5.79086 4 8C4 10.2091 5.79086 12 8 12Z"
-                                stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                        </svg> Add Employee</button>
+                    @if ($company->owner_id == auth()->user()->id)
+                        <button type="button" onclick="modal_add_employee.showModal()"
+                            class="p-2 bg-blue-600 text-white text-xs rounded-md flex gap-1 items-center hover:opacity-80"><svg
+                                width="20" height="20" stroke-width="1.5" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg" color="#ffffff">
+                                <path d="M17 10H20M23 10H20M20 10V7M20 10V13" stroke="#ffffff" stroke-width="1.5"
+                                    stroke-linecap="round" stroke-linejoin="round"></path>
+                                <path d="M1 20V19C1 15.134 4.13401 12 8 12V12C11.866 12 15 15.134 15 19V20" stroke="#ffffff"
+                                    stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                                <path
+                                    d="M8 12C10.2091 12 12 10.2091 12 8C12 5.79086 10.2091 4 8 4C5.79086 4 4 5.79086 4 8C4 10.2091 5.79086 12 8 12Z"
+                                    stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                            </svg> Add Employee</button>
+                    @endif
                 </div>
                 <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -138,94 +142,12 @@
         </div>
     </div>
 
-    <div class="mt-5 flex gap-2">
-        <div class="p-5 bg-white rounded-lg shadow-md w-full">
-            <div class="flex justify-between items-center mb-4">
-                <h1>Employee Position</h1>
-                <button type="button" onclick="modal_add_company_position.showModal()"
-                    class="p-2 bg-blue-600 text-white text-xs rounded-md flex gap-1 items-center hover:opacity-80">
-                    <svg width="20" height="20" stroke-width="1.5" viewBox="0 0 24 24" fill="none"
-                        xmlns="http://www.w3.org/2000/svg" color="#ffffff">
-                        <path d="M8 12H12M16 12H12M12 12V8M12 12V16" stroke="#ffffff" stroke-width="1.5"
-                            stroke-linecap="round" stroke-linejoin="round"></path>
-                        <path
-                            d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
-                            stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                    </svg></button>
-            </div>
-            <div class="overflow-x-auto sm:rounded-lg">
-                <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                        <tr>
-                            <th scope="col" class="w-full px-6">
-                                Position
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Action
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse ($company->companyPosition as $position)
-                            <tr
-                                class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                <td class="w-full px-6">
-                                    {{ $position->name }}
-                                </td>
-                                <td class="py-4 text-center px-6">
-                                    <button type="button"
-                                        onclick="modalEditCompanyPosition({{ $position->id }}, '{{ $position->name }}')"
-                                        class="font-medium text-blue-600 hover:underline">Edit</button>
-                                </td>
-                            </tr>
-                        @empty
-                            <tr class="w-full text-center">
-                                <td colspan="2" class="w-full py-4">No Position in your company, start add one!</td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <div class="p-5 bg-white rounded-lg shadow-md max-w-md w-full">
-            <h1 class="text-gray-800 font-medium">Message</h1>
-            @if ($todayMessage == 0 && $unreadMessage == 0)
-                <div class="w-full h-full flex items-center pt-10 flex-col">
-                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
-                        color="#4b5563" stroke-width="1">
-                        <path fill-rule="evenodd" clip-rule="evenodd"
-                            d="M4 4.25C2.48122 4.25 1.25 5.48122 1.25 7V17C1.25 18.5188 2.48122 19.75 4 19.75H20C21.5188 19.75 22.75 18.5188 22.75 17V7C22.75 5.48122 21.5188 4.25 20 4.25H4ZM7.4301 8.38558C7.09076 8.14804 6.62311 8.23057 6.38558 8.5699C6.14804 8.90924 6.23057 9.37689 6.5699 9.61442L11.5699 13.1144C11.8281 13.2952 12.1719 13.2952 12.4301 13.1144L17.4301 9.61442C17.7694 9.37689 17.852 8.90924 17.6144 8.5699C17.3769 8.23057 16.9092 8.14804 16.5699 8.38558L12 11.5845L7.4301 8.38558Z"
-                            fill="#4b5563"></path>
-                    </svg>
-                    <p class="text-sm text-gray-600 mt-2">Your Message Currently Empty</p>
-                </div>
-            @else
-                <div class="pb-4 flex flex-col justify-between h-full">
-                    <div class="w-full flex justify-center items-center h-full">
-                        <div class="flex flex-col items-center border-r border-gray-300 pr-2">
-                            <h1 class="font-semibold text-gray-800">{{ $todayMessage }}</h1>
-                            <p class="text-xs text-gray-600">Today Message</p>
-                        </div>
-                        <div class="flex flex-col items-center border-l border-gray-300 pl-2">
-                            <h1 class="font-semibold text-gray-800">{{ $unreadMessage }}</h1>
-                            <p class="text-xs text-gray-600">Unread Message</p>
-                        </div>
-                    </div>
-                    <div class="w-full text-center">
-                        <a href="" class="text-sm text-gray-600 hover:text-blue-600 hover:underline">See all message</a>
-                    </div>
-                </div>
-            @endif
-        </div>
-    </div>
-
-    <div class="mt-5">
-        <h1 class="font-medium text-gray-600 mb-1">Manage Project</h1>
-        <div class="flex gap-5">
+    @if ($company->owner_id == auth()->user()->id)
+        <div class="mt-5 flex gap-2">
             <div class="p-5 bg-white rounded-lg shadow-md w-full">
-                <div class="flex justify-between mb-4">
-                    <h1>Badge Task</h1>
-                    <button type="button" onclick="modal_add_badge_task.showModal()"
+                <div class="flex justify-between items-center mb-4">
+                    <h1>Employee Position</h1>
+                    <button type="button" onclick="modal_add_company_position.showModal()"
                         class="p-2 bg-blue-600 text-white text-xs rounded-md flex gap-1 items-center hover:opacity-80">
                         <svg width="20" height="20" stroke-width="1.5" viewBox="0 0 24 24" fill="none"
                             xmlns="http://www.w3.org/2000/svg" color="#ffffff">
@@ -236,7 +158,6 @@
                                 stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
                         </svg></button>
                 </div>
-
                 <div class="overflow-x-auto sm:rounded-lg">
                     <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -244,91 +165,177 @@
                                 <th scope="col" class="w-full px-6">
                                     Position
                                 </th>
-                                <th scope="col" class="w-full px-6">
-                                    Color
-                                </th>
                                 <th scope="col" class="px-6 py-3">
                                     Action
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($badgeTask as $item)
+                            @forelse ($company->companyPosition as $position)
                                 <tr
                                     class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
                                     <td class="w-full px-6">
-                                        {{ $item->name }}
-                                    </td>
-                                    <td class="w-full px-6">
-                                        <div class="w-10 h-4" style="background-color: {{ $item->color }};"></div>
+                                        {{ $position->name }}
                                     </td>
                                     <td class="py-4 text-center px-6">
                                         <button type="button"
-                                            onclick="modalEditBadgeTask({{ $item->id }}, '{{ $item->name }}', '{{ $item->color }}')"
+                                            onclick="modalEditCompanyPosition({{ $position->id }}, '{{ $position->name }}')"
                                             class="font-medium text-blue-600 hover:underline">Edit</button>
                                     </td>
                                 </tr>
                             @empty
                                 <tr class="w-full text-center">
-                                    <td colspan="3" class="w-full py-4">No Badge for your task in your company, start add one!
-                                    </td>
+                                    <td colspan="2" class="w-full py-4">No Position in your company, start add one!</td>
                                 </tr>
                             @endforelse
                         </tbody>
                     </table>
                 </div>
             </div>
-            <div class="p-5 bg-white rounded-lg shadow-md w-full">
-                <div class="flex justify-between mb-4">
-                    <h1>Badge Project</h1>
-                    <button type="button" onclick="modal_add_badge_project.showModal()"
-                        class="p-2 bg-blue-600 text-white text-xs rounded-md flex gap-1 items-center hover:opacity-80">
-                        <svg width="20" height="20" stroke-width="1.5" viewBox="0 0 24 24" fill="none"
-                            xmlns="http://www.w3.org/2000/svg" color="#ffffff">
-                            <path d="M8 12H12M16 12H12M12 12V8M12 12V16" stroke="#ffffff" stroke-width="1.5"
-                                stroke-linecap="round" stroke-linejoin="round"></path>
-                            <path
-                                d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
-                                stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
-                        </svg></button>
-                </div>
+            <div class="p-5 bg-white rounded-lg shadow-md max-w-md w-full">
+                <h1 class="text-gray-800 font-medium">Message</h1>
+                @if ($todayMessage == 0 && $unreadMessage == 0)
+                    <div class="w-full h-full flex items-center pt-10 flex-col">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                            color="#4b5563" stroke-width="1">
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M4 4.25C2.48122 4.25 1.25 5.48122 1.25 7V17C1.25 18.5188 2.48122 19.75 4 19.75H20C21.5188 19.75 22.75 18.5188 22.75 17V7C22.75 5.48122 21.5188 4.25 20 4.25H4ZM7.4301 8.38558C7.09076 8.14804 6.62311 8.23057 6.38558 8.5699C6.14804 8.90924 6.23057 9.37689 6.5699 9.61442L11.5699 13.1144C11.8281 13.2952 12.1719 13.2952 12.4301 13.1144L17.4301 9.61442C17.7694 9.37689 17.852 8.90924 17.6144 8.5699C17.3769 8.23057 16.9092 8.14804 16.5699 8.38558L12 11.5845L7.4301 8.38558Z"
+                                fill="#4b5563"></path>
+                        </svg>
+                        <p class="text-sm text-gray-600 mt-2">Your Message Currently Empty</p>
+                    </div>
+                @else
+                    <div class="pb-4 flex flex-col justify-between h-full">
+                        <div class="w-full flex justify-center items-center h-full">
+                            <div class="flex flex-col items-center border-r border-gray-300 pr-2">
+                                <h1 class="font-semibold text-gray-800">{{ $todayMessage }}</h1>
+                                <p class="text-xs text-gray-600">Today Message</p>
+                            </div>
+                            <div class="flex flex-col items-center border-l border-gray-300 pl-2">
+                                <h1 class="font-semibold text-gray-800">{{ $unreadMessage }}</h1>
+                                <p class="text-xs text-gray-600">Unread Message</p>
+                            </div>
+                        </div>
+                        <div class="w-full text-center">
+                            <a href="" class="text-sm text-gray-600 hover:text-blue-600 hover:underline">See all message</a>
+                        </div>
+                    </div>
+                @endif
+            </div>
+        </div>
 
-                <div class="overflow-x-auto sm:rounded-lg">
-                    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                            <tr>
-                                <th scope="col" class="w-full px-6">
-                                    Position
-                                </th>
-                                <th scope="col" class="px-6 py-3">
-                                    Action
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse ($badgeProject as $item)
-                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                    <td class="w-full px-6">
-                                        {{ $item->name }}
-                                    </td>
-                                    <td class="py-4 text-center px-6">
-                                        <button type="button"
-                                            onclick="modalEditBadgeProject({{ $item->id }}, '{{ $item->name }}')"
-                                            class="font-medium text-blue-600 hover:underline">Edit</button>
-                                    </td>
+        <div class="mt-5">
+            <h1 class="font-medium text-gray-600 mb-1">Manage Project</h1>
+            <div class="flex gap-5">
+                <div class="p-5 bg-white rounded-lg shadow-md w-full">
+                    <div class="flex justify-between mb-4">
+                        <h1>Badge Task</h1>
+                        <button type="button" onclick="modal_add_badge_task.showModal()"
+                            class="p-2 bg-blue-600 text-white text-xs rounded-md flex gap-1 items-center hover:opacity-80">
+                            <svg width="20" height="20" stroke-width="1.5" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg" color="#ffffff">
+                                <path d="M8 12H12M16 12H12M12 12V8M12 12V16" stroke="#ffffff" stroke-width="1.5"
+                                    stroke-linecap="round" stroke-linejoin="round"></path>
+                                <path
+                                    d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+                                    stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                            </svg></button>
+                    </div>
+
+                    <div class="overflow-x-auto sm:rounded-lg">
+                        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                <tr>
+                                    <th scope="col" class="w-full px-6">
+                                        Position
+                                    </th>
+                                    <th scope="col" class="w-full px-6">
+                                        Color
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Action
+                                    </th>
                                 </tr>
-                            @empty
-                                <tr class="w-full text-center">
-                                    <td colspan="2" class="w-full py-4">No Badge for your project in your company, start add
-                                        one!</td>
+                            </thead>
+                            <tbody>
+                                @forelse ($badgeTask as $item)
+                                    <tr
+                                        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                        <td class="w-full px-6">
+                                            {{ $item->name }}
+                                        </td>
+                                        <td class="w-full px-6">
+                                            <div class="w-10 h-4" style="background-color: {{ $item->color }};"></div>
+                                        </td>
+                                        <td class="py-4 text-center px-6">
+                                            <button type="button"
+                                                onclick="modalEditBadgeTask({{ $item->id }}, '{{ $item->name }}', '{{ $item->color }}')"
+                                                class="font-medium text-blue-600 hover:underline">Edit</button>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr class="w-full text-center">
+                                        <td colspan="3" class="w-full py-4">No Badge for your task in your company, start add one!
+                                        </td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="p-5 bg-white rounded-lg shadow-md w-full">
+                    <div class="flex justify-between mb-4">
+                        <h1>Badge Project</h1>
+                        <button type="button" onclick="modal_add_badge_project.showModal()"
+                            class="p-2 bg-blue-600 text-white text-xs rounded-md flex gap-1 items-center hover:opacity-80">
+                            <svg width="20" height="20" stroke-width="1.5" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg" color="#ffffff">
+                                <path d="M8 12H12M16 12H12M12 12V8M12 12V16" stroke="#ffffff" stroke-width="1.5"
+                                    stroke-linecap="round" stroke-linejoin="round"></path>
+                                <path
+                                    d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+                                    stroke="#ffffff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                            </svg></button>
+                    </div>
+
+                    <div class="overflow-x-auto sm:rounded-lg">
+                        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                                <tr>
+                                    <th scope="col" class="w-full px-6">
+                                        Position
+                                    </th>
+                                    <th scope="col" class="px-6 py-3">
+                                        Action
+                                    </th>
                                 </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                @forelse ($badgeProject as $item)
+                                    <tr
+                                        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                        <td class="w-full px-6">
+                                            {{ $item->name }}
+                                        </td>
+                                        <td class="py-4 text-center px-6">
+                                            <button type="button"
+                                                onclick="modalEditBadgeProject({{ $item->id }}, '{{ $item->name }}')"
+                                                class="font-medium text-blue-600 hover:underline">Edit</button>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr class="w-full text-center">
+                                        <td colspan="2" class="w-full py-4">No Badge for your project in your company, start add
+                                            one!</td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    @endif
 
     <!-- Modal add employee -->
     <dialog id="modal_add_employee" class="modal">
@@ -754,9 +761,9 @@
             removeButton.type = "button";
             removeButton.className = "remove-image-btn absolute top-0 right-0 bg-red-500 text-white rounded-full p-1 hover:bg-red-600";
             removeButton.innerHTML = `
-                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-                                                    </svg>`;
+                                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                                                            </svg>`;
 
             removeButton.onclick = function (e) {
                 e.preventDefault();

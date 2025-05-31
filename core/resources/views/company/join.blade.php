@@ -189,6 +189,7 @@
             </div>
             <p class="text-sm text-gray-600">After you send a request to join this company you have to wait for approval, an approval email will be sent to your address.</p>
             <input type="hidden" name="users_id" value="{{ auth()->user()->id }}">
+            <input type="hidden" name="send_by" value="{{ auth()->user()->id }}">
             <input type="hidden" name="companies_id" id="companies-id">
             <input type="hidden" name="send_to" value="company">
             <input type="hidden" name="type" value="join-message">

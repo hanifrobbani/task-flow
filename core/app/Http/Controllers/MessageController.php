@@ -38,6 +38,7 @@ class MessageController extends Controller
             'message' => 'nullable',
             'send_to' => 'required',
             'users_id' => 'required',
+            'send_by' => 'required',
             'companies_id' => 'required',
             'type' => 'nullable',
         ]);
