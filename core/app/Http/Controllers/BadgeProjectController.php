@@ -69,7 +69,6 @@ class BadgeProjectController extends Controller
 
         $validated = $request->validate([
             'name' => 'required|max:255',
-            'companies_id' => 'required'
         ]);
 
         try {
