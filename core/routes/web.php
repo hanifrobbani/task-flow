@@ -40,7 +40,8 @@ Route::group(['middleware' => 'auth'], function () {
     // Company Creation (Before Onboarding)
     Route::get('/company', [CompanyController::class, 'index'])->middleware('isHaveCompany');
     // Route::get('/company/{id}', [CompanyController::class, 'show'])->middleware('isHaveCompany');
-
+    
+    Route::post('/request-join-company', [MessageController::class, 'requestJoinCompany'])->middleware('isHaveCompany');
     // ==========================================
     // ONBOARDED USER ROUTES
     // ==========================================

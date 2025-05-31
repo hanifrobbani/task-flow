@@ -168,7 +168,7 @@
     </dialog>
     <!-- modal join company -->
     <dialog id="modal_join_company" class="modal">
-        <form action="/message" method="POST" class="relative max-w-md bg-white rounded-lg shadow-md p-6 z-50 w-full">
+        <form action="/request-join-company" method="POST" class="relative max-w-md bg-white rounded-lg shadow-md p-6 z-50 w-full">
             @csrf
             <div class="flex gap-2 items-center">
                 <div>
@@ -188,11 +188,7 @@
                 </div>
             </div>
             <p class="text-sm text-gray-600">After you send a request to join this company you have to wait for approval, an approval email will be sent to your address.</p>
-            <input type="hidden" name="users_id" value="{{ auth()->user()->id }}">
-            <input type="hidden" name="send_by" value="{{ auth()->user()->id }}">
             <input type="hidden" name="companies_id" id="companies-id">
-            <input type="hidden" name="send_to" value="company">
-            <input type="hidden" name="type" value="join-message">
             <div class="flex justify-end gap-2 mt-4">
                 <button type="button" onclick="modal_join_company.close()" class="text-sm font-medium border border-gray-300 px-3 py-1 rounded-md hover:bg-gray-50 transition-colors">Cancel</button>
                 <button type="submit" class="text-sm font-medium bg-blue-600 text-white px-3 py-1 rounded-md hover:opacity-80 transition">Request Join!</button>

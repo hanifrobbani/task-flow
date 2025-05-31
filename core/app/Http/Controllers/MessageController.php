@@ -45,16 +45,16 @@ class MessageController extends Controller
         $user = User::where('id', $validated['users_id'])->firstOrFail();
         // dd($validated);
 
-        if($validated['type'] == 'join-message'){
+        if ($validated['type'] == 'join-message') {
             $validated['title'] = "Request Join Company";
-            $validated['message'] =  $user->name . " has request to join your company!";
-            $validated['is_read'] =  true;
+            $validated['message'] = $user->name . " has request to join your company!";
+            $validated['is_read'] = true;
         }
 
-        try{
+        try {
             Message::create($validated);
             return redirect()->back()->with('successMessage', 'Message successfully send!');
-        }catch(Exception $e){
+        } catch (Exception $e) {
             Log::error($e->getMessage());
             return redirect()->back();
         }
@@ -94,19 +94,41 @@ class MessageController extends Controller
     public function destroy(string $id)
     {
         $message = Message::findOrFail($id);
-        try{
+        try {
             $message->delete();
             return redirect()->back()->with('successMessage', 'Message successfully deleted!');
-        }catch(Exception $e){
+        } catch (Exception $e) {
             Log::error($e->getMessage());
             return redirect()->back()->with('errorMessage', 'Error, please try again later!');
 
         }
 
     }
-
-    public function messageCompany(){
+    public function messageCompany()
+    {
         $message = Message::where('send_to', 'company')->get();
         return view('message.company', compact('message'));
+    }
+
+    public function requestJoinCompany(Request $request)
+    {
+        $validated = $request->validate([
+            'companies_id' => 'required|exists:companies,id',
+        ]);
+
+        $userId = Auth::id();
+        $user = User::where('id', '=', $userId)->firstOrFail();
+        $messageUser = $user->name . " has request to join your company, if you don't know him, you can just ignore this message";
+
+        $message = new Message();
+        $message->title = "Request Join Company";
+        $message->product_id = $validated['companies_id'];
+        $message->users_id = $userId;
+        $message->send_by = $userId;
+        $message->message = $messageUser;
+        $message->send_to = 'company';
+        $message->type = 'join-message';
+        $message->save();
+
     }
 }
