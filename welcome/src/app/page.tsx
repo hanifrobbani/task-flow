@@ -1,7 +1,10 @@
-import Mainlayout from "@/components/section/main"
+import Homelayout from "@/components/section/home/layout"
+import MainLayout from "@/components/section/main"
 
 export default function Home() {
   return (
-      <Mainlayout />
+    <MainLayout>
+      <Homelayout />
+    </MainLayout>
   );
 }

@@ -1,12 +1,17 @@
-"use client"
+"use client";
+import type { ReactNode } from "react";
 import Navbar from "../shared/navbar";
 import Footer from "../shared/footer";
-import HomeLayout from "./home/layout";
-export default function MainLayout() {
+
+interface PageLayoutProps {
+  children: ReactNode;
+}
+
+export default function MainLayout({ children }: PageLayoutProps) {
   return (
     <>
       <Navbar />
-      <HomeLayout />
+      {children}
       <Footer />
     </>
   );
