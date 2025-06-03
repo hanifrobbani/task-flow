@@ -42,14 +42,6 @@ class MessageController extends Controller
             'companies_id' => 'required',
             'type' => 'nullable',
         ]);
-        $user = User::where('id', $validated['users_id'])->firstOrFail();
-        // dd($validated);
-
-        if ($validated['type'] == 'join-message') {
-            $validated['title'] = "Request Join Company";
-            $validated['message'] = $user->name . " has request to join your company!";
-            $validated['is_read'] = true;
-        }
 
         try {
             Message::create($validated);
@@ -100,7 +92,6 @@ class MessageController extends Controller
         } catch (Exception $e) {
             Log::error($e->getMessage());
             return redirect()->back()->with('errorMessage', 'Error, please try again later!');
-
         }
 
     }
