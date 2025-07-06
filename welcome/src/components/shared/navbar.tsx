@@ -21,19 +21,19 @@ export default function Navbar() {
         </div>
         <div className="flex gap-2 items-center">
           <Link
-            href={"/about"}
+            href={"/home"}
             className="p-2 hover:bg-blue-50 rounded-md transition-colors text-base"
           >
             Home
           </Link>
           <Link
-            href={"/about"}
+            href={"/plan"}
             className="p-2 hover:bg-blue-50 rounded-md transition-colors text-base"
           >
             Our Plan
           </Link>
           <Link
-            href={"/about"}
+            href={"/contact"}
             className="p-2 hover:bg-blue-50 rounded-md transition-colors text-base"
           >
             Contact Us
